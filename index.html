@@ -185,10 +185,13 @@
                         <span id="badge-nav-missions" class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-purple-950/90 border border-purple-400/40 text-[10px] font-scifi text-purple-200">6</span>
                     </button>
 
+                    <!-- ปิดปุ่ม Grammar Codex ตามความต้องการ -->
+                    <!--
                     <button onclick="switchModule('grammar')" id="nav-grammar" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap">
                         <span class="flex items-center gap-2.5"><span class="text-base">📘</span><span>คลังความรู้ (Grammar)</span></span>
-                        <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-scifi text-blue-200">U11</span>
+                        <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-scifi text-blue-200">U1.1</span>
                     </button>
+                    -->
 
                     <button onclick="openVoiceLab()" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap shadow-[0_0_15px_rgba(168,85,247,0.2)]">
                         <span class="flex items-center gap-2.5"><span class="text-base">🎙️</span><span>ฝึกพูดคำศัพท์ (Voice Lab)</span></span>
@@ -294,56 +297,14 @@
                 <div class="flex items-center gap-2 overflow-x-auto pb-1 border-b border-purple-500/20 mb-2">
                     <span class="text-xs text-purple-300 font-medium whitespace-nowrap">เลือกบทเรียน (เทอม 2):</span>
                     <button onclick="setMissionUnitFilter('ALL')" id="unit-filter-ALL" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-fuchsia-600/80 text-white border border-fuchsia-400/50 whitespace-nowrap">ทุกบท</button>
-                    <button onclick="setMissionUnitFilter('Unit 11')" id="unit-filter-Unit 11" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 11</button>
-                    <button onclick="setMissionUnitFilter('Unit 12')" id="unit-filter-Unit 12" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 12</button>
-                    <button onclick="setMissionUnitFilter('Unit 13')" id="unit-filter-Unit 13" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 13</button>
+                    <button onclick="setMissionUnitFilter('Unit 1.1')" id="unit-filter-Unit 1.1" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1.1</button>
+                    <button onclick="setMissionUnitFilter('Unit 1.2')" id="unit-filter-Unit 1.2" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1.2</button>
+                    <button onclick="setMissionUnitFilter('Unit 1.3')" id="unit-filter-Unit 1.3" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1.3</button>
                 </div>
 
                 <div id="missions-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
             </section>
 
-            <!-- MODULE: GRAMMAR CODEX -->
-            <section id="module-grammar" class="module-section hidden cosmic-card rounded-3xl p-5 sm:p-7 space-y-6">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <div class="flex items-center gap-2.5">
-                            <span class="text-2xl">📘</span>
-                            <h3 class="font-scifi text-xl sm:text-2xl font-bold text-white tracking-wide">Grammar Codex</h3>
-                        </div>
-                        <p class="text-xs sm:text-sm text-purple-200/75 mt-1">คลังความรู้ และสรุปไวยากรณ์สำหรับทบทวน</p>
-                    </div>
-                </div>
-
-                <!-- Slide Viewer UI -->
-                <div class="p-4 sm:p-6 bg-cosmic-950/80 border border-purple-500/30 rounded-2xl space-y-4 relative shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
-                    <div class="flex flex-wrap justify-between items-center mb-2 gap-3">
-                        <h4 class="font-bold text-cyan-300 text-sm sm:text-base">Unit 11: People's Lifestyles</h4>
-                        <span id="slide-counter" class="px-4 py-1.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-xs sm:text-sm font-scifi font-bold text-blue-100 shadow-md">1 / 21</span>
-                    </div>
-                    
-                    <!-- ส่วนแสดงรูปภาพสไลด์ -->
-                    <div class="relative w-full rounded-xl overflow-hidden border border-slate-700 bg-black flex items-center justify-center min-h-[250px] sm:min-h-[450px]">
-                        <img id="current-slide-img" src="U11_Slide_1.PNG" alt="Grammar Slide" 
-                            class="max-w-full max-h-[65vh] object-contain transition-opacity duration-300 shadow-2xl" 
-                            onerror="this.src='https://via.placeholder.com/800x450/090514/38bdf8?text=Image+Not+Found'; showToast('ไม่พบไฟล์รูปภาพ ตรวจสอบชื่อไฟล์บน GitHub', 'error');">
-                    </div>
-
-                    <!-- ปุ่มควบคุมสไลด์ -->
-                    <div class="flex justify-between items-center pt-3 border-t border-slate-700/50 mt-4">
-                        <button onclick="prevSlide()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-xs sm:text-sm font-bold transition flex items-center gap-2 active:scale-95 shadow-md">
-                            <span>⬅️</span> <span>ก่อนหน้า</span>
-                        </button>
-                        
-                        <button onclick="nextSlide()" class="btn-portal px-6 py-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 active:scale-95 shadow-lg">
-                            <span>ถัดไป</span> <span>➡️</span>
-                        </button>
-                    </div>
-                    
-                    <div class="text-center mt-2">
-                        <p class="text-[10px] sm:text-xs text-slate-400">💡 ทริค: อ่านสไลด์เพื่อเตรียมตัวก่อนทำภารกิจหรือสอบ</p>
-                    </div>
-                </div>
-            </section>
         </main>
 
         <!-- 3. RIGHT SIDEBAR -->
@@ -354,7 +315,7 @@
                     <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg flex-shrink-0">🚧</div>
                     <div class="text-xs space-y-1">
                         <p class="font-semibold text-purple-100">ประกาศต้อนรับเทอม 2</p>
-                        <p class="text-slate-300 leading-relaxed">ขณะนี้เปิดให้ผจญภัยเริ่มจาก <b>Unit 11 (M01)</b> เป็นต้นไป หมวดอื่นๆ จะทยอยปลดล็อกเมื่อเนื้อหาพร้อมครับ!</p>
+                        <p class="text-slate-300 leading-relaxed">ขณะนี้เปิดให้ผจญภัยเริ่มจาก <b>Unit 1.1 (M01)</b> เป็นต้นไป หมวดอื่นๆ จะทยอยปลดล็อกเมื่อเนื้อหาพร้อมครับ!</p>
                     </div>
                 </div>
             </div>
@@ -382,9 +343,12 @@
         <button onclick="switchModule('missions')" id="nav-missions-mobile" class="module-nav-btn flex flex-col items-center gap-0.5 py-1 px-2 text-[10px] text-purple-200">
             <span class="text-base">🏠</span><span>ภารกิจ</span>
         </button>
+        <!-- ปิดปุ่มแกรมม่าในมือถือ -->
+        <!-- 
         <button onclick="switchModule('grammar')" id="nav-grammar-mobile" class="module-nav-btn flex flex-col items-center gap-0.5 py-1 px-2 text-[10px] text-slate-500 hover:text-purple-200 transition">
             <span class="text-base">📘</span><span>แกรมม่า</span>
         </button>
+        -->
         <button onclick="openVoiceLab()" class="flex flex-col items-center gap-0.5 py-1 px-2 text-[10px] text-slate-300 hover:text-red-300 transition">
             <span class="text-base">🎙️</span><span>พูดคำศัพท์</span>
         </button>
@@ -487,16 +451,16 @@
 
         const FRAME_CATALOG = {
             "Frame00": { id: "Frame00", name: "No Frame", subtitle: "ซ่อนกรอบ", cssClass: "", reqLevel: 0 },
-            "FrameBio": { id: "FrameBio", name: "Cyber Aura", subtitle: "กรอบมิติไซเบอร์ (V_U11)", cssClass: "frame-biohazard", reqMission: "V_U11" },
+            "FrameBio": { id: "FrameBio", name: "Cyber Aura", subtitle: "กรอบมิติไซเบอร์ (V_U1)", cssClass: "frame-biohazard", reqMission: "V_U1" },
             "FrameLv5": { id: "FrameLv5", name: "Gold Standard", subtitle: "กรอบสำหรับเลเวล 5 ขึ้นไป", cssClass: "frame-level5", reqLevel: 5 },
             "FrameLv10": { id: "FrameLv10", name: "Diamond Master", subtitle: "กรอบสำหรับเลเวล 10 ขึ้นไป", cssClass: "frame-level10", reqLevel: 10 }
         };
 
         const MISSION_META_PRESETS = {
-            "M01": { unit: "Unit 11", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง People's Lifestyles", category: "Reading & Vocab", difficulty: "Medium", xp: 100, demoPasscode: "U11-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_11_1.html" },
-            "M02": { unit: "Unit 12", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง Invitations & Responses", category: "Listening & Speaking", difficulty: "Medium", xp: 100, demoPasscode: "U12-XXXX", artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_12_1.html" },
-            "M03": { unit: "Unit 13", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง People's Interests", category: "Reading & Vocab", difficulty: "Hard", xp: 150, demoPasscode: "U13-XXXX", artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_13_1.html" },
-            "V_U11": { unit: "Unit 11", subtitle: "ภารกิจเสียง: ปราบ The Cyber-Phantom", category: "Speaking", difficulty: "Boss", xp: 200, demoPasscode: "V11-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab.html" }
+            "M01": { unit: "Unit 1.1", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง People's Lifestyles", category: "Reading & Vocab", difficulty: "Medium", xp: 100, demoPasscode: "U11-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_1.html" },
+            "M02": { unit: "Unit 1.2", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง Invitations & Responses", category: "Listening & Speaking", difficulty: "Medium", xp: 100, demoPasscode: "U12-XXXX", artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_2.html" },
+            "M03": { unit: "Unit 1.3", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง People's Interests", category: "Reading & Vocab", difficulty: "Hard", xp: 150, demoPasscode: "U13-XXXX", artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_3.html" },
+            "V_U1": { unit: "Unit 1.1", subtitle: "ภารกิจเสียง: ปราบ The Cyber-Phantom", category: "Speaking", difficulty: "Boss", xp: 200, demoPasscode: "V1-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab.html" }
         };
 
         let appState = {
@@ -511,43 +475,16 @@
             missions: []
         };
 
-        // --- ระบบสไลด์ Grammar Codex ---
-        let currentSlide = 1;
-        const totalSlides = 21; // จำนวนสไลด์ทั้งหมด
-
-        function updateSlide() {
-            const imgEl = document.getElementById('current-slide-img');
-            imgEl.style.opacity = 0.5; 
-            
-            setTimeout(() => {
-                imgEl.src = `U11_Slide_${currentSlide}.PNG`;
-                document.getElementById('slide-counter').innerText = `${currentSlide} / ${totalSlides}`;
-                imgEl.style.opacity = 1;
-            }, 150);
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides) {
-                currentSlide++;
-                updateSlide();
-            } else {
-                showToast('คุณอ่านสไลด์หน้าสุดท้ายจบแล้วครับ! 🎉', 'success');
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlide > 1) {
-                currentSlide--;
-                updateSlide();
-            }
-        }
+        // --- ระบบสไลด์ Grammar Codex ปิดการทำงาน (ซ่อน) ---
 
         // --- ระบบนำทางสลับโมดูล (Switch Module) ---
         function switchModule(modId) {
             appState.activeModule = modId;
             
             document.querySelectorAll('.module-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById('module-' + modId).classList.remove('hidden');
+            if(document.getElementById('module-' + modId)) {
+                document.getElementById('module-' + modId).classList.remove('hidden');
+            }
             
             document.querySelectorAll('.module-nav-btn').forEach(btn => {
                 btn.classList.remove('nav-btn-active', 'text-white');
@@ -560,15 +497,11 @@
             }
             
             const mobileBtnMissions = document.getElementById('nav-missions-mobile');
-            const mobileBtnGrammar = document.getElementById('nav-grammar-mobile');
+            // const mobileBtnGrammar = document.getElementById('nav-grammar-mobile');
             
-            if(mobileBtnMissions && mobileBtnGrammar) {
+            if(mobileBtnMissions) {
                 if(modId === 'missions') {
                     mobileBtnMissions.classList.replace('text-slate-500', 'text-purple-200');
-                    mobileBtnGrammar.classList.replace('text-purple-200', 'text-slate-500');
-                } else if (modId === 'grammar') {
-                    mobileBtnGrammar.classList.replace('text-slate-500', 'text-purple-200');
-                    mobileBtnMissions.classList.replace('text-purple-200', 'text-slate-500');
                 }
             }
             
@@ -740,7 +673,7 @@
             const missions = appState.missions || [];
             
             const filtered = missions.filter(m => {
-                const preset = MISSION_META_PRESETS[m.missionId] || { unit: "Unit 11" };
+                const preset = MISSION_META_PRESETS[m.missionId] || { unit: "Unit 1.1" };
                 const matchStatus = appState.currentFilter === "ALL" || m.state === appState.currentFilter;
                 const matchUnit = appState.currentUnitFilter === "ALL" || preset.unit === appState.currentUnitFilter;
                 return matchStatus && matchUnit;
@@ -782,7 +715,7 @@
                 let rewardBadge = "";
                 if (m.rewardSkin) {
                      rewardBadge = `<span class="px-2 py-0.5 rounded bg-pink-900/80 border border-pink-400/50 text-[9px] text-pink-200">🎁 สกิน: ${m.rewardSkin}</span>`;
-                } else if (m.missionId === "V_U11") {
+                } else if (m.missionId === "V_U1") {
                      rewardBadge = `<span class="px-2 py-0.5 rounded bg-green-900/80 border border-green-400/50 text-[9px] text-green-200">🖼️ กรอบบอส!</span>`;
                 }
 
@@ -1019,8 +952,8 @@
                     appState.missions = res.missions;
                     saveSession(); renderAllModules(); closeMissionModal();
                     
-                    // แจ้งเตือนพิเศษถ้าผ่านด่าน V_U11
-                    if (appState.activeModalMissionId === "V_U11") {
+                    // แจ้งเตือนพิเศษถ้าผ่านด่าน V_U1
+                    if (appState.activeModalMissionId === "V_U1") {
                          showToast("🎉 คุณได้รับกรอบโปรไฟล์ใหม่: Cyber Aura ไปดูที่ตู้เสื้อผ้าได้เลย!", "success");
                     } else {
                          showToast(res.message, "success");
