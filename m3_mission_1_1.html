@@ -561,6 +561,37 @@
 </div>
 
 <script>
+    // 5. ระบบสุ่มตัวเลือกคำศัพท์ (Auto-Shuffle)
+    function shuffleDropdownOptions() {
+        const allSelects = document.querySelectorAll('select.ans-input');
+        allSelects.forEach(select => {
+            const options = Array.from(select.options);
+            if (options.length > 2) {
+                const firstVal = options[1].value.trim().toLowerCase();
+                const textVal = options[1].text.trim().toLowerCase();
+                
+                // เช็คเงื่อนไขว่า ไม่ใช่ 1-8, a-h, true/false หรือ accept/decline
+                const isNumeric = !isNaN(firstVal) && firstVal !== "";
+                const isSingleChar = firstVal.length === 1;
+                const isAbcdOption = textVal.startsWith("a.") || textVal.startsWith("b.");
+                const isBoolean = firstVal === "true" || firstVal === "false";
+                const isAcceptDecline = firstVal === "accept" || firstVal === "decline";
+                
+                // ถ้าไม่ใช่ค่าตายตัว ให้สลับตำแหน่งคำศัพท์
+                if (!isNumeric && !isSingleChar && !isAbcdOption && !isBoolean && !isAcceptDecline) {
+                    const firstOption = options.shift(); // เก็บตัวเลือก "---" ไว้ด้านบนสุดเสมอ
+                    for (let i = options.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [options[i], options[j]] = [options[j], options[i]];
+                    }
+                    select.innerHTML = '';
+                    select.appendChild(firstOption);
+                    options.forEach(opt => select.appendChild(opt));
+                }
+            }
+        });
+    }
+
     // UPDATE API URL HERE (นำ URL ของ Google Apps Script มาใส่ตรงนี้)
     const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
     
@@ -572,6 +603,8 @@
 
     // 1. ระบบดึงรหัสนักเรียนจาก URL
     window.addEventListener("DOMContentLoaded", () => {
+        shuffleDropdownOptions(); // เรียกใช้งานระบบสุ่ม
+
         const urlParams = new URLSearchParams(window.location.search);
         const sidFromUrl = urlParams.get('sid');
         const inputField = document.getElementById("verify-student-id");
@@ -700,13 +733,10 @@
                     }
                 } catch (error) {
                     feedback.className = 'feedback-msg msg-error';
-                    feedback.innerHTML = `❌ ไม่สามารถดึงรหัสจากฐานข้อมูลได้ (อาจจะยังไม่ได้เชื่อมต่อ Google Sheets)<br><br>
-                        <strong style="color: var(--neon-cyan);">รหัสลับสำรองสำหรับด่านนี้คือ: U11-WIN99</strong><br>
-                        <span style="font-size: 0.85rem;">โปรดคัดลอกรหัสสำรองด้านบนไปใช้แทนได้เลย</span>
+                    feedback.innerHTML = `❌ ระบบไม่สามารถเชื่อมต่อฐานข้อมูลเพื่อดึงรหัสลับได้<br>
+                        <span style="font-size: 0.85rem;">กรุณาตรวจสอบอินเทอร์เน็ตของนักเรียน หรือแจ้งคุณครูผู้สอนเพื่อตรวจสอบระบบครับ</span>
                         
-                        <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none; margin-top: 15px;">
-                            กลับหน้าหลักเพื่อรับ XP ➔
-                        </a>
+                        <button class="btn btn-check" onclick="checkAnswers(4)" style="margin-top: 15px;">ลองดึงรหัสใหม่อีกครั้ง 🔄</button>
                     `;
                 }
             }
