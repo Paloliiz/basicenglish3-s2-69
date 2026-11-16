@@ -297,9 +297,9 @@
                 <div class="flex items-center gap-2 overflow-x-auto pb-1 border-b border-purple-500/20 mb-2">
                     <span class="text-xs text-purple-300 font-medium whitespace-nowrap">เลือกบทเรียน (เทอม 2):</span>
                     <button onclick="setMissionUnitFilter('ALL')" id="unit-filter-ALL" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-fuchsia-600/80 text-white border border-fuchsia-400/50 whitespace-nowrap">ทุกบท</button>
-                    <button onclick="setMissionUnitFilter('Unit 1.1')" id="unit-filter-Unit 1.1" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1.1</button>
-                    <button onclick="setMissionUnitFilter('Unit 1.2')" id="unit-filter-Unit 1.2" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1.2</button>
-                    <button onclick="setMissionUnitFilter('Unit 1.3')" id="unit-filter-Unit 1.3" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1.3</button>
+                    <button onclick="setMissionUnitFilter('Unit 1')" id="unit-filter-Unit 1" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1</button>
+                    <button onclick="setMissionUnitFilter('Unit 2')" id="unit-filter-Unit 2" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 2</button>
+                    <button onclick="setMissionUnitFilter('Unit 3')" id="unit-filter-Unit 3" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 3</button>
                 </div>
 
                 <div id="missions-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
@@ -315,7 +315,7 @@
                     <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg flex-shrink-0">🚧</div>
                     <div class="text-xs space-y-1">
                         <p class="font-semibold text-purple-100">ประกาศต้อนรับเทอม 2</p>
-                        <p class="text-slate-300 leading-relaxed">ขณะนี้เปิดให้ผจญภัยเริ่มจาก <b>Unit 1.1 (M01)</b> เป็นต้นไป หมวดอื่นๆ จะทยอยปลดล็อกเมื่อเนื้อหาพร้อมครับ!</p>
+                        <p class="text-slate-300 leading-relaxed">ขณะนี้เปิดให้ผจญภัยเริ่มจาก <b>Unit 1 (M01)</b> เป็นต้นไป หมวดอื่นๆ จะทยอยปลดล็อกเมื่อเนื้อหาพร้อมครับ!</p>
                     </div>
                 </div>
             </div>
@@ -457,10 +457,10 @@
         };
 
         const MISSION_META_PRESETS = {
-            "M01": { unit: "Unit 1.1", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง People's Lifestyles", category: "Reading & Vocab", difficulty: "Medium", xp: 100, demoPasscode: "U11-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_1.html" },
-            "M02": { unit: "Unit 1.2", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง Invitations & Responses", category: "Listening & Speaking", difficulty: "Medium", xp: 100, demoPasscode: "U12-XXXX", artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_2.html" },
-            "M03": { unit: "Unit 1.3", subtitle: "บทเรียนและแบบฝึกหัดเรื่อง People's Interests", category: "Reading & Vocab", difficulty: "Hard", xp: 150, demoPasscode: "U13-XXXX", artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_3.html" },
-            "V_U1": { unit: "Unit 1.1", subtitle: "ภารกิจเสียง: ปราบ The Cyber-Phantom", category: "Speaking", difficulty: "Boss", xp: 200, demoPasscode: "V1-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab.html" }
+            "M01": { unit: "Unit 1", subtitle: "ภารกิจย่อยที่ 1: People's Lifestyles", category: "Reading & Vocab", difficulty: "Medium", xp: 100, demoPasscode: "U11-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_1.html" },
+            "M02": { unit: "Unit 1", subtitle: "ภารกิจย่อยที่ 2: Invitations & Responses", category: "Listening & Speaking", difficulty: "Medium", xp: 100, demoPasscode: "U12-XXXX", artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_2.html" },
+            "M03": { unit: "Unit 1", subtitle: "ภารกิจย่อยที่ 3: People's Interests", category: "Reading & Vocab", difficulty: "Hard", xp: 150, demoPasscode: "U13-XXXX", artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/mission_1_3.html" },
+            "V_U1": { unit: "Unit 1", subtitle: "ภารกิจเสียง: ปราบ The Cyber-Phantom", category: "Speaking", difficulty: "Boss", xp: 200, demoPasscode: "V1-XXXX", artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab.html" }
         };
 
         let appState = {
@@ -673,7 +673,7 @@
             const missions = appState.missions || [];
             
             const filtered = missions.filter(m => {
-                const preset = MISSION_META_PRESETS[m.missionId] || { unit: "Unit 1.1" };
+                const preset = MISSION_META_PRESETS[m.missionId] || { unit: "Unit 1" };
                 const matchStatus = appState.currentFilter === "ALL" || m.state === appState.currentFilter;
                 const matchUnit = appState.currentUnitFilter === "ALL" || preset.unit === appState.currentUnitFilter;
                 return matchStatus && matchUnit;
