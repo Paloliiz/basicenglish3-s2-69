@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: All About Me - Mission 1.2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS VARIABLES & GLOBALS ================= */
+        :root {
+            --bg-space: #020617; 
+            --bg-panel: #0f172a; 
+            --bg-card: #1e293b;
+            --neon-cyan: #06b6d4; 
+            --neon-blue: #3b82f6; 
+            --neon-green: #22c55e; 
+            --neon-orange: #f59e0b;
+            --neon-red: #ef4444; 
+            --text-main: #f8fafc; 
+            --text-muted: #94a3b8; 
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-space); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            padding: 15px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15) 0%, transparent 60%);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .poppins { font-family: 'Poppins', sans-serif; }
+        .text-cyan { color: var(--neon-cyan); }
+        .text-orange { color: var(--neon-orange); }
+        .text-center { text-align: center; }
+        
+        .container {
+            background: var(--bg-panel); 
+            border-top: 4px solid var(--neon-cyan); 
+            border-radius: var(--radius);
+            padding: 20px; 
+            max-width: 800px; 
+            width: 100%; 
+            margin: 0 auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .section-title { 
+            background: rgba(6, 182, 212, 0.1); 
+            color: var(--neon-cyan); 
+            display: inline-block; 
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--neon-cyan);
+        }
+
+        .card { 
+            background: var(--bg-card); 
+            border: 1px solid #334155; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            animation: fadeIn 0.4s ease-out; 
+        }
+
+        .reading-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border-left: 4px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .reading-name { font-weight: 600; color: var(--neon-orange); font-size: 1.1rem; margin-bottom: 5px; }
+
+        /* ================= NAVIGATION TABS ================= */
+        .tab-container { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 25px; 
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+        .tab-btn { 
+            background: #1e293b; 
+            color: var(--text-muted); 
+            border: 1px solid #475569; 
+            font-size: 0.85rem; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.3s;
+            flex: 1;
+            min-width: 75px;
+            text-align: center;
+        }
+        .tab-btn.active { 
+            background: rgba(6, 182, 212, 0.15); 
+            color: var(--neon-cyan); 
+            border-color: var(--neon-cyan); 
+            font-weight: 600;
+        }
+        .tab-btn:hover:not(.active) { background: #334155; }
+        .hidden { display: none !important; }
+
+        /* ================= INPUTS & FORMS ================= */
+        .question-block { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #334155; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        select, input[type="text"] {
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #475569; 
+            background: #020617; 
+            color: #fff; 
+            font-size: 1rem;
+            margin-top: 8px;
+            transition: 0.3s;
+        }
+        select:focus, input[type="text"]:focus { border-color: var(--neon-cyan); outline: none; }
+        
+        select.inline-select {
+            width: auto; min-width: 130px; padding: 5px 10px; margin: 0 5px; display: inline-block;
+            font-size: 0.95rem; color: var(--neon-cyan); border-color: #475569;
+        }
+
+        .correct-input { border-color: var(--neon-green) !important; color: var(--neon-green) !important; background: rgba(34, 197, 94, 0.05) !important; }
+        .wrong-input { border-color: var(--neon-red) !important; color: var(--neon-red) !important; background: rgba(239, 68, 68, 0.05) !important; }
+
+        .audio-player { width: 100%; height: 40px; margin-bottom: 15px; outline: none; }
+
+        /* ================= BUTTONS & FEEDBACK ================= */
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 8px; 
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; 
+            transition: all 0.2s; margin-top: 15px;
+        }
+        .btn-check { background: var(--neon-blue); color: white; }
+        .btn-check:hover { background: #2563eb; transform: translateY(-2px); }
+        .btn-next { background: var(--neon-green); color: #000; animation: pulse 2s infinite; }
+
+        .feedback-msg {
+            display: none; padding: 15px; border-radius: 8px; margin-top: 15px; 
+            font-size: 1rem; text-align: center; font-weight: 600;
+        }
+        .msg-success { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+        .msg-error { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--neon-red); color: var(--neon-red); }
+
+        /* ================= GRIDS ================= */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media(min-width: 600px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h2 class="poppins text-cyan">UNIT 1: ALL ABOUT ME</h2>
+        <p style="color: var(--text-muted);">Pages 10 - 13 (Speaking & Reading)</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-container">
+        <div class="tab-btn active" onclick="switchTab(1)" id="tab-btn-1">1. Speak Vocab (P.10)</div>
+        <div class="tab-btn" onclick="switchTab(2)" id="tab-btn-2">2. Expressions (P.10-11)</div>
+        <div class="tab-btn" onclick="switchTab(3)" id="tab-btn-3">3. Read Vocab (P.11-12)</div>
+        <div class="tab-btn" onclick="switchTab(4)" id="tab-btn-4">4. Reading (P.12-13)</div>
+    </div>
+
+    <!-- ================= PHASE 1: Speaking Vocabulary ================= -->
+    <div id="phase-1" class="phase-section">
+        <div class="section-title">B. Speaking - Vocabulary</div>
+        
+        <div class="card">
+            <p><strong>1. Listen and number (1-8).</strong> ฟังและเลือกหมายเลขให้ตรงกับคำศัพท์</p>
+            <audio controls class="audio-player"><source src="Track_1-06.mp3" type="audio/mpeg"></audio>
+            
+            <div class="grid-4" style="margin-top: 15px;">
+                <div class="question-block" style="border:none;">
+                    <label>Hobby</label>
+                    <select class="ans-input" data-answer="6"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Checkers</label><select class="ans-input" data-answer="3"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Energy</label><select class="ans-input" data-answer="1"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Explore</label><select class="ans-input" data-answer="2"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Enter</label><select class="ans-input" data-answer="7"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Aerobics</label><select class="ans-input" data-answer="8"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Card game</label><select class="ans-input" data-answer="4"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Radio / Podcast</label><select class="ans-input" data-answer="5"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <p><strong>2. Fill in the blanks with the best vocabulary words.</strong></p>
+            <div class="question-block">
+                <p>1. I exercise in the morning because that's when I have the most <select class="ans-input inline-select" data-answer="energy"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select>.</p>
+            </div>
+            <div class="question-block">
+                <p>2. Painting is my favorite <select class="ans-input inline-select" data-answer="hobby"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select>. I do it every day.</p>
+            </div>
+            <div class="question-block">
+                <p>3. My best friend and I will <select class="ans-input inline-select" data-answer="enter"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select> a dance contest.</p>
+            </div>
+            <div class="question-block">
+                <p>4. I am doing <select class="ans-input inline-select" data-answer="aerobics"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select> to lose weight.</p>
+            </div>
+            <div class="question-block">
+                <p>5. My favorite singer is doing an interview on the <select class="ans-input inline-select" data-answer="radio/podcast"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select> tonight.</p>
+            </div>
+            <div class="question-block">
+                <p>6. I don't know how to play chess, but I can play <select class="ans-input inline-select" data-answer="checkers"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select>.</p>
+            </div>
+            <div class="question-block">
+                <p>7. My friends and I like to <select class="ans-input inline-select" data-answer="explore"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select> the city in search of good cafes.</p>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>8. On game night, we play a/an <select class="ans-input inline-select" data-answer="card game"><option value="">---</option><option value="energy">energy</option><option value="hobby">hobby</option><option value="enter">enter</option><option value="aerobics">aerobics</option><option value="radio/podcast">radio/podcast</option><option value="checkers">checkers</option><option value="explore">explore</option><option value="card game">card game</option></select> such as Go Fish or Hearts.</p>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-1"></div>
+        <button class="btn btn-check" id="btn-check-1" onclick="checkAnswers(1)">Check Answers</button>
+        <button class="btn btn-next hidden" id="btn-next-1" onclick="switchTab(2)">Next Phase ➔</button>
+    </div>
+
+    <!-- ================= PHASE 2: Expressions ================= -->
+    <div id="phase-2" class="phase-section hidden">
+        <div class="section-title">Expressions: Invitations and Responses</div>
+        
+        <div class="card">
+            <p><strong>Study & Understand:</strong> ฟังและฝึกพูดตามตาราง (Track 1-08)</p>
+            <audio controls class="audio-player"><source src="Track_1-08.mp3" type="audio/mpeg"></audio>
+            
+            <div style="background: rgba(2,6,23,0.5); padding: 15px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 20px;">
+                <p class="text-cyan" style="font-weight: 600; margin-bottom: 5px;">✅ Accept (การตอบรับคำชวน)</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px; color: #cbd5e1;">
+                    <li>Of course! I'd love to! (แน่นอน! ฉันอยากไป)</li>
+                    <li>I'd love to! Thanks for asking.</li>
+                    <li>Sounds great. / With pleasure!</li>
+                    <li>Sure! That sounds like fun.</li>
+                </ul>
+                <p class="text-orange" style="font-weight: 600; margin-bottom: 5px;">❌ Decline (การปฏิเสธอย่างสุภาพ)</p>
+                <ul style="margin-left: 20px; color: #cbd5e1;">
+                    <li>Sorry, I can't. I have to study. (ขอโทษที ไปไม่ได้ ฉันต้องอ่านหนังสือ)</li>
+                    <li>Thanks for the offer, but I have to refuse.</li>
+                    <li>Sorry, I'd love to, but I don't have the energy to do aerobics now.</li>
+                    <li>I'd love to, but I have another commitment. (อยากไปนะ แต่ติดธุระอื่นแล้ว)</li>
+                </ul>
+            </div>
+
+            <p style="margin-bottom: 10px;"><strong>Mini Quiz: เลือกคำตอบที่เหมาะสมกับสถานการณ์</strong></p>
+            <div class="question-block">
+                <p>1. <b>A:</b> Do you feel like exploring the city today? <br><span style="font-size: 0.85rem; color:#94a3b8;">(B ตอบรับคำชวน)</span><br><b>B:</b> ____________________</p>
+                <select class="ans-input" data-answer="accept">
+                    <option value="">-- Select --</option>
+                    <option value="accept">Of course! I'd love to!</option>
+                    <option value="decline">Sorry, I can't. I have to study.</option>
+                </select>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>2. <b>A:</b> What do you think about playing a game of checkers? <br><span style="font-size: 0.85rem; color:#94a3b8;">(B ติดธุระอื่น)</span><br><b>B:</b> ____________________</p>
+                <select class="ans-input" data-answer="decline">
+                    <option value="">-- Select --</option>
+                    <option value="accept">With pleasure!</option>
+                    <option value="decline">I'd love to, but I have another commitment.</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-2"></div>
+        <button class="btn btn-check" id="btn-check-2" onclick="checkAnswers(2)">Check Answers</button>
+        <button class="btn btn-next hidden" id="btn-next-2" onclick="switchTab(3)">Next Phase ➔</button>
+    </div>
+
+    <!-- ================= PHASE 3: Reading Vocabulary ================= -->
+    <div id="phase-3" class="phase-section hidden">
+        <div class="section-title">C. Reading - Vocabulary</div>
+        
+        <div class="card">
+            <p><strong>1. Listen and number (1-8).</strong> (Track 1-09)</p>
+            <audio controls class="audio-player"><source src="Track_1-09.mp3" type="audio/mpeg"></audio>
+            
+            <div class="grid-4" style="margin-top: 15px;">
+                <div class="question-block" style="border:none;">
+                    <label>Language</label><select class="ans-input" data-answer="5"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Interpreter</label><select class="ans-input" data-answer="4"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Career</label><select class="ans-input" data-answer="2"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Archery</label><select class="ans-input" data-answer="1"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Medal</label><select class="ans-input" data-answer="6"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Technique</label><select class="ans-input" data-answer="8"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Champion</label><select class="ans-input" data-answer="3"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Pushups</label><select class="ans-input" data-answer="7"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <p><strong>2. Fill in the blanks with the best vocabulary words.</strong></p>
+            <div class="question-block">
+                <p>1. How many <select class="ans-input inline-select" data-answer="pushups"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select> can you do before your arms get too tired?</p>
+            </div>
+            <div class="question-block">
+                <p>2. Your martial arts <select class="ans-input inline-select" data-answer="technique"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select> is pretty good.</p>
+            </div>
+            <div class="question-block">
+                <p>3. Kevin won the spelling contest and is the <select class="ans-input inline-select" data-answer="champion"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select> speller in our school.</p>
+            </div>
+            <div class="question-block">
+                <p>4. My sister got a gold <select class="ans-input inline-select" data-answer="medal"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select> for being the fastest runner at her school.</p>
+            </div>
+            <div class="question-block">
+                <p>5. He speaks Spanish and English and works as a/an <select class="ans-input inline-select" data-answer="interpreter"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select>.</p>
+            </div>
+            <div class="question-block">
+                <p>6. Many different kinds of bows are used in <select class="ans-input inline-select" data-answer="archery"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select>.</p>
+            </div>
+            <div class="question-block">
+                <p>7. She wanted a/an <select class="ans-input inline-select" data-answer="career"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select> in the travel business.</p>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>8. The teacher spoke to him in a/an <select class="ans-input inline-select" data-answer="language"><option value="">---</option><option value="pushups">pushups</option><option value="technique">technique</option><option value="champion">champion</option><option value="medal">medal</option><option value="interpreter">interpreter</option><option value="archery">archery</option><option value="career">career</option><option value="language">language</option></select> he could understand.</p>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-3"></div>
+        <button class="btn btn-check" id="btn-check-3" onclick="checkAnswers(3)">Check Answers</button>
+        <button class="btn btn-next hidden" id="btn-next-3" onclick="switchTab(4)">Next Phase ➔</button>
+    </div>
+
+    <!-- ================= PHASE 4: Reading Comprehension ================= -->
+    <div id="phase-4" class="phase-section hidden">
+        <div class="section-title">Reading & Comprehension</div>
+        
+        <div class="card">
+            <h3 class="poppins text-center text-cyan" style="margin-bottom: 20px;">Different Interests</h3>
+            <audio controls class="audio-player"><source src="Track_1-10.mp3" type="audio/mpeg"></audio>
+            
+            <div class="reading-card">
+                <div class="reading-name">⛸️ Carlos</div>
+                <p>I love ice skating. At the moment, I'm taking private lessons, and I'm applying to a special skating school. They train many future champions there. I hope I get in! I have two dreams. One of my dreams is to get a gold medal in ice skating at the Olympics. My other dream is to become an ice-skating coach. I want to help younger skaters become champions, too.</p>
+            </div>
+
+            <div class="reading-card">
+                <div class="reading-name">🏹 Sarah</div>
+                <p>I do a lot of different things. I'm on my school's softball team, and I swim with my friends on the weekend. But now I have a favorite hobby: archery! Yes, really! Archery is a great sport because it's more about form and technique than strength. Still, I do a lot of pushups to strengthen my arms. Competitions are a thrill, but it's satisfying just to compete against myself. When my arrows hit the center of the target, I can be really proud.</p>
+            </div>
+
+            <div class="reading-card">
+                <div class="reading-name">🗣️ Nicholas</div>
+                <p>This may sound strange, but I really love studying languages. We move to other countries pretty often because of my dad's job, so I hear a lot of different languages. Some are very similar to each other, like Spanish and Portuguese. Other languages are completely different. I practice translating from one language to another. Someday I want to have a career as an interpreter.</p>
+            </div>
+
+            <div class="reading-card">
+                <div class="reading-name">🎸 Carmen</div>
+                <p>My interests are all related to music. I love all kinds, from hip-hop to opera and from rock to folk. I'm learning songs in English, Spanish, and French. I sing in our school chorus and have a lot of solos. On weekends, I play guitar with a band. When I'm making music, I forget everything else. I'm hoping to have a great career in music. In my dreams, I'm performing in concerts around the world.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <p><strong>5. Comprehension: Circle True or False.</strong></p>
+            <div class="question-block">
+                <p>1. Carmen and Carlos both want performing careers.</p>
+                <select class="ans-input" data-answer="false"><option value="">-- Select --</option><option value="true">True</option><option value="false">False</option></select>
+            </div>
+            <div class="question-block">
+                <p>2. Sarah enjoys combat sports.</p>
+                <select class="ans-input" data-answer="false"><option value="">-- Select --</option><option value="true">True</option><option value="false">False</option></select>
+            </div>
+            <div class="question-block">
+                <p>3. Nicholas wants to be a famous writer.</p>
+                <select class="ans-input" data-answer="false"><option value="">-- Select --</option><option value="true">True</option><option value="false">False</option></select>
+            </div>
+            <div class="question-block">
+                <p>4. Carmen and Nicholas both know different languages.</p>
+                <select class="ans-input" data-answer="true"><option value="">-- Select --</option><option value="true">True</option><option value="false">False</option></select>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>5. Carlos and Sarah both enjoy team sports.</p>
+                <select class="ans-input" data-answer="false"><option value="">-- Select --</option><option value="true">True</option><option value="false">False</option></select>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-4"></div>
+        <button class="btn btn-check" id="btn-check-4" onclick="checkAnswers(4)">Check Answers & Finish 🏆</button>
+    </div>
+
+</div>
+
+<script>
+    // ระบบเปลี่ยน Tab
+    function switchTab(phaseNum) {
+        document.querySelectorAll('.phase-section').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(`phase-${phaseNum}`).classList.remove('hidden');
+        document.getElementById(`tab-btn-${phaseNum}`).classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ฟังก์ชันตรวจคำตอบ
+    function checkAnswers(phaseNum) {
+        const phaseDiv = document.getElementById(`phase-${phaseNum}`);
+        const inputs = phaseDiv.querySelectorAll('.ans-input');
+        const feedback = document.getElementById(`feedback-${phaseNum}`);
+        const btnCheck = document.getElementById(`btn-check-${phaseNum}`);
+        const btnNext = document.getElementById(`btn-next-${phaseNum}`);
+        
+        let allCorrect = true;
+
+        inputs.forEach(input => {
+            const correctAnswer = input.getAttribute('data-answer');
+            let userAnswer = input.value;
+
+            input.classList.remove('correct-input', 'wrong-input');
+
+            if (userAnswer === "" || userAnswer === null) {
+                allCorrect = false;
+                input.classList.add('wrong-input'); 
+            } else if (userAnswer === correctAnswer) {
+                input.classList.add('correct-input');
+            } else {
+                allCorrect = false;
+                input.classList.add('wrong-input');
+            }
+        });
+
+        feedback.style.display = 'block';
+        if (allCorrect) {
+            feedback.className = 'feedback-msg msg-success';
+            
+            if (phaseNum < 4) {
+                feedback.innerHTML = '🎯 Excellent! All answers are correct. You can move to the next phase.';
+                btnCheck.classList.add('hidden');
+                if (btnNext) btnNext.classList.remove('hidden');
+                document.getElementById(`tab-btn-${phaseNum}`).innerHTML += ' ✔️';
+            } else {
+                feedback.innerHTML = '🏆 MISSION COMPLETED! You have successfully finished Unit 1 (Pages 10-13).';
+                btnCheck.classList.add('hidden');
+            }
+        } else {
+            feedback.className = 'feedback-msg msg-error';
+            feedback.innerHTML = '❌ Some answers are incorrect or missing. Check the red boxes and try again!';
+        }
+    }
+</script>
+
+</body>
+</html>

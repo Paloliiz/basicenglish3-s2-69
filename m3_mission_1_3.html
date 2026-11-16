@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: All About Me - Mission 1.3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS VARIABLES & GLOBALS ================= */
+        :root {
+            --bg-space: #020617; 
+            --bg-panel: #0f172a; 
+            --bg-card: #1e293b;
+            --neon-cyan: #06b6d4; 
+            --neon-blue: #3b82f6; 
+            --neon-green: #22c55e; 
+            --neon-orange: #f59e0b;
+            --neon-purple: #a855f7;
+            --neon-red: #ef4444; 
+            --text-main: #f8fafc; 
+            --text-muted: #94a3b8; 
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-space); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            padding: 15px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 60%);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .poppins { font-family: 'Poppins', sans-serif; }
+        .text-cyan { color: var(--neon-cyan); }
+        .text-purple { color: var(--neon-purple); }
+        .text-orange { color: var(--neon-orange); }
+        .text-center { text-align: center; }
+        
+        .container {
+            background: var(--bg-panel); 
+            border-top: 4px solid var(--neon-purple); 
+            border-radius: var(--radius);
+            padding: 20px; 
+            max-width: 800px; 
+            width: 100%; 
+            margin: 0 auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .section-title { 
+            background: rgba(168, 85, 247, 0.15); 
+            color: var(--neon-purple); 
+            display: inline-block; 
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--neon-purple);
+        }
+
+        .card { 
+            background: var(--bg-card); 
+            border: 1px solid #334155; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            animation: fadeIn 0.4s ease-out; 
+        }
+
+        /* Grammar Explanation Box */
+        .grammar-box {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .grammar-box h4 {
+            color: var(--neon-orange);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed rgba(245, 158, 11, 0.4);
+            padding-bottom: 5px;
+        }
+
+        /* ================= NAVIGATION TABS ================= */
+        .tab-container { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 25px; 
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+        .tab-btn { 
+            background: #1e293b; 
+            color: var(--text-muted); 
+            border: 1px solid #475569; 
+            font-size: 0.85rem; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.3s;
+            flex: 1;
+            min-width: 75px;
+            text-align: center;
+        }
+        .tab-btn.active { 
+            background: rgba(168, 85, 247, 0.15); 
+            color: var(--neon-purple); 
+            border-color: var(--neon-purple); 
+            font-weight: 600;
+        }
+        .tab-btn:hover:not(.active) { background: #334155; }
+        .hidden { display: none !important; }
+
+        /* ================= INPUTS & FORMS ================= */
+        .question-block { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #334155; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        select, input[type="text"] {
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #475569; 
+            background: #020617; 
+            color: #fff; 
+            font-size: 1rem;
+            margin-top: 8px;
+            transition: 0.3s;
+        }
+        select:focus, input[type="text"]:focus { border-color: var(--neon-purple); outline: none; }
+        
+        select.inline-select {
+            width: auto; min-width: 100px; padding: 5px 10px; margin: 0 5px; display: inline-block;
+            font-size: 0.95rem; color: var(--neon-cyan); border-color: #475569;
+        }
+        input[type="text"].blank-input {
+            width: 150px; text-align: center; color: var(--neon-orange);
+            border: none; border-bottom: 2px solid #475569; border-radius: 0; background: transparent; display: inline-block; padding: 5px;
+        }
+        input[type="text"].blank-input:focus { border-bottom-color: var(--neon-purple); }
+
+        .correct-input { border-color: var(--neon-green) !important; color: var(--neon-green) !important; background: rgba(34, 197, 94, 0.05) !important; }
+        .wrong-input { border-color: var(--neon-red) !important; color: var(--neon-red) !important; background: rgba(239, 68, 68, 0.05) !important; }
+
+        .audio-player { width: 100%; height: 40px; margin-bottom: 15px; outline: none; }
+
+        /* ================= BUTTONS & FEEDBACK ================= */
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 8px; 
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; 
+            transition: all 0.2s; margin-top: 15px;
+        }
+        .btn-check { background: var(--neon-purple); color: white; }
+        .btn-check:hover { background: #9333ea; transform: translateY(-2px); }
+        .btn-next { background: var(--neon-green); color: #000; animation: pulse 2s infinite; }
+
+        .feedback-msg {
+            display: none; padding: 15px; border-radius: 8px; margin-top: 15px; 
+            font-size: 1rem; text-align: center; font-weight: 600;
+        }
+        .msg-success { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+        .msg-error { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--neon-red); color: var(--neon-red); }
+
+        /* ================= GRIDS ================= */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media(min-width: 600px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h2 class="poppins text-purple">UNIT 1: ALL ABOUT ME</h2>
+        <p style="color: var(--text-muted);">Pages 14 - 15 (Writing & Grammar)</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-container">
+        <div class="tab-btn active" onclick="switchTab(1)" id="tab-btn-1">1. Vocab (P.14)</div>
+        <div class="tab-btn" onclick="switchTab(2)" id="tab-btn-2">2. Match (P.14)</div>
+        <div class="tab-btn" onclick="switchTab(3)" id="tab-btn-3">3. Gram 1 (P.14)</div>
+        <div class="tab-btn" onclick="switchTab(4)" id="tab-btn-4">4. Gram 2 (P.15)</div>
+    </div>
+
+    <!-- ================= PHASE 1: Writing Vocabulary ================= -->
+    <div id="phase-1" class="phase-section">
+        <div class="section-title">D. Writing - Vocabulary</div>
+        
+        <div class="card">
+            <p><strong>1. Listen and number (1-8).</strong> ฟังและเลือกหมายเลขให้ตรงกับคำศัพท์</p>
+            <audio controls class="audio-player"><source src="Track_1-11.mp3" type="audio/mpeg"></audio>
+            
+            <div class="grid-4" style="margin-top: 15px;">
+                <div class="question-block" style="border:none;">
+                    <label>Fact</label><select class="ans-input" data-answer="5"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Foreign</label><select class="ans-input" data-answer="7"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Magic</label><select class="ans-input" data-answer="1"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Member</label><select class="ans-input" data-answer="8"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Neighbor</label><select class="ans-input" data-answer="3"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Online</label><select class="ans-input" data-answer="4"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Playmate</label><select class="ans-input" data-answer="2"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+                <div class="question-block" style="border:none;">
+                    <label>Profile</label><select class="ans-input" data-answer="6"><option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-1"></div>
+        <button class="btn btn-check" id="btn-check-1" onclick="checkAnswers(1)">Check Answers</button>
+        <button class="btn btn-next hidden" id="btn-next-1" onclick="switchTab(2)">Next Phase ➔</button>
+    </div>
+
+    <!-- ================= PHASE 2: Matching ================= -->
+    <div id="phase-2" class="phase-section hidden">
+        <div class="section-title">2. Match</div>
+        
+        <div class="card">
+            <p style="margin-bottom: 20px;"><strong>เลือกความหมายที่ถูกต้องให้ตรงกับคำศัพท์ (a-h)</strong></p>
+            
+            <div class="question-block">
+                <p>1. fact <select class="ans-input inline-select" data-answer="e"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> something that is true</p>
+            </div>
+            <div class="question-block">
+                <p>2. foreign <select class="ans-input inline-select" data-answer="c"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> from or about a country that is not your own</p>
+            </div>
+            <div class="question-block">
+                <p>3. magic <select class="ans-input inline-select" data-answer="g"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> the art of doing things that seem impossible</p>
+            </div>
+            <div class="question-block">
+                <p>4. member <select class="ans-input inline-select" data-answer="a"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> someone or something that belongs to a particular group</p>
+            </div>
+            <div class="question-block">
+                <p>5. neighbor <select class="ans-input inline-select" data-answer="h"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> someone who lives near you</p>
+            </div>
+            <div class="question-block">
+                <p>6. online <select class="ans-input inline-select" data-answer="b"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> connected to the internet</p>
+            </div>
+            <div class="question-block">
+                <p>7. playmate <select class="ans-input inline-select" data-answer="f"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> a friend that a child has fun with</p>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>8. profile <select class="ans-input inline-select" data-answer="d"><option value="">---</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option><option value="g">g</option><option value="h">h</option></select> a description that gives useful information about a person</p>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-2"></div>
+        <button class="btn btn-check" id="btn-check-2" onclick="checkAnswers(2)">Check Answers</button>
+        <button class="btn btn-next hidden" id="btn-next-2" onclick="switchTab(3)">Next Phase ➔</button>
+    </div>
+
+    <!-- ================= PHASE 3: Grammar 1 ================= -->
+    <div id="phase-3" class="phase-section hidden">
+        <div class="section-title">Grammar: Comparatives & Intensifiers</div>
+        
+        <!-- กล่องอธิบายแกรมม่า -->
+        <div class="grammar-box">
+            <h4>💡 เรียนรู้ก่อนลุย: Comparatives & Intensifiers</h4>
+            <p><strong>1. Comparatives (การเปรียบเทียบขั้นกว่า):</strong> ใช้เปรียบเทียบของ 2 สิ่ง มักจะเจอคำว่า <b>than</b> ตามหลังเสมอ<br>
+            <i>เทคนิค:</i> คำสั้นเติม <b>-er</b> (เช่น fast ➔ faster) / คำยาวใช้ <b>more + คำศัพท์</b> (เช่น exciting ➔ more exciting)</p>
+            <p style="margin-top: 10px;"><strong>2. Intensifiers (คำขยายความ):</strong> ใช้เติมหน้าคำขั้นกว่า เพื่อบอกให้รู้ว่า "กว่ามาก" หรือ "กว่านิดหน่อย"<br>
+            🔹 มาก: <b>much, a lot, far</b> (เช่น much bigger = ใหญ่กว่ามาก)<br>
+            🔹 นิดหน่อย: <b>a little</b> (เช่น a little softer = นุ่มกว่านิดหน่อย)</p>
+        </div>
+
+        <div class="card">
+            <p><strong>4. Fill in the blanks using intensifiers and the comparative form of the given words.</strong><br>
+            <span style="font-size: 0.85rem; color:#94a3b8;">(พิมพ์คำตอบลงในช่องว่าง เช่น a lot faster, much lower เป็นต้น)</span></p>
+            
+            <div class="question-block">
+                <p>1. This sports car is <input type="text" class="ans-input blank-input" data-answer="a lot faster"> (fast) than that SUV.</p>
+            </div>
+            <div class="question-block">
+                <p>2. This store's prices are <input type="text" class="ans-input blank-input" data-answer="much lower"> (low) than the prices at the store downtown.</p>
+            </div>
+            <div class="question-block">
+                <p>3. The quality of this suit is <input type="text" class="ans-input blank-input" data-answer="far better"> (good) than the quality of my old one.</p>
+            </div>
+            <div class="question-block">
+                <p>4. This movie is <input type="text" class="ans-input blank-input" data-answer="more exciting"> (exciting) than the last one we saw.</p>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>5. This bed is <input type="text" class="ans-input blank-input" data-answer="a little softer"> (soft) than my old one.</p>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-3"></div>
+        <button class="btn btn-check" id="btn-check-3" onclick="checkAnswers(3)">Check Answers</button>
+        <button class="btn btn-next hidden" id="btn-next-3" onclick="switchTab(4)">Next Phase ➔</button>
+    </div>
+
+    <!-- ================= PHASE 4: Grammar 2 ================= -->
+    <div id="phase-4" class="phase-section hidden">
+        <div class="section-title">Grammar: Present Simple vs Present Continuous</div>
+        
+        <!-- กล่องอธิบายแกรมม่า -->
+        <div class="grammar-box">
+            <h4>💡 เรียนรู้ก่อนลุย: Present Tenses</h4>
+            <p><strong>1. Present Simple:</strong> ใช้กับเหตุการณ์ที่เป็นความจริง, กิจวัตรประจำวัน<br>
+            <i>โครงสร้าง:</i> ประธาน + V.1 (ถ้าประธานเอกพจน์ กริยาเติม s/es)<br>
+            <i>ตัวอย่าง:</i> Mark <b>speaks</b> three languages.</p>
+            
+            <p style="margin-top: 10px;"><strong>2. Present Continuous:</strong> ใช้กับเหตุการณ์ที่กำลังทำอยู่ตอนนี้ หรือยังไม่เสร็จ<br>
+            <i>โครงสร้าง:</i> ประธาน + is/am/are + V.ing<br>
+            <i>จุดสังเกต:</i> มักจะมีคำว่า Look!, Listen!, right now, today<br>
+            <i>ตัวอย่าง:</i> Look! He <b>is driving</b> his new car.</p>
+        </div>
+
+        <div class="card">
+            <p><strong>6. Fill in the blanks with the correct form of the given words.</strong><br>
+            <span style="font-size: 0.85rem; color:#94a3b8;">(พิมพ์คำกริยาที่ถูกแปลงรูปแล้วลงในช่องว่างให้ถูกต้อง)</span></p>
+            
+            <div class="question-block">
+                <p>1. Mark <input type="text" class="ans-input blank-input" data-answer="speaks"> (speak) three languages.</p>
+            </div>
+            <div class="question-block">
+                <p>2. Today <input type="text" class="ans-input blank-input" data-answer="is"> (be) my birthday.</p>
+            </div>
+            <div class="question-block">
+                <p>3. The people at the party are <input type="text" class="ans-input blank-input" data-answer="having"> (have) fun right now.</p>
+            </div>
+            <div class="question-block">
+                <p>4. We <input type="text" class="ans-input blank-input" data-answer="practice"> (practice) for the play every day.</p>
+            </div>
+            <div class="question-block">
+                <p>5. Look! He is <input type="text" class="ans-input blank-input" data-answer="driving"> (drive) his new car.</p>
+            </div>
+            <div class="question-block" style="border:none;">
+                <p>6. I <input type="text" class="ans-input blank-input" data-answer="take"> (take) violin lessons after school.</p>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-4"></div>
+        <button class="btn btn-check" id="btn-check-4" onclick="checkAnswers(4)">Check Answers & Finish 🏆</button>
+    </div>
+
+</div>
+
+<script>
+    // ระบบเปลี่ยน Tab
+    function switchTab(phaseNum) {
+        document.querySelectorAll('.phase-section').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(`phase-${phaseNum}`).classList.remove('hidden');
+        document.getElementById(`tab-btn-${phaseNum}`).classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ฟังก์ชันทำความสะอาดข้อความ (ให้พิมพ์ตัวเล็ก/ใหญ่ หรือเผลอเว้นวรรคก็ตรวจให้ถูก)
+    function cleanString(str) {
+        return str.toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
+    }
+
+    // ฟังก์ชันตรวจคำตอบ
+    function checkAnswers(phaseNum) {
+        const phaseDiv = document.getElementById(`phase-${phaseNum}`);
+        const inputs = phaseDiv.querySelectorAll('.ans-input');
+        const feedback = document.getElementById(`feedback-${phaseNum}`);
+        const btnCheck = document.getElementById(`btn-check-${phaseNum}`);
+        const btnNext = document.getElementById(`btn-next-${phaseNum}`);
+        
+        let allCorrect = true;
+
+        inputs.forEach(input => {
+            let correctAnswer = input.getAttribute('data-answer');
+            let userAnswer = input.value;
+
+            if (input.type === 'text') {
+                userAnswer = cleanString(userAnswer);
+                correctAnswer = cleanString(correctAnswer);
+            }
+
+            input.classList.remove('correct-input', 'wrong-input');
+
+            if (userAnswer === "" || userAnswer === null) {
+                allCorrect = false;
+                input.classList.add('wrong-input'); 
+            } else if (userAnswer === correctAnswer) {
+                input.classList.add('correct-input');
+            } else {
+                allCorrect = false;
+                input.classList.add('wrong-input');
+            }
+        });
+
+        feedback.style.display = 'block';
+        if (allCorrect) {
+            feedback.className = 'feedback-msg msg-success';
+            
+            if (phaseNum < 4) {
+                feedback.innerHTML = '🎯 Excellent! All answers are correct. You can move to the next phase.';
+                btnCheck.classList.add('hidden');
+                if (btnNext) btnNext.classList.remove('hidden');
+                document.getElementById(`tab-btn-${phaseNum}`).innerHTML += ' ✔️';
+            } else {
+                feedback.innerHTML = '🏆 MISSION COMPLETED! You have successfully finished Unit 1 (Pages 14-15).';
+                btnCheck.classList.add('hidden');
+            }
+        } else {
+            feedback.className = 'feedback-msg msg-error';
+            feedback.innerHTML = '❌ Some answers are incorrect or missing. Check the red boxes and try again!';
+        }
+    }
+</script>
+
+</body>
+</html>
