@@ -373,7 +373,7 @@
         
         <div class="card">
             <h3 class="poppins text-center text-cyan" style="margin-bottom: 20px;">Different Interests</h3>
-            <audio controls class="audio-player"><source src=NF2e_SB3_Track 01-10.mp3" type="audio/mpeg"></audio>
+            <audio controls class="audio-player"><source src="NF2e_SB3_Track 01-10.mp3" type="audio/mpeg"></audio>
             
             <div class="reading-card">
                 <div class="reading-name">⛸️ Carlos</div>
@@ -427,7 +427,11 @@
 </div>
 
 <script>
-    // ระบบเปลี่ยน Tab
+    // 1. ระบบดึงรหัสนักเรียนจาก URL ที่ส่งมาจากหน้าหลัก
+    const urlParams = new URLSearchParams(window.location.search);
+    const studentId = urlParams.get('sid') || "GUEST (ไม่ได้ล็อกอิน)";
+
+    // 2. ระบบเปลี่ยน Tab
     function switchTab(phaseNum) {
         document.querySelectorAll('.phase-section').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -438,7 +442,12 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ฟังก์ชันตรวจคำตอบ
+    // ฟังก์ชันทำความสะอาดข้อความที่นักเรียนพิมพ์
+    function cleanString(str) {
+        return str.toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
+    }
+
+    // 3. ฟังก์ชันตรวจคำตอบ และแจกรหัสลับเมื่อผ่านด่านสุดท้าย
     function checkAnswers(phaseNum) {
         const phaseDiv = document.getElementById(`phase-${phaseNum}`);
         const inputs = phaseDiv.querySelectorAll('.ans-input');
@@ -451,6 +460,10 @@
         inputs.forEach(input => {
             const correctAnswer = input.getAttribute('data-answer');
             let userAnswer = input.value;
+
+            if (input.type === 'text') {
+                userAnswer = cleanString(userAnswer);
+            }
 
             input.classList.remove('correct-input', 'wrong-input');
 
@@ -466,6 +479,7 @@
         });
 
         feedback.style.display = 'block';
+        
         if (allCorrect) {
             feedback.className = 'feedback-msg msg-success';
             
@@ -475,7 +489,18 @@
                 if (btnNext) btnNext.classList.remove('hidden');
                 document.getElementById(`tab-btn-${phaseNum}`).innerHTML += ' ✔️';
             } else {
-                feedback.innerHTML = '🏆 MISSION COMPLETED! You have successfully finished Unit 1 (Pages 10-13).';
+                // *** แจกรหัสลับ (Passcode) ***
+                // แก้ไขรหัสตรงนี้ให้ตรงกับ Google Sheets
+                const secretPasscode = "U12-XXXX"; 
+
+                feedback.innerHTML = `
+                    <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
+                    <p style="color: #f8fafc;">เยี่ยมมาก! รหัสนักเรียน <strong>${studentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
+                    <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
+                        🔑 ${secretPasscode}
+                    </div>
+                    <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                `;
                 btnCheck.classList.add('hidden');
             }
         } else {
