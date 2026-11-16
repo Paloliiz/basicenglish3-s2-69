@@ -671,29 +671,43 @@
                     // เรียก API เพื่อขอ Passcode
                     const response = await fetch(API_URL, {
                         method: "POST",
-                        body: JSON.stringify({ action: "getPasscode", missionId: THIS_MISSION_ID })
+                        body: JSON.stringify({ 
+                            action: "getPasscode", 
+                            missionId: THIS_MISSION_ID,
+                            studentId: activeStudentId // ส่ง SID ไปด้วย
+                        })
                     });
                     
                     const result = await response.json();
-                    const secretPasscode = result.passcode || "ERROR: CODE NOT FOUND";
-
-                    feedback.innerHTML = `
-                        <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
-                        <p style="color: #f8fafc;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
-                        <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
-                            🔑 ${secretPasscode}
-                        </div>
-                        <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                    
+                    if (result.status === "success" && result.passcode) {
+                        const secretPasscode = result.passcode;
+                        feedback.innerHTML = `
+                            <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
+                            <p style="color: #f8fafc;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
+                            <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
+                                🔑 ${secretPasscode}
+                            </div>
+                            <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                            
+                            <!-- ปุ่มกลับหน้าหลักตรงส่วน Feedback -->
+                            <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none;">
+                                กลับหน้าหลักเพื่อรับ XP ➔
+                            </a>
+                        `;
+                    } else {
+                        throw new Error("Invalid response from server");
+                    }
+                } catch (error) {
+                    feedback.className = 'feedback-msg msg-error';
+                    feedback.innerHTML = `❌ ไม่สามารถดึงรหัสจากฐานข้อมูลได้ (อาจจะยังไม่ได้เชื่อมต่อ Google Sheets)<br><br>
+                        <strong style="color: var(--neon-cyan);">รหัสลับสำรองสำหรับด่านนี้คือ: U11-WIN99</strong><br>
+                        <span style="font-size: 0.85rem;">โปรดคัดลอกรหัสสำรองด้านบนไปใช้แทนได้เลย</span>
                         
-                        <!-- ปุ่มกลับหน้าหลักตรงส่วน Feedback -->
-                        <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none;">
+                        <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none; margin-top: 15px;">
                             กลับหน้าหลักเพื่อรับ XP ➔
                         </a>
                     `;
-                } catch (error) {
-                    feedback.className = 'feedback-msg msg-error';
-                    feedback.innerHTML = `❌ ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาแคปหน้าจอนี้แจ้งคุณครูผู้สอน`;
-                    btnCheck.classList.remove('hidden'); // ให้กดลองใหม่ได้
                 }
             }
         } else {
