@@ -71,6 +71,34 @@
             font-weight: 700;
         }
 
+        /* Top Action Buttons */
+        .top-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        .btn-home {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-home:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-space);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+        }
+
         .section-title { 
             background: rgba(6, 182, 212, 0.1); 
             color: var(--neon-cyan); 
@@ -138,6 +166,7 @@
         }
         select:focus, input[type="text"]:focus { border-color: var(--neon-cyan); outline: none; }
         
+        /* สไตล์สำหรับแทรก dropdown ในประโยค (Inline Select) */
         select.inline-select {
             width: auto;
             min-width: 120px;
@@ -149,6 +178,7 @@
             border-color: #475569;
         }
 
+        /* สถานะการตรวจคำตอบ */
         .correct-input { border-color: var(--neon-green) !important; color: var(--neon-green) !important; background: rgba(34, 197, 94, 0.05) !important; }
         .wrong-input { border-color: var(--neon-red) !important; color: var(--neon-red) !important; background: rgba(239, 68, 68, 0.05) !important; }
 
@@ -163,6 +193,8 @@
         .btn-check { background: var(--neon-blue); color: white; }
         .btn-check:hover { background: #2563eb; transform: translateY(-2px); }
         .btn-next { background: var(--neon-green); color: #000; animation: pulse 2s infinite; }
+        .btn-finish { background: var(--neon-cyan); color: #000; margin-top: 15px; }
+        .btn-finish:hover { background: #0891b2; color: #fff; }
 
         .feedback-msg {
             display: none; padding: 15px; border-radius: 8px; margin-top: 15px; 
@@ -205,15 +237,25 @@
 <div id="login-modal" class="modal-overlay">
     <div class="modal-card">
         <h2 class="poppins text-cyan" style="margin-bottom: 10px;">IDENTITY CHECK</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">กรุณายืนยันรหัสนักเรียนก่อนเริ่มภารกิจ</p>
-        <p style="color: var(--neon-orange); font-size: 0.8rem; margin-top: 5px;">(ป้องกันการทำผิดคนจากการส่งลิงก์)</p>
-        <input type="text" id="verify-student-id" class="modal-input" placeholder="รหัส 5 หลัก" maxlength="6">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">ระบบดึงรหัสนักเรียนของคุณมาแล้ว<br>กรุณากดยืนยันเพื่อเริ่มภารกิจ</p>
+        <p style="color: var(--neon-orange); font-size: 0.8rem; margin-top: 5px;">(หากรหัสไม่ถูกต้อง กรุณากลับไปเข้าสู่ระบบใหม่ที่หน้าหลัก)</p>
+        <input type="text" id="verify-student-id" class="modal-input" placeholder="กรอกรหัสนักเรียน" readonly>
         <button class="btn btn-check" onclick="verifyStudent()">ยืนยันรหัส (Start Mission)</button>
+        <a href="index.html" class="btn btn-home" style="display: block; text-align: center; margin-top: 15px; background: transparent; border-color: #475569; color: var(--text-muted);">
+            ⬅️ กลับหน้าหลัก (Dashboard)
+        </a>
         <p id="login-error" style="color: var(--neon-red); display: none; margin-top: 10px; font-size: 0.9rem;"></p>
     </div>
 </div>
 
 <div class="container" id="main-content" style="display: none;">
+    <!-- ปุ่มกลับหน้าหลัก และ แสดงรหัสนักเรียน -->
+    <div class="top-actions">
+        <a href="index.html" class="btn-home">
+            <span>🏠</span> กลับหน้าหลัก (Dashboard)
+        </a>
+    </div>
+    
     <!-- แสดงรหัสนักเรียนมุมบน -->
     <div class="student-id-display">
         <span class="label">ผู้ทำภารกิจ (Student ID):</span>
@@ -242,6 +284,7 @@
             <audio controls class="audio-player"><source src="NF2e_SB3_Track 01-01.mp3" type="audio/mpeg"></audio>
             
             <div class="grid-4" style="margin-top: 15px;">
+                <!-- Data-answer เก็บคีย์คำตอบไว้ตรวจใน JS -->
                 <div class="question-block" style="border:none;">
                     <label>Yoga</label>
                     <select class="ans-input" data-answer="8">
@@ -521,7 +564,7 @@
     // UPDATE API URL HERE (นำ URL ของ Google Apps Script มาใส่ตรงนี้)
     const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
     
-    // ตั้งค่า Mission ID ของหน้านี้ (แก้ให้ตรงกับใน Google Sheets เช่น M01, M02)
+    // ตั้งค่า Mission ID ของหน้านี้ (แก้ให้ตรงกับใน Google Sheets)
     const THIS_MISSION_ID = "M01"; 
 
     // ตัวแปรเก็บรหัสนักเรียนสำหรับใช้ทั้งหน้า
@@ -534,7 +577,12 @@
         const inputField = document.getElementById("verify-student-id");
         
         if (sidFromUrl && sidFromUrl !== "GUEST (ไม่ได้ล็อกอิน)") {
+            // ถ้ารหัสมีอยู่แล้ว ให้เติมลงในช่องอัตโนมัติ และป้องกันการพิมพ์แก้ (readonly)
             inputField.value = sidFromUrl;
+            inputField.setAttribute('readonly', true);
+        } else {
+            // ถ้าก็อปลิงก์มาเปิดเอง ไม่มีรหัส ก็ให้เป็นช่องว่างพิมพ์ได้ปกติ
+            inputField.removeAttribute('readonly');
         }
     });
 
@@ -543,8 +591,9 @@
         const input = document.getElementById("verify-student-id").value.trim();
         const errorMsg = document.getElementById("login-error");
         
-        if (!input || input.length < 5) {
-            errorMsg.innerText = "กรุณากรอกรหัสนักเรียนให้ถูกต้อง (5 ตัวอักษรขึ้นไป)";
+        // อนุญาตให้ใส่รหัสความยาวเท่าใดก็ได้ ขอแค่ไม่เป็นค่าว่าง
+        if (!input) {
+            errorMsg.innerText = "กรุณากรอกรหัสนักเรียนหรือชื่อ (สำหรับผู้ที่เข้าลิงก์ตรง)";
             errorMsg.style.display = "block";
             return;
         }
@@ -630,11 +679,16 @@
 
                     feedback.innerHTML = `
                         <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
-                        <p style="color: #f8fafc;">เยี่ยมมาก! รหัสนักเรียน <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
+                        <p style="color: #f8fafc;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
                         <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
                             🔑 ${secretPasscode}
                         </div>
                         <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                        
+                        <!-- ปุ่มกลับหน้าหลักตรงส่วน Feedback -->
+                        <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none;">
+                            กลับหน้าหลักเพื่อรับ XP ➔
+                        </a>
                     `;
                 } catch (error) {
                     feedback.className = 'feedback-msg msg-error';
