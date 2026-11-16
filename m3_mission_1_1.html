@@ -461,7 +461,11 @@
 </div>
 
 <script>
-    // ระบบเปลี่ยน Tab
+    // 1. ระบบดึงรหัสนักเรียนจาก URL ที่ส่งมาจากหน้าหลัก
+    const urlParams = new URLSearchParams(window.location.search);
+    const studentId = urlParams.get('sid') || "GUEST (ไม่ได้ล็อกอิน)";
+
+    // 2. ระบบเปลี่ยน Tab
     function switchTab(phaseNum) {
         // ซ่อนทุกหน้า
         document.querySelectorAll('.phase-section').forEach(el => el.classList.add('hidden'));
@@ -482,7 +486,7 @@
         return str.toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
     }
 
-    // ฟังก์ชันตรวจคำตอบของแต่ละด่าน
+    // 3. ฟังก์ชันตรวจคำตอบ และแจกรหัสลับเมื่อผ่านด่านสุดท้าย
     function checkAnswers(phaseNum) {
         const phaseDiv = document.getElementById(`phase-${phaseNum}`);
         const inputs = phaseDiv.querySelectorAll('.ans-input');
@@ -522,12 +526,24 @@
             feedback.className = 'feedback-msg msg-success';
             
             if (phaseNum < 4) {
+                // กรณีผ่านด่านย่อย
                 feedback.innerHTML = '🎯 Excellent! All answers are correct. You can move to the next phase.';
                 btnCheck.classList.add('hidden');
                 if (btnNext) btnNext.classList.remove('hidden');
                 document.getElementById(`tab-btn-${phaseNum}`).innerHTML += ' ✔️';
             } else {
-                feedback.innerHTML = '🏆 MISSION COMPLETED! You have successfully finished Unit 1 (Pages 8-9).';
+                // กรณีผ่านด่านสุดท้าย (Phase 4) -> แจกรหัสลับ (Passcode)
+                // *** คุณครูเปลี่ยนรหัสตรงคำว่า "U11-XXXX" ให้ตรงกับใน Google Sheets นะครับ ***
+                const secretPasscode = "U11-XXXX"; 
+
+                feedback.innerHTML = `
+                    <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
+                    <p style="color: #f8fafc;">เยี่ยมมาก! รหัสนักเรียน <strong>${studentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
+                    <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
+                        🔑 ${secretPasscode}
+                    </div>
+                    <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                `;
                 btnCheck.classList.add('hidden');
             }
         } else {
