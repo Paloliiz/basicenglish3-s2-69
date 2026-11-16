@@ -260,7 +260,8 @@
             <span>🏠</span> กลับหน้าหลัก (Dashboard)
         </a>
     </div>
-
+    
+    <!-- แสดงรหัสนักเรียนมุมบน -->
     <div class="student-id-display">
         <span class="label">ผู้ทำภารกิจ (Student ID):</span>
         <span class="value" id="display-sid">-----</span>
@@ -527,6 +528,37 @@
 </div>
 
 <script>
+    // 5. ระบบสุ่มตัวเลือกคำศัพท์ (Auto-Shuffle)
+    function shuffleDropdownOptions() {
+        const allSelects = document.querySelectorAll('select.ans-input');
+        allSelects.forEach(select => {
+            const options = Array.from(select.options);
+            if (options.length > 2) {
+                const firstVal = options[1].value.trim().toLowerCase();
+                const textVal = options[1].text.trim().toLowerCase();
+                
+                // เช็คเงื่อนไขว่า ไม่ใช่ 1-8, a-h, true/false หรือ accept/decline
+                const isNumeric = !isNaN(firstVal) && firstVal !== "";
+                const isSingleChar = firstVal.length === 1;
+                const isAbcdOption = textVal.startsWith("a.") || textVal.startsWith("b.");
+                const isBoolean = firstVal === "true" || firstVal === "false";
+                const isAcceptDecline = firstVal === "accept" || firstVal === "decline";
+                
+                // ถ้าไม่ใช่ค่าตายตัว ให้สลับตำแหน่งคำศัพท์
+                if (!isNumeric && !isSingleChar && !isAbcdOption && !isBoolean && !isAcceptDecline) {
+                    const firstOption = options.shift(); // เก็บตัวเลือก "---" ไว้ด้านบนสุดเสมอ
+                    for (let i = options.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [options[i], options[j]] = [options[j], options[i]];
+                    }
+                    select.innerHTML = '';
+                    select.appendChild(firstOption);
+                    options.forEach(opt => select.appendChild(opt));
+                }
+            }
+        });
+    }
+
     // UPDATE API URL HERE (นำ URL ของ Google Apps Script มาใส่ตรงนี้)
     const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
     
@@ -536,8 +568,10 @@
     // ตัวแปรเก็บรหัสนักเรียนสำหรับใช้ทั้งหน้า
     let activeStudentId = "GUEST";
 
-    // 1. ระบบดึงรหัสนักเรียนจาก URL
+    // 1. ระบบดึงรหัสนักเรียนจาก URL และเรียกสุ่มคำศัพท์
     window.addEventListener("DOMContentLoaded", () => {
+        shuffleDropdownOptions(); // << เพิ่มการเรียกใช้ตรงนี้
+
         const urlParams = new URLSearchParams(window.location.search);
         const sidFromUrl = urlParams.get('sid');
         const inputField = document.getElementById("verify-student-id");
@@ -582,7 +616,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ฟังก์ชันทำความสะอาดข้อความที่นักเรียนพิมพ์
     function cleanString(str) {
         return str.toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
     }
@@ -638,29 +671,36 @@
                     // เรียก API เพื่อขอ Passcode
                     const response = await fetch(API_URL, {
                         method: "POST",
-                        body: JSON.stringify({ action: "getPasscode", missionId: THIS_MISSION_ID })
+                        body: JSON.stringify({ action: "getPasscode", missionId: THIS_MISSION_ID, studentId: activeStudentId })
                     });
                     
                     const result = await response.json();
-                    const secretPasscode = result.passcode || "ERROR: CODE NOT FOUND";
-
-                    feedback.innerHTML = `
-                        <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
-                        <p style="color: #f8fafc;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
-                        <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
-                            🔑 ${secretPasscode}
-                        </div>
-                        <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
-                        
-                        <!-- ปุ่มกลับหน้าหลักตรงส่วน Feedback -->
-                        <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none;">
-                            กลับหน้าหลักเพื่อรับ XP ➔
-                        </a>
-                    `;
+                    
+                    if (result.status === "success" && result.passcode) {
+                        const secretPasscode = result.passcode;
+                        feedback.innerHTML = `
+                            <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
+                            <p style="color: #f8fafc;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
+                            <div style="background: #020617; color: var(--neon-cyan); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
+                                🔑 ${secretPasscode}
+                            </div>
+                            <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                            
+                            <!-- ปุ่มกลับหน้าหลักตรงส่วน Feedback -->
+                            <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none;">
+                                กลับหน้าหลักเพื่อรับ XP ➔
+                            </a>
+                        `;
+                    } else {
+                        throw new Error("Invalid response from server");
+                    }
                 } catch (error) {
                     feedback.className = 'feedback-msg msg-error';
-                    feedback.innerHTML = `❌ ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาแคปหน้าจอนี้แจ้งคุณครูผู้สอน`;
-                    btnCheck.classList.remove('hidden'); // ให้กดลองใหม่ได้
+                    feedback.innerHTML = `❌ ระบบไม่สามารถเชื่อมต่อฐานข้อมูลเพื่อดึงรหัสลับได้<br>
+                        <span style="font-size: 0.85rem;">กรุณาตรวจสอบอินเทอร์เน็ตของนักเรียน หรือแจ้งคุณครูผู้สอนเพื่อตรวจสอบระบบครับ</span>
+                        
+                        <button class="btn btn-check" onclick="checkAnswers(4)" style="margin-top: 15px;">ลองดึงรหัสใหม่อีกครั้ง 🔄</button>
+                    `;
                 }
             }
         } else {
