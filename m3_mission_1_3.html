@@ -50,6 +50,57 @@
             width: 100%; 
             margin: 0 auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* Student ID Display Header */
+        .student-id-display {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--neon-purple);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .student-id-display .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .student-id-display .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--neon-purple);
+            font-weight: 700;
+        }
+
+        /* Top Action Buttons */
+        .top-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        .btn-home {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-home:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-space);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
         }
 
         .section-title { 
@@ -160,6 +211,8 @@
         .btn-check { background: var(--neon-purple); color: white; }
         .btn-check:hover { background: #9333ea; transform: translateY(-2px); }
         .btn-next { background: var(--neon-green); color: #000; animation: pulse 2s infinite; }
+        .btn-finish { background: var(--neon-cyan); color: #000; margin-top: 15px; }
+        .btn-finish:hover { background: #0891b2; color: #fff; }
 
         .feedback-msg {
             display: none; padding: 15px; border-radius: 8px; margin-top: 15px; 
@@ -175,11 +228,58 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-card {
+            background: var(--bg-card); border: 1px solid var(--neon-cyan);
+            border-radius: var(--radius); padding: 30px; max-width: 400px; width: 90%;
+            text-align: center; box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+        }
+        .modal-input {
+            width: 100%; padding: 12px; margin: 20px 0; border-radius: 8px;
+            border: 2px solid #475569; background: #020617; color: white;
+            font-size: 1.2rem; text-align: center; font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+        .modal-input:focus { border-color: var(--neon-cyan); outline: none; }
+        
     </style>
 </head>
 <body>
 
-<div class="container">
+<!-- ล็อกอิน Popup -->
+<div id="login-modal" class="modal-overlay">
+    <div class="modal-card">
+        <h2 class="poppins text-cyan" style="margin-bottom: 10px;">IDENTITY CHECK</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">ระบบดึงรหัสนักเรียนของคุณมาแล้ว<br>กรุณากดยืนยันเพื่อเริ่มภารกิจ</p>
+        <p style="color: var(--neon-orange); font-size: 0.8rem; margin-top: 5px;">(หากรหัสไม่ถูกต้อง กรุณากลับไปเข้าสู่ระบบใหม่ที่หน้าหลัก)</p>
+        <input type="text" id="verify-student-id" class="modal-input" placeholder="กรอกรหัสนักเรียน" readonly>
+        <button class="btn btn-check" onclick="verifyStudent()">ยืนยันรหัส (Start Mission)</button>
+        <a href="index.html" class="btn btn-home" style="display: block; text-align: center; margin-top: 15px; background: transparent; border-color: #475569; color: var(--text-muted);">
+            ⬅️ กลับหน้าหลัก (Dashboard)
+        </a>
+        <p id="login-error" style="color: var(--neon-red); display: none; margin-top: 10px; font-size: 0.9rem;"></p>
+    </div>
+</div>
+
+<div class="container" id="main-content" style="display: none;">
+    <!-- ปุ่มกลับหน้าหลัก และ แสดงรหัสนักเรียน -->
+    <div class="top-actions">
+        <a href="index.html" class="btn-home">
+            <span>🏠</span> กลับหน้าหลัก (Dashboard)
+        </a>
+    </div>
+
+    <div class="student-id-display">
+        <span class="label">ผู้ทำภารกิจ (Student ID):</span>
+        <span class="value" id="display-sid">-----</span>
+    </div>
+
     <div style="text-align: center; margin-bottom: 20px;">
         <h2 class="poppins text-purple">UNIT 1: ALL ABOUT ME</h2>
         <p style="color: var(--text-muted);">Pages 14 - 15 (Writing & Grammar)</p>
@@ -360,11 +460,51 @@
 </div>
 
 <script>
-    // 1. ระบบดึงรหัสนักเรียนจาก URL ที่ส่งมาจากหน้าหลัก
-    const urlParams = new URLSearchParams(window.location.search);
-    const studentId = urlParams.get('sid') || "GUEST (ไม่ได้ล็อกอิน)";
+    // UPDATE API URL HERE (นำ URL ของ Google Apps Script มาใส่ตรงนี้)
+    const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
+    
+    // ตั้งค่า Mission ID ของหน้านี้ (แก้ให้ตรงกับใน Google Sheets เช่น M01, M02)
+    const THIS_MISSION_ID = "M03"; 
 
-    // 2. ระบบเปลี่ยน Tab
+    // ตัวแปรเก็บรหัสนักเรียนสำหรับใช้ทั้งหน้า
+    let activeStudentId = "GUEST";
+
+    // 1. ระบบดึงรหัสนักเรียนจาก URL
+    window.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sidFromUrl = urlParams.get('sid');
+        const inputField = document.getElementById("verify-student-id");
+        
+        if (sidFromUrl && sidFromUrl !== "GUEST (ไม่ได้ล็อกอิน)") {
+            // ถ้ารหัสมีอยู่แล้ว ให้เติมลงในช่องอัตโนมัติ และป้องกันการพิมพ์แก้ (readonly)
+            inputField.value = sidFromUrl;
+            inputField.setAttribute('readonly', true);
+        } else {
+            // ถ้าก็อปลิงก์มาเปิดเอง ไม่มีรหัส ก็ให้เป็นช่องว่างพิมพ์ได้ปกติ
+            inputField.removeAttribute('readonly');
+        }
+    });
+
+    // 2. ฟังก์ชันยืนยันรหัสนักเรียนตอนเริ่มด่าน
+    function verifyStudent() {
+        const input = document.getElementById("verify-student-id").value.trim();
+        const errorMsg = document.getElementById("login-error");
+        
+        // อนุญาตให้ใส่รหัสความยาวเท่าใดก็ได้ ขอแค่ไม่เป็นค่าว่าง
+        if (!input) {
+            errorMsg.innerText = "กรุณากรอกรหัสนักเรียนหรือชื่อ (สำหรับผู้ที่เข้าลิงก์ตรง)";
+            errorMsg.style.display = "block";
+            return;
+        }
+        
+        // ถ้ารหัสผ่านเกณฑ์ ให้ปิดป๊อปอัปและแสดงหน้าจอภารกิจ
+        activeStudentId = input;
+        document.getElementById("display-sid").innerText = activeStudentId;
+        document.getElementById("login-modal").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+    }
+
+    // 3. ระบบเปลี่ยน Tab
     function switchTab(phaseNum) {
         document.querySelectorAll('.phase-section').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -375,13 +515,12 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ฟังก์ชันทำความสะอาดข้อความ (ให้พิมพ์ตัวเล็ก/ใหญ่ หรือเผลอเว้นวรรคก็ตรวจให้ถูก)
     function cleanString(str) {
         return str.toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
     }
 
-    // 3. ฟังก์ชันตรวจคำตอบ และแจกรหัสลับเมื่อผ่านด่านสุดท้าย
-    function checkAnswers(phaseNum) {
+    // 4. ฟังก์ชันตรวจคำตอบ และดึงรหัสลับจาก Database เมื่อผ่านด่านสุดท้าย
+    async function checkAnswers(phaseNum) {
         const phaseDiv = document.getElementById(`phase-${phaseNum}`);
         const inputs = phaseDiv.querySelectorAll('.ans-input');
         const feedback = document.getElementById(`feedback-${phaseNum}`);
@@ -391,12 +530,11 @@
         let allCorrect = true;
 
         inputs.forEach(input => {
-            let correctAnswer = input.getAttribute('data-answer');
+            const correctAnswer = input.getAttribute('data-answer');
             let userAnswer = input.value;
 
             if (input.type === 'text') {
                 userAnswer = cleanString(userAnswer);
-                correctAnswer = cleanString(correctAnswer);
             }
 
             input.classList.remove('correct-input', 'wrong-input');
@@ -412,8 +550,8 @@
             }
         });
 
-        // แสดงผลข้อความ Feedback
         feedback.style.display = 'block';
+        
         if (allCorrect) {
             feedback.className = 'feedback-msg msg-success';
             
@@ -424,19 +562,38 @@
                 if (btnNext) btnNext.classList.remove('hidden');
                 document.getElementById(`tab-btn-${phaseNum}`).innerHTML += ' ✔️';
             } else {
-                // กรณีผ่านด่านสุดท้าย (Phase 4) -> แจกรหัสลับ (Passcode)
-                // *** คุณครูเปลี่ยนรหัสตรงคำว่า "U13-XXXX" ให้ตรงกับใน Google Sheets นะครับ ***
-                const secretPasscode = "U13-XXXX"; 
-
-                feedback.innerHTML = `
-                    <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
-                    <p style="color: #f8fafc;">เยี่ยมมาก! รหัสนักเรียน <strong>${studentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
-                    <div style="background: #020617; color: var(--neon-purple); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-purple); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
-                        🔑 ${secretPasscode}
-                    </div>
-                    <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
-                `;
+                // กรณีผ่านด่านสุดท้าย (Phase 4) -> ดึงรหัสลับจาก Database
                 btnCheck.classList.add('hidden');
+                feedback.innerHTML = `<div style="text-align:center;">กำลังประมวลผลและดึงรหัสลับจากฐานข้อมูล... ⏳</div>`;
+                
+                try {
+                    // เรียก API เพื่อขอ Passcode
+                    const response = await fetch(API_URL, {
+                        method: "POST",
+                        body: JSON.stringify({ action: "getPasscode", missionId: THIS_MISSION_ID })
+                    });
+                    
+                    const result = await response.json();
+                    const secretPasscode = result.passcode || "ERROR: CODE NOT FOUND";
+
+                    feedback.innerHTML = `
+                        <div style="font-size: 1.2rem; margin-bottom: 10px;">🏆 MISSION COMPLETED!</div>
+                        <p style="color: #f8fafc;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${activeStudentId}</strong> ทำภารกิจสำเร็จแล้ว</p>
+                        <div style="background: #020617; color: var(--neon-purple); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--neon-purple); font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px;">
+                            🔑 ${secretPasscode}
+                        </div>
+                        <p style="font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Portal)"</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                        
+                        <!-- ปุ่มกลับหน้าหลักตรงส่วน Feedback -->
+                        <a href="index.html" class="btn btn-finish" style="display: block; text-decoration: none;">
+                            กลับหน้าหลักเพื่อรับ XP ➔
+                        </a>
+                    `;
+                } catch (error) {
+                    feedback.className = 'feedback-msg msg-error';
+                    feedback.innerHTML = `❌ ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาแคปหน้าจอนี้แจ้งคุณครูผู้สอน`;
+                    btnCheck.classList.remove('hidden'); // ให้กดลองใหม่ได้
+                }
             }
         } else {
             feedback.className = 'feedback-msg msg-error';
