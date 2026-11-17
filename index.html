@@ -73,10 +73,18 @@
         /* --- Frame CSS Classes --- */
         .frame-base { position: absolute; inset: -6px; pointer-events: none; z-index: 20; border-radius: 50%; }
         
+        /* กรอบบอส (ดึงไฟล์จาก GitHub) */
         .frame-biohazard {
-            border: 4px dashed #39ff14;
-            box-shadow: 0 0 15px #39ff14, inset 0 0 15px #39ff14;
-            animation: spinSlow 10s linear infinite;
+            background-image: url('frame_lazy.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            inset: -15px; /* ปรับขนาดให้คลุมรูปพอดี */
+            z-index: 30;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            animation: none; /* ปิด spinSlow เพื่อให้รูปกรอบตรงๆ */
         }
         
         .frame-level5 {
@@ -193,8 +201,9 @@
                     </button>
                     -->
 
+                    <!-- แก้ไขลิงก์ Voice Lab ตรงนี้ให้เป็นชื่อไฟล์ใหม่ voice_lab_m3.html -->
                     <button onclick="openVoiceLab()" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-                        <span class="flex items-center gap-2.5"><span class="text-base">🎙️</span><span>ฝึกพูดคำศัพท์ (Voice Lab)</span></span>
+                        <span class="flex items-center gap-2.5"><span class="text-base">🎙️</span><span>มินิเกม (Voice Lab)</span></span>
                         <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-red-900/80 border border-red-400/50 text-[10px] font-scifi text-red-100 animate-pulse">BOSS</span>
                     </button>
 
@@ -451,7 +460,7 @@
 
         const FRAME_CATALOG = {
             "Frame00": { id: "Frame00", name: "No Frame", subtitle: "ซ่อนกรอบ", cssClass: "", reqLevel: 0 },
-            "FrameBio": { id: "FrameBio", name: "Cyber Aura", subtitle: "กรอบมิติไซเบอร์ (V_U1)", cssClass: "frame-biohazard", reqMission: "V_U1" },
+            "frame_lazy": { id: "frame_lazy", name: "Cyber Aura", subtitle: "กรอบมิติไซเบอร์ (V_U1)", cssClass: "frame-biohazard", reqMission: "V_U1" },
             "FrameLv5": { id: "FrameLv5", name: "Gold Standard", subtitle: "กรอบสำหรับเลเวล 5 ขึ้นไป", cssClass: "frame-level5", reqLevel: 5 },
             "FrameLv10": { id: "FrameLv10", name: "Diamond Master", subtitle: "กรอบสำหรับเลเวล 10 ขึ้นไป", cssClass: "frame-level10", reqLevel: 10 }
         };
@@ -508,9 +517,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // --- แก้ไขตรงนี้: สั่งให้ไปเรียกไฟล์ voice_lab_m3.html ตรงๆ ---
         function openVoiceLab() {
             const sid = appState.user ? appState.user.studentId : "GUEST";
-            window.open('voice_lab.html?sid=' + sid, '_blank');
+            window.open('voice_lab_m3.html?sid=' + sid, '_blank');
         }
 
         window.addEventListener("DOMContentLoaded", () => {
@@ -714,7 +724,12 @@
                 // แจกสกิน หรือ แจกกรอบ
                 let rewardBadge = "";
                 if (m.rewardSkin) {
-                     rewardBadge = `<span class="px-2 py-0.5 rounded bg-pink-900/80 border border-pink-400/50 text-[9px] text-pink-200">🎁 สกิน: ${m.rewardSkin}</span>`;
+                     // ถ้าข้อมูลในชีทเป็นชื่อกรอบรูป
+                     if(m.rewardSkin.includes('frame')) {
+                         rewardBadge = `<span class="px-2 py-0.5 rounded bg-cyan-900/80 border border-cyan-400/50 text-[9px] text-cyan-200">🖼️ ได้กรอบรูป!</span>`;
+                     } else {
+                         rewardBadge = `<span class="px-2 py-0.5 rounded bg-pink-900/80 border border-pink-400/50 text-[9px] text-pink-200">🎁 สกิน: ${m.rewardSkin}</span>`;
+                     }
                 } else if (m.missionId === "V_U1") {
                      rewardBadge = `<span class="px-2 py-0.5 rounded bg-green-900/80 border border-green-400/50 text-[9px] text-green-200">🖼️ กรอบบอส!</span>`;
                 }
@@ -797,8 +812,11 @@
                     </button>`;
             };
             
-            list.innerHTML = Object.values(SKIN_CATALOG).slice(0, 3).map(s => renderSkinFn(s, false)).join(""); 
-            grid.innerHTML = Object.values(SKIN_CATALOG).map(s => renderSkinFn(s, true)).join("");
+            // กรองเอาพวกที่เป็นเฟรม (frame_) ออกจากรายการสกิน
+            const validSkins = Object.values(SKIN_CATALOG).filter(s => !s.id.includes('frame'));
+            
+            list.innerHTML = validSkins.slice(0, 3).map(s => renderSkinFn(s, false)).join(""); 
+            grid.innerHTML = validSkins.map(s => renderSkinFn(s, true)).join("");
             
             const customInput = document.getElementById("custom-avatar-url");
             if (customInput) customInput.value = appState.customAvatarUrl || "";
@@ -807,8 +825,13 @@
             const framesGrid = document.getElementById("wardrobe-frames-grid");
             const curFrame = appState.currentFrameId;
             
+            // เอาเฟรมที่ได้จากระบบ unlockedSkins มาอัปเดตในแค็ตตาล็อกด้วย
+            if (unlocked.includes('frame_lazy')) {
+                FRAME_CATALOG['frame_lazy'].isUnlocked = true;
+            }
+            
             const renderFrameFn = (frame) => {
-                const isUnl = checkFrameUnlockStatus(frame);
+                const isUnl = checkFrameUnlockStatus(frame) || frame.isUnlocked || unlocked.includes(frame.id);
                 const isEq = curFrame === frame.id;
                 
                 let hint = "";
@@ -821,7 +844,6 @@
                         
                         <div class="relative w-16 h-16 flex items-center justify-center flex-shrink-0 mt-2">
                             <div class="absolute inset-0 bg-cosmic-900 rounded-full"></div>
-                            <!-- รูป Avatar ปัจจุบันที่อยู่ข้างในกรอบ -->
                             <div class="absolute inset-1 rounded-full overflow-hidden opacity-50">${getSkinVisualHtml(curSkin)}</div>
                             <!-- ตัวกรอบรูป -->
                             <div class="frame-base ${frame.cssClass}"></div>
@@ -874,7 +896,10 @@
         
         function selectFrame(frameId) {
             const frameObj = FRAME_CATALOG[frameId];
-            if(!frameObj || !checkFrameUnlockStatus(frameObj)) return;
+            if(!frameObj) return;
+            
+            const isUnlocked = checkFrameUnlockStatus(frameObj) || frameObj.isUnlocked || (appState.user && appState.user.unlockedSkins.includes(frameId));
+            if(!isUnlocked) return;
             
             appState.currentFrameId = frameId;
             localStorage.setItem("pd_current_frame", frameId);
@@ -952,8 +977,8 @@
                     appState.missions = res.missions;
                     saveSession(); renderAllModules(); closeMissionModal();
                     
-                    // แจ้งเตือนพิเศษถ้าผ่านด่าน V_U1
-                    if (appState.activeModalMissionId === "V_U1") {
+                    // แจ้งเตือนพิเศษถ้าได้กรอบรูปใหม่
+                    if (res.unlockedSkins && res.unlockedSkins.includes('frame_lazy')) {
                          showToast("🎉 คุณได้รับกรอบโปรไฟล์ใหม่: Cyber Aura ไปดูที่ตู้เสื้อผ้าได้เลย!", "success");
                     } else {
                          showToast(res.message, "success");
