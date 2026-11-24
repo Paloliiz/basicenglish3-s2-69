@@ -109,21 +109,21 @@
                 </button>
             </div>
 
-            <!-- EXAM U2 (COMING SOON) -->
+            <!-- EXAM U2 -->
             <div id="card-u2" class="exam-card locked rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-xs font-bold px-3 py-1 rounded bg-slate-900 text-slate-400 border border-slate-700 font-scifi">UNIT 2</span>
-                        <span class="text-lg">🔒</span>
+                        <span class="text-xs font-bold px-3 py-1 rounded bg-rose-950 text-rose-400 border border-rose-500/30 font-scifi">UNIT 2</span>
+                        <span id="lock-icon-u2" class="text-lg">🔒</span>
                     </div>
-                    <h3 class="font-scifi text-xl font-bold text-slate-300 mb-2">Unit 2 Final Exam</h3>
-                    <p class="text-sm text-slate-400 mb-4">ข้อสอบประจำบทที่ 2 (10 คะแนน)</p>
-                    <div class="text-xs text-slate-400 bg-slate-900/70 p-2.5 rounded-lg border border-slate-700 mb-6">
-                        <b>สถานะ:</b> ยังไม่เปิดให้เข้าสอบ (Coming Soon)
+                    <h3 class="font-scifi text-xl font-bold text-white mb-2">Fashion Forward</h3>
+                    <p class="text-sm text-slate-300 mb-4">ข้อสอบประจำบทที่ 2 (20 ข้อ • 10 คะแนน)</p>
+                    <div id="req-u2" class="text-xs text-rose-400 bg-rose-950/50 p-2.5 rounded-lg border border-rose-900 mb-6">
+                        <b>เงื่อนไขปลดล็อก:</b> ต้องผ่าน M04, M05, M06, M07 และบอส V02 ก่อน
                     </div>
                 </div>
-                <button disabled class="btn-enter w-full py-3 rounded-xl font-bold font-scifi tracking-wider">
-                    COMING SOON
+                <button id="btn-u2" disabled onclick="enterExam('unit2_exam.html')" class="btn-enter w-full py-3 rounded-xl font-bold text-white font-scifi tracking-wider">
+                    ENTER EXAM
                 </button>
             </div>
 
@@ -200,9 +200,7 @@
                     if (data && data.status === "success" && data.missions) {
                         completedMissions = data.missions.filter(m => m.state === "COMPLETED").map(m => m.missionId);
                     }
-                } catch(e) {
-                    // ใช้ข้อมูลที่โหลดไว้จาก localStorage ต่อได้ทันที
-                }
+                } catch(e) {}
             }
 
             evaluateLocks();
@@ -212,25 +210,36 @@
             document.getElementById('loading-msg').style.display = "none";
             document.getElementById('rooms-container').style.display = "grid";
 
-            // เงื่อนไขปลดล็อกสอบท้ายบทที่ 1 (ม.3): ผ่าน M01, M02, M03 และบอส V01 (หรือ V_U1)
-            const hasCore = ["M01", "M02", "M03"].every(m => completedMissions.includes(m));
-            const hasBoss = completedMissions.includes("V01") || completedMissions.includes("V_U1");
-            const isU1Ready = hasCore && hasBoss;
-            const isU1Completed = completedMissions.includes("EXAM_U1");
-            
-            if (isU1Completed) {
-                document.getElementById("card-u1").classList.add("locked");
-                document.getElementById("btn-u1").disabled = true;
-                document.getElementById("btn-u1").innerText = "สอบผ่านแล้ว ✓";
-                document.getElementById("lock-icon-u1").textContent = "🏆";
-                document.getElementById("req-u1").className = "text-xs text-emerald-400 bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-900 mb-6";
-                document.getElementById("req-u1").innerHTML = "<b>สถานะ:</b> สอบผ่านเรียบร้อยแล้ว";
-            } else if (isU1Ready) {
-                document.getElementById("card-u1").classList.remove("locked");
-                document.getElementById("btn-u1").disabled = false;
-                document.getElementById("lock-icon-u1").textContent = "🔓";
-                document.getElementById("req-u1").className = "text-xs text-emerald-400 bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-900 mb-6";
-                document.getElementById("req-u1").innerHTML = "<b>สถานะ:</b> มีสิทธิ์เข้าสอบ (พร้อมลุย!)";
+            // 1. เช็คสิทธิ์ Unit 1
+            const hasU1Core = ["M01", "M02", "M03"].every(m => completedMissions.includes(m));
+            const hasU1Boss = completedMissions.includes("V01") || completedMissions.includes("V_U1");
+            updateExamCard("u1", hasU1Core && hasU1Boss, completedMissions.includes("EXAM_U1"));
+
+            // 2. เช็คสิทธิ์ Unit 2
+            const hasU2Core = ["M04", "M05", "M06", "M07"].every(m => completedMissions.includes(m));
+            const hasU2Boss = completedMissions.includes("V02") || completedMissions.includes("V_U2");
+            updateExamCard("u2", hasU2Core && hasU2Boss, completedMissions.includes("EXAM_U2"));
+        }
+
+        function updateExamCard(unitKey, isReady, isCompleted) {
+            const card = document.getElementById(`card-${unitKey}`);
+            const btn = document.getElementById(`btn-${unitKey}`);
+            const icon = document.getElementById(`lock-icon-${unitKey}`);
+            const req = document.getElementById(`req-${unitKey}`);
+
+            if (isCompleted) {
+                card.classList.add("locked");
+                btn.disabled = true;
+                btn.innerText = "สอบผ่านแล้ว ✓";
+                icon.textContent = "🏆";
+                req.className = "text-xs text-emerald-400 bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-900 mb-6";
+                req.innerHTML = "<b>สถานะ:</b> สอบผ่านเรียบร้อยแล้ว";
+            } else if (isReady) {
+                card.classList.remove("locked");
+                btn.disabled = false;
+                icon.textContent = "🔓";
+                req.className = "text-xs text-emerald-400 bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-900 mb-6";
+                req.innerHTML = "<b>สถานะ:</b> มีสิทธิ์เข้าสอบ (พร้อมลุย!)";
             }
         }
 
