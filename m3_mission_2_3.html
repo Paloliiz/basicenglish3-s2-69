@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mission 2.3: Fashion Trend of the Past (Pages 24-25) | PARALLEL DIMENSION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Orbitron:wght@500;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS VARIABLES & GLOBALS ================= */
+        :root {
+            --bg-space: #020617;
+            --bg-panel: #0f172a;
+            --bg-card: #1e293b;
+            --unit-theme: #e11d48;       /* ธีมสีแดงอมชมพู Unit 2: Fashion Forward */
+            --unit-theme-light: #fb7185;
+            --neon-cyan: #06b6d4;
+            --neon-blue: #3b82f6;
+            --neon-orange: #f59e0b;
+            --neon-red: #ef4444;
+            --gold: #facc15;
+            --neon-green: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-space);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 15px;
+            background-image: radial-gradient(circle at 50% 10%, rgba(225, 29, 72, 0.14) 0%, transparent 60%);
+            line-height: 1.6;
+        }
+
+        .container {
+            background: var(--bg-panel);
+            border-top: 4px solid var(--unit-theme);
+            border-radius: var(--radius);
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.4s ease;
+            position: relative;
+        }
+
+        h1, h2, h3 { font-family: 'Poppins', 'Kanit', sans-serif; }
+        .text-cyan { color: var(--neon-cyan); }
+        .section-title {
+            background: var(--unit-theme);
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* ================= TOP ACTION & PROFILE BADGE ================= */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 12px;
+        }
+        .btn-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--neon-cyan);
+            background: rgba(6, 182, 212, 0.08);
+            color: var(--neon-cyan);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-home-link:hover {
+            background: var(--neon-cyan);
+            color: #020617;
+            transform: translateY(-1px);
+        }
+
+        .profile-badge {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background: rgba(225, 29, 72, 0.06);
+            border: 1px solid var(--unit-theme-light);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ================= FORM & INPUTS ================= */
+        select, input[type="text"], input[type="number"] {
+            font-size: 16px !important;
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: #fff;
+            font-family: 'Kanit', sans-serif;
+        }
+        select:focus, input:focus { border-color: var(--unit-theme-light); outline: none; }
+
+        /* Dropdown แบบเส้นใต้เนียนไปกับประโยค */
+        select.blank-input {
+            border: none;
+            border-bottom: 2px solid var(--unit-theme);
+            background: rgba(2, 6, 23, 0.55) !important;
+            color: var(--gold) !important;
+            text-align: left;
+            padding: 3px 8px;
+            border-radius: 4px 4px 0 0;
+            display: inline-block;
+            font-weight: bold;
+            width: auto;
+            min-width: 135px;
+            font-size: 0.95rem !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+        }
+        select.blank-input:focus {
+            border-bottom-color: var(--unit-theme-light);
+            outline: none;
+            background: #020617 !important;
+        }
+
+        select.full-select {
+            margin-top: 8px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: var(--gold);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .is-correct { color: var(--neon-green) !important; font-weight: bold; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-check { background: var(--unit-theme); color: white; }
+        .btn-check:hover:not(:disabled) { background: var(--unit-theme-light); }
+        .btn-next { background: var(--neon-cyan); color: #000; animation: pulse 1.5s infinite; }
+        .btn-back { background: transparent; border: 1px solid #475569; color: #cbd5e1; margin-top: 12px; }
+        .btn-finish-link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: var(--neon-cyan);
+            color: #020617;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.2s;
+        }
+        .btn-finish-link:hover { background: #22d3ee; transform: translateY(-2px); }
+
+        /* ================= MISSION UI ================= */
+        .header-mission {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px dashed #334155;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .header-mission h2 {
+            font-family: 'Poppins', 'Kanit', sans-serif;
+            color: var(--unit-theme-light);
+            margin: 0;
+            font-size: 1.35rem;
+        }
+
+        .question {
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #334155;
+        }
+        .question:last-of-type { border-bottom: none; padding-bottom: 0; }
+        .q-text { font-size: 0.98rem; margin-bottom: 6px; color: #f8fafc; line-height: 1.9; }
+
+        /* Vocab Reference Cards */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+            margin-bottom: 22px;
+        }
+        @media (min-width: 600px) { .vocab-grid { grid-template-columns: repeat(4, 1fr); } }
+        .vocab-item {
+            background: rgba(2, 6, 23, 0.55);
+            padding: 12px 10px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #475569;
+            text-align: center;
+        }
+        .vocab-word { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--unit-theme-light); }
+        .vocab-meaning { font-size: 0.8rem; color: var(--text-muted); margin-top: 3px; }
+
+        /* Reading Article Cards */
+        .article-box {
+            background: rgba(2, 6, 23, 0.6);
+            border-radius: 10px;
+            border: 1px solid #334155;
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+        .article-header {
+            background: linear-gradient(90deg, var(--unit-theme), #9f1239);
+            color: white;
+            padding: 14px 16px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .reading-para {
+            padding: 16px 18px;
+            border-bottom: 1px dashed #334155;
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: #e2e8f0;
+        }
+        .reading-para:last-child { border-bottom: none; }
+        .para-title-slot {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .para-badge {
+            background: rgba(225, 29, 72, 0.25);
+            border: 1px solid var(--unit-theme-light);
+            color: var(--unit-theme-light);
+            padding: 1px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+        }
+
+        .audio-container {
+            background: #020617;
+            border: 1px solid #475569;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        audio { width: 100%; height: 40px; outline: none; }
+
+        .sub-heading {
+            color: var(--unit-theme-light);
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 12px;
+            padding-top: 14px;
+            border-top: 1px dashed #334155;
+        }
+        .sub-heading:first-child { border-top: none; padding-top: 0; }
+
+        /* ================= TABS ================= */
+        .tab-container {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #1e293b;
+            color: var(--text-muted);
+            border: 1px solid #475569;
+            font-size: 0.85rem;
+            margin: 0;
+            padding: 9px 12px;
+            flex: 1;
+            min-width: 130px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--unit-theme);
+            color: #fff;
+            border-color: var(--unit-theme);
+            font-weight: bold;
+        }
+        .tab-btn.locked-tab { opacity: 0.6; cursor: not-allowed; }
+        .tab-btn:hover:not(.active):not(.locked-tab) { transform: none; background: #334155; }
+
+        .master-feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.65;
+        }
+        .correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+        .wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--neon-red); color: var(--neon-red); }
+
+        .passcode-box {
+            background: #020617;
+            color: var(--gold);
+            padding: 14px;
+            border-radius: 8px;
+            margin: 14px 0;
+            border: 1px dashed var(--gold);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.45); } 70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); } 100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); } }
+    </style>
+</head>
+<body>
+
+    <!-- STUDENT VERIFICATION PANEL -->
+    <div id="student-verification-panel" class="container" style="max-width: 500px; text-align: center; background: rgba(15, 23, 42, 0.95);">
+        <div style="font-size: 42px; margin-bottom: 10px;">👤</div>
+        <h3 style="color: var(--neon-cyan); margin-bottom: 8px; font-size: 1.25rem;">ยืนยันตัวตนก่อนทำภารกิจ</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px;">Unit 2: Fashion Forward — Mission 2.3 (Pages 24-25)</p>
+        <input type="text" id="verify-sid" placeholder="กรอกรหัสนักเรียน (Student ID)" style="text-align: center; margin-bottom: 12px; font-size: 1.15rem !important; padding: 14px; font-family: 'Orbitron', 'Kanit', sans-serif; letter-spacing: 2px;">
+        <button onclick="verifyStudent()" style="background: var(--neon-cyan); color: #000; padding: 14px;">ยืนยันรหัส & เริ่มภารกิจ 🚀</button>
+        <a href="index.html" class="btn-back" style="display: block; text-align: center; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 0.9rem;">⬅️ กลับหน้าหลัก (Dashboard)</a>
+        <div id="verify-result" style="margin-top: 12px; font-size: 0.9rem; font-weight: bold;"></div>
+    </div>
+
+    <!-- MAIN MISSION VIEW -->
+    <div id="view-mission" class="container hidden">
+        
+        <div class="top-bar">
+            <a href="index.html" class="btn-home-link">🏠 กลับหน้าหลัก (Dashboard)</a>
+        </div>
+
+        <!-- STUDENT PROFILE BADGE -->
+        <div class="profile-badge">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-size: 1.8rem; background: rgba(0,0,0,0.5); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid #334155;">🎓</div>
+                <div>
+                    <div style="font-size: 0.72rem; color: var(--text-muted); font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">CURRENT EXPLORER</div>
+                    <div id="display-student-name" style="font-weight: bold; color: var(--neon-cyan); font-size: 1.05rem; line-height: 1.2;">นักเรียน ม.3</div>
+                </div>
+            </div>
+            <div id="display-student-id" style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--gold); background: rgba(250, 204, 21, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(250, 204, 21, 0.3);">ID: -----</div>
+        </div>
+
+        <!-- MISSION NAV (ล็อกข้ามด่าน) -->
+        <div id="missionNav" class="tab-container">
+            <button id="tab1" class="tab-btn active" onclick="goToPhase(1)">1. Vocab (Page 24)</button>
+            <button id="tab2" class="tab-btn locked-tab" onclick="goToPhase(2)">🔒 2. Reading (Page 25)</button>
+        </div>
+
+        <div class="header-mission">
+            <h2>Mission 2.3: Fashion Trend of the Past</h2>
+            <span id="pageBadge" style="background: #334155; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;">Page 24</span>
+        </div>
+
+        <!-- ================= PHASE 1: VOCABULARY (Page 24) ================= -->
+        <div id="phase1">
+            <div class="section-title">C. Reading — Vocabulary</div>
+            
+            <div class="card">
+                <p class="sub-heading">1. Listen and repeat. (ฟังการออกเสียงและทำความเข้าใจคำศัพท์ทั้ง 8 คำ)</p>
+                
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 2-07 (Vocabulary)</span>
+                    <audio controls><source src="audio_u2/NF2e_SB3_Track 02-07.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <div class="vocab-grid">
+                    <div class="vocab-item"><span class="vocab-word">makeup</span><span class="vocab-meaning">เครื่องสำอาง</span></div>
+                    <div class="vocab-item"><span class="vocab-word">perfume</span><span class="vocab-meaning">น้ำหอม</span></div>
+                    <div class="vocab-item"><span class="vocab-word">collar</span><span class="vocab-meaning">ปกเสื้อ / สร้อยปลอกคอ</span></div>
+                    <div class="vocab-item"><span class="vocab-word">practical</span><span class="vocab-meaning">ใช้งานได้จริง</span></div>
+                    <div class="vocab-item"><span class="vocab-word">popular</span><span class="vocab-meaning">เป็นที่นิยม</span></div>
+                    <div class="vocab-item"><span class="vocab-word">style</span><span class="vocab-meaning">สไตล์, รูปแบบ</span></div>
+                    <div class="vocab-item"><span class="vocab-word">trend</span><span class="vocab-meaning">กระแส, เทรนด์</span></div>
+                    <div class="vocab-item"><span class="vocab-word">noble</span><span class="vocab-meaning">ชนชั้นสูง, ขุนนาง</span></div>
+                </div>
+
+                <p class="sub-heading">2. Fill in the blanks with the best vocabulary words. (เลือกคำศัพท์เติมลงในช่องว่างให้ถูกต้อง)</p>
+
+                <div class="question">
+                    <div class="q-text">1. A sport shirt has a <select class="word-dropdown blank-input" id="v24_1"><option value="">-- เลือกคำศัพท์ --</option></select>, but a T-shirt does not.</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">2. The coat is a nice color, but it's not my <select class="word-dropdown blank-input" id="v24_2"><option value="">-- เลือกคำศัพท์ --</option></select>.</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">3. Sneakers are more <select class="word-dropdown blank-input" id="v24_3"><option value="">-- เลือกคำศัพท์ --</option></select> than high heels for a walk in the park.</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">4. The prince wants to marry a woman from a <select class="word-dropdown blank-input" id="v24_4"><option value="">-- เลือกคำศัพท์ --</option></select> family.</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">5. Tessa is beautiful even without <select class="word-dropdown blank-input" id="v24_5"><option value="">-- เลือกคำศัพท์ --</option></select>.</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">6. Online magazines have up-to-date information about new <select class="word-dropdown blank-input" id="v24_6"><option value="">-- เลือกคำศัพท์ --</option></select>.</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">7. Jenna wore a light <select class="word-dropdown blank-input" id="v24_7"><option value="">-- เลือกคำศัพท์ --</option></select> that smelled like spring flowers.</div>
+                </div>
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">8. Something or someone that is liked by many people is <select class="word-dropdown blank-input" id="v24_8"><option value="">-- เลือกคำศัพท์ --</option></select>.</div>
+                </div>
+
+                <div id="fb-p1" class="master-feedback"></div>
+                <button class="btn-check" id="btn-check-1" onclick="checkPhase1()">ตรวจคำตอบ Phase 1</button>
+                <button class="btn-next hidden" id="btn-next-1" onclick="goToPhase(2)">➔ ไปด่าน Reading & Comprehension (Page 25)</button>
+            </div>
+        </div>
+
+        <!-- ================= PHASE 2: READING & COMPREHENSION (Page 25) ================= -->
+        <div id="phase2" class="hidden">
+            <div class="section-title">Reading & Comprehension (Page 25)</div>
+
+            <div class="card">
+                <p class="sub-heading">4. Read and listen. (ฟังและอ่านบทความเรื่องแฟชั่นในอดีต)</p>
+
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 2-08 (Fashion Trend of the Past)</span>
+                    <audio controls><source src="audio_u2/NF2e_SB3_Track 02-08.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <div class="article-box">
+                    <div class="article-header">📜 Fashion Trend of the Past</div>
+
+                    <div class="reading-para">
+                        <div class="para-title-slot">
+                            <span class="para-badge">Paragraph 1</span>
+                            <span id="preview-title-1">_______________________</span>
+                        </div>
+                        <p>In ancient Egypt, both men and women shaved their heads and wore decorated wigs. Wealthy or royal people wore heavy collars made of gold and jewels. They wore perfume, makeup, and fine clothes to show that they were important. But their fashions were also practical. Shaving people's heads prevented lice. The heavy black makeup around their eyes protected them from the sun. Creamy perfumes helped keep their skin from drying out and were even used to brush their teeth.</p>
+                    </div>
+
+                    <div class="reading-para">
+                        <div class="para-title-slot">
+                            <span class="para-badge">Paragraph 2</span>
+                            <span id="preview-title-2">_______________________</span>
+                        </div>
+                        <p>High heels are popular with women today. But high heels were first popular among men! In the fifteenth century, high heels were worn by Persian soldiers. The heels helped keep their feet in place when they rode horses. Then European men copied the style. They wore high heels to show how rich and powerful they were. Women wore high heels to show how important their husbands were. Some heels were so high that people needed servants to walk beside them so they wouldn't fall. It is said that King Louis XIV, a seventeenth-century French king, wore heels that were almost ten centimeters tall. Clearly, those high heels were not for riding horses!</p>
+                    </div>
+
+                    <div class="reading-para">
+                        <div class="para-title-slot">
+                            <span class="para-badge">Paragraph 3</span>
+                            <span id="preview-title-3">_______________________</span>
+                        </div>
+                        <p>In the sixteenth century, most people had healthy teeth. This is because sugar was not in most food, since it was very expensive. One person who loved sweets and had enough money to buy them was Queen Elizabeth I of England. She loved sweets so much that some people say her teeth were black. But instead of seeing black teeth as dirty, people saw them as trendy. People started to blacken their teeth so that they could look rich and noble like Queen Elizabeth.</p>
+                    </div>
+                </div>
+
+                <!-- Exercise 5 -->
+                <p class="sub-heading">5. Comprehension: Circle True or False. (อ่านบทความแล้วเลือก true หรือ false)</p>
+
+                <div class="question">
+                    <div class="q-text">1. Ancient Egyptians wore gold and jewels in their hair.
+                        <select id="r25_5_1" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="q-text">2. The French were the first to wear high heels.
+                        <select id="r25_5_2" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="q-text">3. High heels were worn by Persian soldiers to be stylish.
+                        <select id="r25_5_3" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">4. People used to think that black teeth were dirty.
+                        <select id="r25_5_4" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+
+                <!-- Exercise 6 -->
+                <p class="sub-heading">6. Circle the best titles for the paragraphs. (เลือกชื่อหัวข้อที่เหมาะสมที่สุดให้กับแต่ละย่อหน้า)</p>
+
+                <div class="question">
+                    <div class="q-text">1. Paragraph 1:</div>
+                    <select id="r25_6_1" class="full-select" onchange="updateTitlePreview(1, this)">
+                        <option value="">-- เลือกชื่อหัวข้อ --</option>
+                        <option value="a">a. Shaved Heads</option>
+                        <option value="b">b. Gold and Jewels</option>
+                        <option value="c">c. Beautiful and Practical</option>
+                    </select>
+                </div>
+
+                <div class="question">
+                    <div class="q-text">2. Paragraph 2:</div>
+                    <select id="r25_6_2" class="full-select" onchange="updateTitlePreview(2, this)">
+                        <option value="">-- เลือกชื่อหัวข้อ --</option>
+                        <option value="a">a. Popular Shoes</option>
+                        <option value="b">b. A Man in Heels</option>
+                        <option value="c">c. Persian Horses</option>
+                    </select>
+                </div>
+
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">3. Paragraph 3:</div>
+                    <select id="r25_6_3" class="full-select" onchange="updateTitlePreview(3, this)">
+                        <option value="">-- เลือกชื่อหัวข้อ --</option>
+                        <option value="a">a. Sweet Tooth</option>
+                        <option value="b">b. Black Candy</option>
+                        <option value="c">c. Kings and Queens</option>
+                    </select>
+                </div>
+
+                <div id="fb-p2" class="master-feedback"></div>
+                <button class="btn-check" id="btn-check-2" style="margin-top: 20px;" onclick="checkPhase2()">ตรวจคำตอบ & จบภารกิจ 🏆</button>
+                <button class="btn-back" onclick="goToPhase(1)">⬅️ ย้อนกลับ</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ================= API & MISSION CONFIG (M.3) =================
+        const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
+        const THIS_MISSION_ID = "M06"; // Unit 2.3 (Pages 24-25)
+
+        let verifiedStudentId = "";
+        let verifiedStudentName = "";
+        let isPhase1Passed = false;
+
+        // สุ่มตัวเลือกคำศัพท์ (Auto-Shuffle) แยกแต่ละข้อใน Ex. 2 (หน้า 24)
+        const vocabList = ["collar", "style", "practical", "noble", "makeup", "trends", "perfume", "popular"];
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function populateShuffledDropdowns() {
+            document.querySelectorAll('.word-dropdown').forEach(dropdown => {
+                const shuffled = shuffleArray(vocabList);
+                shuffled.forEach(word => {
+                    const option = document.createElement('option');
+                    option.value = word;
+                    option.textContent = word;
+                    dropdown.appendChild(option);
+                });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            populateShuffledDropdowns();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            let sid = urlParams.get('sid');
+            let savedName = "";
+
+            const savedSession = localStorage.getItem("pd_m3_portal_session") || localStorage.getItem("pd_portal_session");
+            if (savedSession) {
+                try {
+                    const appState = JSON.parse(savedSession);
+                    if (appState.user && appState.user.studentId) {
+                        if (!sid || sid === "GUEST") sid = appState.user.studentId;
+                        if (String(appState.user.studentId).trim() === String(sid).trim()) {
+                            savedName = appState.user.name || "";
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            const sidInput = document.getElementById('verify-sid');
+            if (sid && sid !== "GUEST" && sid !== "GUEST (ไม่ได้ล็อกอิน)") {
+                sidInput.value = sid;
+                sidInput.setAttribute('readonly', true);
+                verifiedStudentId = sid;
+                verifiedStudentName = savedName || `Student #${sid}`;
+
+                if (savedName) {
+                    enterMissionScreen();
+                }
+            }
+
+            // รีเซ็ตสถานะอัตโนมัติหากมีการแก้ไขคำตอบใน Phase 1 หลังตรวจผ่านแล้ว
+            document.querySelectorAll('#phase1 select').forEach(el => {
+                el.addEventListener('change', () => {
+                    if (isPhase1Passed) {
+                        isPhase1Passed = false;
+                        document.getElementById('tab1').innerHTML = "1. Vocab (Page 24)";
+                        const tab2 = document.getElementById('tab2');
+                        tab2.innerHTML = "🔒 2. Reading (Page 25)";
+                        tab2.classList.add('locked-tab');
+                        document.getElementById('btn-next-1').classList.add('hidden');
+                        document.getElementById('btn-check-1').classList.remove('hidden');
+                    }
+                });
+            });
+        });
+
+        function verifyStudent() {
+            const sid = document.getElementById('verify-sid').value.trim();
+            const resDiv = document.getElementById('verify-result');
+            if (!sid) {
+                resDiv.innerHTML = '<span style="color: var(--neon-red);">❌ กรุณากรอกรหัสนักเรียนก่อนเริ่มภารกิจ</span>';
+                return;
+            }
+            verifiedStudentId = sid;
+            if (!verifiedStudentName) verifiedStudentName = `Explorer #${sid}`;
+            enterMissionScreen();
+        }
+
+        function enterMissionScreen() {
+            document.getElementById('display-student-name').innerText = verifiedStudentName;
+            document.getElementById('display-student-id').innerText = "ID: " + verifiedStudentId;
+            document.getElementById('student-verification-panel').style.display = 'none';
+            document.getElementById('view-mission').classList.remove('hidden');
+        }
+
+        // แสดงชื่อหัวข้อที่เลือกจากข้อ 6 ขึ้นไปบนย่อหน้าแบบเรียลไทม์
+        function updateTitlePreview(paraNum, selectEl) {
+            const previewEl = document.getElementById('preview-title-' + paraNum);
+            if (!previewEl) return;
+            if (!selectEl.value) {
+                previewEl.textContent = "_______________________";
+            } else {
+                const rawText = selectEl.options[selectEl.selectedIndex].text;
+                previewEl.textContent = rawText.replace(/^[a-c]\.\s*/i, '');
+            }
+        }
+
+        // ระบบสลับหน้า (ล็อกข้ามด่าน)
+        function goToPhase(phaseNum) {
+            if (phaseNum === 2 && !isPhase1Passed) {
+                const fb1 = document.getElementById('fb-p1');
+                fb1.style.display = 'block';
+                fb1.className = 'master-feedback wrong';
+                fb1.innerHTML = '⚠️ กรุณาทำด่าน Vocab (Page 24) และกด "ตรวจคำตอบ" ให้ผ่านครบทุกข้อก่อนไปหน้า 25 นะครับ!';
+                fb1.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            document.querySelectorAll('#phase1, #phase2').forEach(el => el.classList.add('hidden'));
+            document.getElementById('phase' + phaseNum).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab' + phaseNum).classList.add('active');
+
+            document.getElementById('pageBadge').innerText = (phaseNum === 1) ? "Page 24" : "Page 25";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateSelectGroup(answerMap) {
+            let allCorrect = true;
+            for (const key in answerMap) {
+                const el = document.getElementById(key);
+                const isInline = el.classList.contains('blank-input');
+                if (el.value !== answerMap[key]) {
+                    allCorrect = false;
+                    if (isInline) {
+                        el.style.setProperty('border-bottom-color', 'var(--neon-red)', 'important');
+                    } else {
+                        el.style.setProperty('border-color', 'var(--neon-red)', 'important');
+                    }
+                    el.classList.remove('is-correct');
+                } else {
+                    if (isInline) {
+                        el.style.setProperty('border-bottom-color', 'var(--neon-green)', 'important');
+                    } else {
+                        el.style.setProperty('border-color', 'var(--neon-green)', 'important');
+                    }
+                    el.classList.add('is-correct');
+                }
+            }
+            return allCorrect;
+        }
+
+        // ตรวจคำตอบ Phase 1: Vocabulary (Page 24)
+        function checkPhase1() {
+            const ans = {
+                v24_1: 'collar',
+                v24_2: 'style',
+                v24_3: 'practical',
+                v24_4: 'noble',
+                v24_5: 'makeup',
+                v24_6: 'trends',
+                v24_7: 'perfume',
+                v24_8: 'popular'
+            };
+
+            const correct = validateSelectGroup(ans);
+            const fb = document.getElementById('fb-p1');
+            fb.style.display = 'block';
+
+            if (correct) {
+                isPhase1Passed = true;
+                document.getElementById('tab1').innerHTML = "1. Vocab (Page 24) ✔️";
+                const tab2 = document.getElementById('tab2');
+                tab2.innerHTML = "2. Reading (Page 25)";
+                tab2.classList.remove('locked-tab');
+
+                fb.className = 'master-feedback correct';
+                fb.innerHTML = '✔️ ยอดเยี่ยม! คำศัพท์หน้า 24 ถูกต้องครบทุกข้อ ไปลุยบทความหน้า 25 กันต่อเลย';
+                document.getElementById('btn-next-1').classList.remove('hidden');
+                document.getElementById('btn-check-1').classList.add('hidden');
+            } else {
+                isPhase1Passed = false;
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ ยังมีข้อที่ผิดหรือยังไม่เลือก สังเกตเส้นสีแดงแล้วลองแก้ไขใหม่อีกครั้งครับ';
+            }
+        }
+
+        // ตรวจคำตอบ Phase 2: Reading & Comprehension (Page 25) & ดึงรหัสลับ
+        async function checkPhase2() {
+            const fb = document.getElementById('fb-p2');
+            if (!isPhase1Passed) {
+                fb.style.display = 'block';
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ กรุณาย้อนกลับไปทำด่าน Vocab (Page 24) ให้ผ่านก่อนนะครับ';
+                return;
+            }
+
+            const ans = {
+                r25_5_1: 'false',
+                r25_5_2: 'false',
+                r25_5_3: 'false',
+                r25_5_4: 'false',
+                r25_6_1: 'c', // Beautiful and Practical
+                r25_6_2: 'b', // A Man in Heels
+                r25_6_3: 'a'  // Sweet Tooth
+            };
+
+            const correct = validateSelectGroup(ans);
+            fb.style.display = 'block';
+
+            if (!correct) {
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ ยังมีข้อที่ผิด ลองย้อนกลับไปอ่านรายละเอียดในบทความตรงข้อสีแดงแล้วกดตรวจใหม่นะครับ';
+                return;
+            }
+
+            document.getElementById('tab2').innerHTML = "2. Reading (Page 25) ✔️";
+            document.getElementById('btn-check-2').classList.add('hidden');
+            fb.className = 'master-feedback correct';
+            fb.innerHTML = '⏳ ตรวจสอบถูกต้องครบทุกข้อ! กำลังประมวลผลและดึงรหัสลับจากฐานข้อมูล...';
+
+            await fetchSecretPasscode();
+        }
+
+        async function fetchSecretPasscode() {
+            const fb = document.getElementById('fb-p2');
+            fb.className = 'master-feedback correct';
+            fb.innerHTML = '⏳ กำลังเชื่อมต่อฐานข้อมูลเพื่อดึงรหัสเฉพาะบุคคล...';
+
+            try {
+                // 1. ดึงรหัสลับเฉพาะบุคคลจาก Apps Script ม.3 (ไม่มีรหัสสำรอง)
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "getPasscode",
+                        missionId: THIS_MISSION_ID,
+                        studentId: verifiedStudentId
+                    })
+                });
+                const result = await response.json();
+
+                if (result.status === "success" && result.passcode && result.passcode !== "NO-CODE-FOUND") {
+                    // 2. บันทึกประวัติลง Logs
+                    fetch(API_URL, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            action: "recordActivity",
+                            studentId: verifiedStudentId,
+                            activityType: "WORKSHEET_" + THIS_MISSION_ID,
+                            itemId: THIS_MISSION_ID,
+                            xp: 0,
+                            details: "Completed Unit 2.3: Fashion Trend of the Past (Pages 24-25)"
+                        })
+                    }).catch(() => {});
+
+                    const warningNote = result.passcode.includes("{CIPHER}")
+                        ? `<p style="font-size: 0.82rem; color: var(--neon-orange); margin-top: 8px;">⚠️ แจ้งคุณครู: กรุณาเพิ่มสูตร U23-{CIPHER} ใน Apps Script และ Deploy เวอร์ชันใหม่</p>`
+                        : "";
+
+                    fb.innerHTML = `
+                        <div style="font-size: 1.2rem; margin-bottom: 6px;">🏆 MISSION 2.3 COMPLETED!</div>
+                        <p style="color: #f8fafc; font-weight: normal;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${verifiedStudentId}</strong> ผ่านภารกิจหน้า 24-25 เรียบร้อยแล้ว</p>
+                        <div class="passcode-box">🔑 ${result.passcode}</div>
+                        ${warningNote}
+                        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Dashboard)"</b> ตรงการ์ด <b>${THIS_MISSION_ID}</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                        <a href="index.html" class="btn-finish-link">กลับหน้าหลักเพื่อรับ XP ➔</a>
+                    `;
+                } else {
+                    throw new Error("ไม่พบรหัสด่าน " + THIS_MISSION_ID + " ในชีท Missions");
+                }
+            } catch (error) {
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = `
+                    ❌ ระบบไม่สามารถดึงรหัสลับจากฐานข้อมูลได้<br>
+                    <span style="font-size: 0.85rem; font-weight: normal;">กรุณาตรวจสอบอินเทอร์เน็ต หรือแจ้งคุณครูว่าเพิ่มแถว <b>${THIS_MISSION_ID}</b> ในชีท Missions แล้วหรือยัง</span>
+                    <button class="btn-check" onclick="fetchSecretPasscode()" style="margin-top: 14px;">ลองดึงรหัสใหม่อีกครั้ง 🔄</button>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
