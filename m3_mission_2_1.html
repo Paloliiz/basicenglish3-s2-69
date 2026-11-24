@@ -127,7 +127,7 @@
         }
         select:focus, input:focus { border-color: var(--unit-theme-light); outline: none; }
 
-        /* Dropdown แบบเส้นใต้เนียนไปกับประโยค (แบบ mission_5_4) */
+        /* Dropdown แบบเส้นใต้เนียนไปกับประโยค */
         select.blank-input {
             border: none;
             border-bottom: 2px solid var(--unit-theme);
@@ -389,7 +389,7 @@
             <div id="display-student-id" style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--gold); background: rgba(250, 204, 21, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(250, 204, 21, 0.3);">ID: -----</div>
         </div>
 
-        <!-- MISSION NAV (ล็อกข้ามด่านแบบ mission_5_4) -->
+        <!-- MISSION NAV (ล็อกข้ามด่าน) -->
         <div id="missionNav" class="tab-container">
             <button id="tab1" class="tab-btn active" onclick="goToPhase(1)">1. Vocab (Page 20)</button>
             <button id="tab2" class="tab-btn locked-tab" onclick="goToPhase(2)">🔒 2. Listen Up (Page 21)</button>
@@ -410,7 +410,7 @@
                 
                 <div class="audio-container">
                     <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 2-01 (Vocabulary)</span>
-                    <audio controls><source src="NF2e_SB3_Track 02-01.mp3" type="audio/mpeg"></audio>
+                    <audio controls><source src="audio_u2/NF2e_SB3_Track 02-01.mp3" type="audio/mpeg"></audio>
                 </div>
 
                 <div class="vocab-grid">
@@ -484,7 +484,7 @@
             <div class="card">
                 <div class="audio-container">
                     <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 2-02 (ใช้ฟังสำหรับข้อ 5, 6 และ 7)</span>
-                    <audio controls><source src="NF2e_SB3_Track 02-02.mp3" type="audio/mpeg"></audio>
+                    <audio controls><source src="audio_u2/NF2e_SB3_Track 02-02.mp3" type="audio/mpeg"></audio>
                 </div>
 
                 <!-- Exercise 5 -->
@@ -571,7 +571,7 @@
 
                 <div class="audio-container">
                     <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 2-03 (Challenge)</span>
-                    <audio controls><source src="NF2e_SB3_Track 02-03.mp3" type="audio/mpeg"></audio>
+                    <audio controls><source src="audio_u2/NF2e_SB3_Track 02-03.mp3" type="audio/mpeg"></audio>
                 </div>
 
                 <div class="question">
@@ -630,7 +630,7 @@
     <script>
         // ================= API & MISSION CONFIG (M.3) =================
         const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
-        const THIS_MISSION_ID = "M05"; // Unit 2.1 (Pages 20-21)
+        const THIS_MISSION_ID = "M04"; // Unit 2.1 (Pages 20-21)
 
         let verifiedStudentId = "";
         let verifiedStudentName = "";
@@ -750,7 +750,7 @@
             document.getElementById('view-mission').classList.remove('hidden');
         }
 
-        // 2. ระบบสลับหน้า (ล็อกข้ามด่านแบบ mission_5_4)
+        // 2. ระบบสลับหน้า (ล็อกข้ามด่าน)
         function goToPhase(phaseNum) {
             if (phaseNum === 2 && !isPhase1Passed) {
                 const fb1 = document.getElementById('fb-p1');
@@ -891,7 +891,7 @@
             }
         }
 
-        // 5. ตรวจคำตอบ Phase 3: Challenge (Page 21) & ดึงรหัสลับจากฐานข้อมูล ม.3 (ห้ามมีรหัสสำรอง)
+        // 5. ตรวจคำตอบ Phase 3: Challenge (Page 21) & ดึงรหัสลับจากฐานข้อมูล ม.3 (ไม่มีรหัสสำรอง)
         async function checkPhase3() {
             const fb = document.getElementById('fb-p3');
             if (!isPhase1Passed || !isPhase2Passed) {
