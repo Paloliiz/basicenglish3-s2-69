@@ -271,7 +271,6 @@
                             <!-- Hero Avatar -->
                             <div id="hero-avatar-container" onclick="openWardrobeModal()" title="คลิกเปลี่ยนสกินและกรอบ"
                                 class="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-cosmic-900 border-2 border-purple-300 cursor-pointer flex items-center justify-center shadow-2xl">
-                                <!-- กรอบรูปจะถูกแทรกเข้ามาตรงนี้โดย JS -->
                                 <div id="hero-frame-container"></div>
                                 <div id="hero-skin-container" class="w-full h-full rounded-full overflow-hidden relative z-10"></div>
                             </div>
@@ -362,7 +361,6 @@
                 <div class="p-4 sm:p-6 bg-cosmic-950/80 border border-purple-500/30 rounded-2xl space-y-4 relative shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
                     <div class="flex flex-wrap justify-between items-center mb-2 gap-3">
                         
-                        <!-- Dropdown เลือกหัวข้อไวยากรณ์ ม.3 -->
                         <div class="relative">
                             <select id="grammar-topic-select" onchange="changeGrammarTopic(this.value)" class="bg-cosmic-900 border border-cyan-500/40 text-cyan-300 font-bold text-sm sm:text-base rounded-xl px-4 py-2 focus:outline-none focus:border-cyan-400 shadow-md cursor-pointer appearance-none pr-10">
                                 <option value="u1_comparatives">Unit 1: Comparatives & Intensifiers</option>
@@ -376,14 +374,12 @@
                         <span id="slide-counter" class="px-4 py-1.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-xs sm:text-sm font-scifi font-bold text-blue-100 shadow-md">1 / 10</span>
                     </div>
                     
-                    <!-- ส่วนแสดงรูปภาพสไลด์ -->
                     <div class="relative w-full rounded-xl overflow-hidden border border-slate-700 bg-black flex items-center justify-center min-h-[250px] sm:min-h-[450px]">
                         <img id="current-slide-img" src="U1_Comparatives/U1_Comparatives_1.PNG" alt="Grammar Slide" 
                             class="max-w-full max-h-[65vh] object-contain transition-opacity duration-300 shadow-2xl" 
                             onerror="this.src='https://via.placeholder.com/800x450/090514/38bdf8?text=M.3+Grammar+Slide+Coming+Soon';">
                     </div>
 
-                    <!-- ปุ่มควบคุมสไลด์ -->
                     <div class="flex justify-between items-center pt-3 border-t border-slate-700/50 mt-4">
                         <button onclick="prevSlide()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-xs sm:text-sm font-bold transition flex items-center gap-2 active:scale-95 shadow-md">
                             <span>⬅️</span> <span>ก่อนหน้า</span>
@@ -410,7 +406,6 @@
                         </div>
                         <p class="text-xs sm:text-sm text-purple-200/75 mt-1">สมุดพกภารกิจ ม.3: ตรวจสอบสถานะการส่งงานออนไลน์และแบบฝึกหัดในหนังสือ</p>
                     </div>
-                    <!-- Countdown Timer -->
                     <div class="bg-rose-950/80 border border-rose-500/50 px-4 py-2 rounded-xl text-center shadow-[0_0_15px_rgba(244,63,94,0.2)]">
                         <p class="text-[10px] text-rose-300 font-scifi mb-1">UNIT 1 DEADLINE</p>
                         <p class="text-lg font-bold text-rose-400 font-scifi" id="quest-countdown">-- : -- : --</p>
@@ -418,24 +413,18 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Cyber Quests -->
                     <div class="bg-cosmic-950/80 border border-cyan-500/30 rounded-2xl p-5 shadow-lg">
                         <h4 class="font-bold text-cyan-300 border-b border-cyan-500/30 pb-3 mb-4 flex items-center gap-2">
                             <span>🌐</span> ภารกิจในมิติไซเบอร์ (ทำในเว็บ)
                         </h4>
-                        <div id="quest-web-list" class="space-y-3">
-                            <!-- Injected by JS -->
-                        </div>
+                        <div id="quest-web-list" class="space-y-3"></div>
                     </div>
 
-                    <!-- Real-world Quests -->
                     <div class="bg-cosmic-950/80 border border-pink-500/30 rounded-2xl p-5 shadow-lg">
                         <h4 class="font-bold text-pink-300 border-b border-pink-500/30 pb-3 mb-4 flex items-center gap-2">
                             <span>📚</span> ภารกิจโลกจริง (ส่งครูตรวจในหนังสือ)
                         </h4>
-                        <div id="quest-book-list" class="space-y-3">
-                            <!-- Injected by JS -->
-                        </div>
+                        <div id="quest-book-list" class="space-y-3"></div>
                     </div>
                 </div>
             </section>
@@ -602,8 +591,8 @@
             "M02": { unit: "Unit 1", subtitle: "ฝึกสำนวนการเชิญชวนและอ่านเรื่อง Different Interests (หน้า 10-13)", category: "Speaking & Reading", difficulty: "Medium", xp: 100, artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_2.html" },
             "M03": { unit: "Unit 1", subtitle: "คำศัพท์และการใช้ Grammar: Comparatives & Present Tenses (หน้า 14-15)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_3.html" },
             "M04": { unit: "Unit 1", subtitle: "ภารกิจเสริมท้ายบท Unit 1: Interests", category: "Review & Skills", difficulty: "Hard", xp: 150, artType: "castle", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_4.html" },
-            "V01": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3.html" },
-            "V_U1": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3.html" },
+            "V01": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
+            "V_U1": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
 
             // Final Challenges (Exams M.3)
             "EXAM_U1": { unit: "Unit 1", subtitle: "สอบเก็บคะแนน Unit 1: All About Me (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false },
@@ -714,7 +703,7 @@
 
         function openVoiceLab() {
             const sid = appState.user ? appState.user.studentId : "GUEST";
-            window.open('voice_lab_m3.html?sid=' + sid, '_blank');
+            window.open('voice_lobby.html?sid=' + sid, '_blank');
         }
 
         function openONetArena() {
@@ -882,7 +871,6 @@
             const missions = appState.missions || [];
             const offline = (appState.user && appState.user.offlineTasks) || {}; 
             
-            // 1. งานออนไลน์ ม.3 (Unit 1)
             const webQuests = [
                 { ids: ["M01"], name: "ภารกิจ M01: People's Lifestyles" },
                 { ids: ["M02"], name: "ภารกิจ M02: Invitations & Responses" },
@@ -903,7 +891,6 @@
                 `;
             }).join("");
 
-            // 2. งานออฟไลน์ในหนังสือ ม.3 (Unit 1)
             const bookQuests = [
                 { id: "M01_Book", name: "ส่งแบบฝึกหัดหน้า 8-9 (Unit 1.1)" },
                 { id: "M02_Book", name: "ส่งแบบฝึกหัดหน้า 10-13 (Unit 1.2)" },
@@ -942,7 +929,6 @@
             }
         }
 
-        // Countdown Timer (Unit 1 ม.3)
         setInterval(() => {
             const el = document.getElementById("quest-countdown");
             if (!el) return;
@@ -1192,7 +1178,6 @@
             const customInput = document.getElementById("custom-avatar-url");
             if (customInput) customInput.value = appState.customAvatarUrl || "";
 
-            // Render Frames
             const framesGrid = document.getElementById("wardrobe-frames-grid");
             const curFrame = appState.currentFrameId;
             
@@ -1335,7 +1320,6 @@
             err.classList.add("hidden"); btn.disabled = true; btn.innerHTML = "กำลังตรวจ...";
             
             try {
-                // ส่งรหัสจริงไปตรวจที่ Google Apps Script ของ ม.3 โดยตรง
                 const res = await callPortalApi({ action: "submitMission", studentId: appState.user.studentId, missionId: mId, passcode: code });
                 if(res.status === "success") {
                     appState.user.totalXp = res.totalXp;
@@ -1344,7 +1328,7 @@
                     appState.missions = res.missions;
                     saveSession(); renderAllModules(); closeMissionModal();
                     
-                    if (mId === "V01" || mId === "V_U1" || mId.includes("EXAM") || (res.unlockedSkins && res.unlockedSkins.includes('frame_lazy') && mId === "V01")) {
+                    if (mId === "V01" || mId === "V_U1" || mId.includes("EXAM")) {
                          showToast("🎉 ยินดีด้วย! คุณได้รับกรอบโปรไฟล์ใหม่ ไปดูที่ตู้เสื้อผ้าได้เลย!", "success");
                     } else {
                          showToast(res.message, "success");
