@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Exam Lobby (M.3) | PARALLEL DIMENSION</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        scifi: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        cosmic: { 950: '#070510', 900: '#0d091d', 800: '#150f2e', 700: '#211844' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070510;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(244, 63, 94, 0.1) 0%, transparent 45%);
+            background-attachment: fixed;
+            color: #f1f5f9;
+            min-height: 100vh;
+        }
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(21, 15, 46, 0.88), rgba(13, 9, 29, 0.94));
+            border: 1px solid rgba(244, 63, 94, 0.35);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(244, 63, 94, 0.1);
+            backdrop-filter: blur(12px);
+        }
+        .exam-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(100, 116, 139, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .exam-card:hover:not(.locked) {
+            border-color: #f43f5e;
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.3);
+            transform: translateY(-5px);
+        }
+        .exam-card.locked {
+            opacity: 0.6;
+            filter: grayscale(80%);
+            cursor: not-allowed;
+        }
+        .btn-enter {
+            background: linear-gradient(90deg, #be123c 0%, #f43f5e 100%);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+            transition: all 0.2s;
+        }
+        .btn-enter:hover:not(:disabled) {
+            filter: brightness(1.2);
+            transform: scale(1.02);
+        }
+        .btn-enter:disabled {
+            background: #334155;
+            box-shadow: none;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 lg:p-10 flex flex-col items-center justify-center">
+
+    <div class="glass-panel rounded-3xl max-w-5xl w-full p-6 sm:p-10 relative overflow-hidden">
+        
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-rose-950/80 border border-rose-500/50 shadow-[0_0_20px_rgba(244,63,94,0.4)] mb-4">
+                <span class="text-3xl">⚠️</span>
+            </div>
+            <h1 class="font-scifi text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-500 mb-2 tracking-wider">
+                EXAM LOBBY (M.3)
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base">โถงทางเข้าห้องสอบประจำบท ม.3 (สอบผ่านรับกรอบโปรไฟล์พิเศษ!)</p>
+        </div>
+
+        <div id="loading-msg" class="text-center text-rose-300 mb-6 font-scifi animate-pulse">กำลังตรวจสอบสิทธิ์การเข้าสอบ...</div>
+
+        <!-- EXAM ROOMS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto" id="rooms-container" style="display: none;">
+            
+            <!-- EXAM U1 -->
+            <div id="card-u1" class="exam-card locked rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold px-3 py-1 rounded bg-rose-950 text-rose-400 border border-rose-500/30 font-scifi">UNIT 1</span>
+                        <span id="lock-icon-u1" class="text-lg">🔒</span>
+                    </div>
+                    <h3 class="font-scifi text-xl font-bold text-white mb-2">All About Me</h3>
+                    <p class="text-sm text-slate-300 mb-4">ข้อสอบประจำบทที่ 1 (20 ข้อ • 10 คะแนน)</p>
+                    <div id="req-u1" class="text-xs text-rose-400 bg-rose-950/50 p-2.5 rounded-lg border border-rose-900 mb-6">
+                        <b>เงื่อนไขปลดล็อก:</b> ต้องผ่าน M01, M02, M03 และบอส V01 ก่อน
+                    </div>
+                </div>
+                <button id="btn-u1" disabled onclick="enterExam('unit1_exam.html')" class="btn-enter w-full py-3 rounded-xl font-bold text-white font-scifi tracking-wider">
+                    ENTER EXAM
+                </button>
+            </div>
+
+            <!-- EXAM U2 (COMING SOON) -->
+            <div id="card-u2" class="exam-card locked rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold px-3 py-1 rounded bg-slate-900 text-slate-400 border border-slate-700 font-scifi">UNIT 2</span>
+                        <span class="text-lg">🔒</span>
+                    </div>
+                    <h3 class="font-scifi text-xl font-bold text-slate-300 mb-2">Unit 2 Final Exam</h3>
+                    <p class="text-sm text-slate-400 mb-4">ข้อสอบประจำบทที่ 2 (10 คะแนน)</p>
+                    <div class="text-xs text-slate-400 bg-slate-900/70 p-2.5 rounded-lg border border-slate-700 mb-6">
+                        <b>สถานะ:</b> ยังไม่เปิดให้เข้าสอบ (Coming Soon)
+                    </div>
+                </div>
+                <button disabled class="btn-enter w-full py-3 rounded-xl font-bold font-scifi tracking-wider">
+                    COMING SOON
+                </button>
+            </div>
+
+            <!-- EXAM U3 (COMING SOON) -->
+            <div id="card-u3" class="exam-card locked rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold px-3 py-1 rounded bg-slate-900 text-slate-400 border border-slate-700 font-scifi">UNIT 3</span>
+                        <span class="text-lg">🔒</span>
+                    </div>
+                    <h3 class="font-scifi text-xl font-bold text-slate-300 mb-2">Unit 3 Final Exam</h3>
+                    <p class="text-sm text-slate-400 mb-4">ข้อสอบประจำบทที่ 3 (10 คะแนน)</p>
+                    <div class="text-xs text-slate-400 bg-slate-900/70 p-2.5 rounded-lg border border-slate-700 mb-6">
+                        <b>สถานะ:</b> ยังไม่เปิดให้เข้าสอบ (Coming Soon)
+                    </div>
+                </div>
+                <button disabled class="btn-enter w-full py-3 rounded-xl font-bold font-scifi tracking-wider">
+                    COMING SOON
+                </button>
+            </div>
+
+        </div>
+        
+        <div class="text-center mt-10 border-t border-rose-500/20 pt-6">
+            <a href="index.html" class="text-sm text-slate-400 hover:text-white underline transition">
+                ⬅️ กลับสู่หน้า Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentSid = "GUEST";
+        let completedMissions = [];
+        
+        // Google Apps Script API ของ ม.3
+        const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            let sidFromUrl = urlParams.get('sid');
+            let savedPin = "";
+
+            try {
+                const savedSession = JSON.parse(localStorage.getItem("pd_m3_portal_session") || localStorage.getItem("pd_portal_session"));
+                if (savedSession) {
+                    if ((!sidFromUrl || sidFromUrl === "GUEST") && savedSession.user) {
+                        sidFromUrl = savedSession.user.studentId;
+                    }
+                    savedPin = savedSession.studentPin || "";
+                    if (savedSession.missions) {
+                        completedMissions = savedSession.missions.filter(m => m.state === "COMPLETED").map(m => m.missionId);
+                    }
+                }
+            } catch (e) {}
+
+            if (sidFromUrl && sidFromUrl !== "GUEST") {
+                currentSid = sidFromUrl;
+                checkExamEligibility(savedPin);
+            } else {
+                document.getElementById('loading-msg').textContent = "⚠️ ไม่พบข้อมูลนักเรียน กรุณาล็อกอินใหม่ในหน้าหลัก";
+            }
+        });
+
+        async function checkExamEligibility(pin) {
+            if (currentSid === "GUEST") return;
+            
+            if (pin) {
+                try {
+                    const res = await fetch(API_URL, { 
+                        method: "POST", 
+                        body: JSON.stringify({ action: "login", studentId: currentSid, pin: pin })
+                    });
+                    const data = await res.json();
+                    if (data && data.status === "success" && data.missions) {
+                        completedMissions = data.missions.filter(m => m.state === "COMPLETED").map(m => m.missionId);
+                    }
+                } catch(e) {
+                    // ใช้ข้อมูลที่โหลดไว้จาก localStorage ต่อได้ทันที
+                }
+            }
+
+            evaluateLocks();
+        }
+
+        function evaluateLocks() {
+            document.getElementById('loading-msg').style.display = "none";
+            document.getElementById('rooms-container').style.display = "grid";
+
+            // เงื่อนไขปลดล็อกสอบท้ายบทที่ 1 (ม.3): ผ่าน M01, M02, M03 และบอส V01 (หรือ V_U1)
+            const hasCore = ["M01", "M02", "M03"].every(m => completedMissions.includes(m));
+            const hasBoss = completedMissions.includes("V01") || completedMissions.includes("V_U1");
+            const isU1Ready = hasCore && hasBoss;
+            const isU1Completed = completedMissions.includes("EXAM_U1");
+            
+            if (isU1Completed) {
+                document.getElementById("card-u1").classList.add("locked");
+                document.getElementById("btn-u1").disabled = true;
+                document.getElementById("btn-u1").innerText = "สอบผ่านแล้ว ✓";
+                document.getElementById("lock-icon-u1").textContent = "🏆";
+                document.getElementById("req-u1").className = "text-xs text-emerald-400 bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-900 mb-6";
+                document.getElementById("req-u1").innerHTML = "<b>สถานะ:</b> สอบผ่านเรียบร้อยแล้ว";
+            } else if (isU1Ready) {
+                document.getElementById("card-u1").classList.remove("locked");
+                document.getElementById("btn-u1").disabled = false;
+                document.getElementById("lock-icon-u1").textContent = "🔓";
+                document.getElementById("req-u1").className = "text-xs text-emerald-400 bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-900 mb-6";
+                document.getElementById("req-u1").innerHTML = "<b>สถานะ:</b> มีสิทธิ์เข้าสอบ (พร้อมลุย!)";
+            }
+        }
+
+        function enterExam(targetPage) {
+            window.location.href = `${targetPage}?sid=${encodeURIComponent(currentSid)}`;
+        }
+    </script>
+</body>
+</html>
