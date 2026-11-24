@@ -70,20 +70,16 @@
         .animate-float { animation: floatSlow 4s ease-in-out infinite; }
         .nav-btn-active { background: linear-gradient(90deg, rgba(147, 51, 234, 0.85) 0%, rgba(219, 39, 119, 0.65) 100%); color: #ffffff !important; border: 1px solid rgba(216, 180, 254, 0.6); box-shadow: 0 0 18px rgba(168, 85, 247, 0.4); }
 
-        /* --- Frame CSS Classes (M.3 Edition) --- */
+        /* --- Frame CSS Classes (M.3 Edition - Pure CSS) --- */
         .frame-base { position: absolute; inset: -6px; pointer-events: none; z-index: 20; border-radius: 50%; }
         
-        /* กรอบบอส Unit 1 (ดึงไฟล์ frame_lazy.png จาก GitHub) */
-        .frame-lazy-img {
-            background-image: url('frame_lazy.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            inset: -15px;
-            z-index: 30;
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
+        /* กรอบบอส Unit 1: The Lazy Phantom (สร้างด้วย CSS ล้วน) */
+        .frame-lazy-aura {
+            border: 4px dashed #a855f7;
+            outline: 2px solid rgba(56, 189, 248, 0.7);
+            outline-offset: 2px;
+            box-shadow: 0 0 18px #a855f7, 0 0 32px rgba(56, 189, 248, 0.6), inset 0 0 15px #c084fc;
+            animation: spinSlow 12s linear infinite;
         }
         
         .frame-level5 {
@@ -589,7 +585,7 @@
 
         const FRAME_CATALOG = {
             "Frame00": { id: "Frame00", name: "No Frame", subtitle: "ซ่อนกรอบ", cssClass: "", reqLevel: 0 },
-            "frame_lazy": { id: "frame_lazy", name: "Lazy Phantom Aura", subtitle: "ปราบบอส U1 (V01)", cssClass: "frame-lazy-img", reqMission: ["V01", "V_U1"] },
+            "frame_lazy": { id: "frame_lazy", name: "Lazy Phantom Aura", subtitle: "ปราบบอส U1 (V01)", cssClass: "frame-lazy-aura", reqMission: ["V01", "V_U1"] },
             "FrameU1": { id: "FrameU1", name: "Active Spirit", subtitle: "จบภารกิจ Unit 1 (M03)", cssClass: "frame-u1-clear", reqMission: "M03" },
             "FrameEx1": { id: "FrameEx1", name: "Unit 1 Conqueror", subtitle: "สอบผ่าน Unit 1 (EXAM_U1)", cssClass: "frame-ex1", reqMission: "EXAM_U1" },
             "FrameU2": { id: "FrameU2", name: "Star Voyager", subtitle: "จบภารกิจ Unit 2", cssClass: "frame-u2-clear", reqMission: "M08" },
@@ -630,7 +626,6 @@
         // ==========================================
         // ระบบสไลด์ Grammar Codex (ม.3)
         // ==========================================
-        // คุณครูสามารถเปลี่ยนชื่อโฟลเดอร์และจำนวนหน้า (total) ให้ตรงกับไฟล์สไลด์ที่อัปโหลดขึ้น GitHub ได้ตรงนี้ครับ
         const GRAMMAR_TOPICS = {
             "u1_comparatives": { folder: "U1_Comparatives/", prefix: "U1_Comparatives_", ext: ".PNG", total: 10 },
             "u1_present_tenses": { folder: "U1_Present_Tenses/", prefix: "U1_Present_Tenses_", ext: ".PNG", total: 10 }
@@ -724,7 +719,6 @@
 
         function openONetArena() {
             const sid = appState.user ? appState.user.studentId : "GUEST";
-            // หากยังไม่ได้สร้างไฟล์ onet_arena.html สามารถเปลี่ยนบรรทัดนี้เป็น showToast ได้ครับ
             window.open('onet_arena.html?sid=' + sid, '_blank');
         }
 
@@ -929,7 +923,6 @@
                 `;
             }).join("");
             
-            // อัปเดตตัวเลขแจ้งเตือนบนปุ่มภารกิจ (นับเฉพาะด่านที่เปิดอยู่ในชีทและยังไม่ผ่าน)
             const activeMissions = missions.filter(m => {
                 const preset = MISSION_META_PRESETS[m.missionId];
                 return !(preset && preset.category === "Exam");
@@ -949,7 +942,7 @@
             }
         }
 
-        // Countdown Timer (ปรับวันหมดเขตของ Unit 1 ม.3 ได้ตรงนี้)
+        // Countdown Timer (Unit 1 ม.3)
         setInterval(() => {
             const el = document.getElementById("quest-countdown");
             if (!el) return;
