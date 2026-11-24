@@ -73,13 +73,22 @@
         /* --- Frame CSS Classes (M.3 Edition - Pure CSS) --- */
         .frame-base { position: absolute; inset: -6px; pointer-events: none; z-index: 20; border-radius: 50%; }
         
-        /* กรอบบอส Unit 1: The Lazy Phantom (สร้างด้วย CSS ล้วน) */
+        /* กรอบบอส Unit 1: The Lazy Phantom */
         .frame-lazy-aura {
             border: 4px dashed #a855f7;
             outline: 2px solid rgba(56, 189, 248, 0.7);
             outline-offset: 2px;
             box-shadow: 0 0 18px #a855f7, 0 0 32px rgba(56, 189, 248, 0.6), inset 0 0 15px #c084fc;
             animation: spinSlow 12s linear infinite;
+        }
+
+        /* กรอบบอส Unit 2: The Vanity Glitch */
+        .frame-vanity-aura {
+            border: 4px double #ec4899;
+            outline: 2px dashed #facc15;
+            outline-offset: 2px;
+            box-shadow: 0 0 20px #ec4899, 0 0 36px rgba(250, 204, 21, 0.65), inset 0 0 16px #fb7185;
+            animation: spinSlow 10s linear reverse infinite;
         }
         
         .frame-level5 {
@@ -220,12 +229,12 @@
                 <nav class="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0">
                     <button onclick="switchModule('missions')" id="nav-missions" class="module-nav-btn nav-btn-active flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap">
                         <span class="flex items-center gap-2.5"><span class="text-base">🏠</span><span>แบบฝึกหัด (Missions)</span></span>
-                        <span id="badge-nav-missions" class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-purple-950/90 border border-purple-400/40 text-[10px] font-scifi text-purple-200">4</span>
+                        <span id="badge-nav-missions" class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-purple-950/90 border border-purple-400/40 text-[10px] font-scifi text-purple-200">9</span>
                     </button>
 
                     <button onclick="switchModule('grammar')" id="nav-grammar" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap">
                         <span class="flex items-center gap-2.5"><span class="text-base">📘</span><span>คลังความรู้ (Grammar)</span></span>
-                        <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-scifi text-blue-200">Unit 1</span>
+                        <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-scifi text-blue-200">2 บท</span>
                     </button>
 
                     <button onclick="openVoiceLab()" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap shadow-[0_0_15px_rgba(168,85,247,0.2)]">
@@ -365,6 +374,8 @@
                             <select id="grammar-topic-select" onchange="changeGrammarTopic(this.value)" class="bg-cosmic-900 border border-cyan-500/40 text-cyan-300 font-bold text-sm sm:text-base rounded-xl px-4 py-2 focus:outline-none focus:border-cyan-400 shadow-md cursor-pointer appearance-none pr-10">
                                 <option value="u1_comparatives">Unit 1: Comparatives & Intensifiers</option>
                                 <option value="u1_present_tenses">Unit 1: Present Simple vs Present Continuous</option>
+                                <option value="u2_used_to_would">Unit 2: Past Habits (used to / would)</option>
+                                <option value="u2_passive_voice">Unit 2: Present & Past Simple Passive</option>
                             </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-cyan-400">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
@@ -391,7 +402,7 @@
                     </div>
                     
                     <div class="text-center mt-2">
-                        <p class="text-[10px] sm:text-xs text-slate-400">💡 ทริค: ทบทวนไวยากรณ์ Unit 1 ก่อนลุยด่าน M03 และห้องสอบท้ายบท</p>
+                        <p class="text-[10px] sm:text-xs text-slate-400">💡 ทริค: ทบทวนไวยากรณ์ก่อนลุยด่าน Writing และห้องสอบท้ายบท</p>
                     </div>
                 </div>
             </section>
@@ -407,7 +418,7 @@
                         <p class="text-xs sm:text-sm text-purple-200/75 mt-1">สมุดพกภารกิจ ม.3: ตรวจสอบสถานะการส่งงานออนไลน์และแบบฝึกหัดในหนังสือ</p>
                     </div>
                     <div class="bg-rose-950/80 border border-rose-500/50 px-4 py-2 rounded-xl text-center shadow-[0_0_15px_rgba(244,63,94,0.2)]">
-                        <p class="text-[10px] text-rose-300 font-scifi mb-1">UNIT 1 DEADLINE</p>
+                        <p class="text-[10px] text-rose-300 font-scifi mb-1">TERM 2 DEADLINE</p>
                         <p class="text-lg font-bold text-rose-400 font-scifi" id="quest-countdown">-- : -- : --</p>
                     </div>
                 </div>
@@ -435,10 +446,10 @@
             <div class="cosmic-card rounded-3xl p-5 space-y-3">
                 <h4 class="font-scifi font-bold text-sm tracking-wider text-white flex items-center gap-2"><span>📢</span> SYSTEM ANNOUNCEMENT</h4>
                 <div class="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/90 to-indigo-950/80 border border-purple-400/30 flex items-start gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg flex-shrink-0">🚧</div>
+                    <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg flex-shrink-0">🔥</div>
                     <div class="text-xs space-y-1">
-                        <p class="font-semibold text-purple-100">ประกาศต้อนรับเทอม 2 (ม.3)</p>
-                        <p class="text-slate-300 leading-relaxed">ขณะนี้เปิดให้ผจญภัยเริ่มจาก <b>Unit 1: All About Me (M01)</b> และบอส <b>The Lazy Phantom</b> เป็นต้นไป บทถัดไปจะทยอยปลดล็อกครับ!</p>
+                        <p class="font-semibold text-purple-100">เปิดมิติ Unit 2: Fashion Forward แล้ว!</p>
+                        <p class="text-slate-300 leading-relaxed">ลุยภารกิจ <b>M04–M07</b> และปราบบอส <b>The Vanity Glitch (V02)</b> เพื่อปลดล็อกกรอบใหม่และห้องสอบ <b>EXAM_U2</b> ได้เลย!</p>
                     </div>
                 </div>
             </div>
@@ -567,8 +578,8 @@
             "Skin03": { id: "Skin03", name: "Skin 03: Mastermind", subtitle: "ชุดนักสำรวจมิติพิศวง", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M02", svg: `<img src="skin03.png" alt="Mastermind" class="w-full h-full object-cover">` },
             "Skin04": { id: "Skin04", name: "Skin 04: Cyber Ninja", subtitle: "นินจาไซเบอร์แห่งมิติเวลา", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M03", svg: `<img src="skin04.png" alt="Cyber Ninja" class="w-full h-full object-cover">` },
             "Skin05": { id: "Skin05", name: "Skin 05: Galactic Scholar", subtitle: "นักปราชญ์จักรวาลคู่ขนาน", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M04", svg: `<img src="skin05.png" alt="Galactic Scholar" class="w-full h-full object-cover">` },
-            "Skin06": { id: "Skin06", name: "Skin 06: Time Warden", subtitle: "ผู้พิทักษ์กาลเวลา", unlockHint: "ปลดล็อกเมื่อผ่านด่านที่กำหนด", svg: `<img src="skin06.png" alt="Time Warden" class="w-full h-full object-cover">` },
-            "Skin07": { id: "Skin07", name: "Skin 07: Void Walker", subtitle: "ผู้ท่องความว่างเปล่า", unlockHint: "ปลดล็อกเมื่อผ่านด่านที่กำหนด", svg: `<img src="skin07.png" alt="Void Walker" class="w-full h-full object-cover">` },
+            "Skin06": { id: "Skin06", name: "Skin 06: Time Warden", subtitle: "ผู้พิทักษ์กาลเวลา", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M05", svg: `<img src="skin06.png" alt="Time Warden" class="w-full h-full object-cover">` },
+            "Skin07": { id: "Skin07", name: "Skin 07: Void Walker", subtitle: "ผู้ท่องความว่างเปล่า", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M06", svg: `<img src="skin07.png" alt="Void Walker" class="w-full h-full object-cover">` },
             "Skin99": { id: "Skin99", name: "Custom Avatar", subtitle: "ตัวละครที่คุณสร้างเอง", unlockHint: "ปลดล็อกเมื่อใส่ลิงก์รูปภาพ", svg: `<svg viewBox="0 0 200 200" class="w-full h-full"><rect width="200" height="200" fill="#070510"/><rect x="40" y="40" width="120" height="120" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="8 8"/><circle cx="100" cy="100" r="20" fill="#38bdf8" opacity="0.5" class="animate-ping"/></svg>` }
         };
 
@@ -577,9 +588,10 @@
             "frame_lazy": { id: "frame_lazy", name: "Lazy Phantom Aura", subtitle: "ปราบบอส U1 (V01)", cssClass: "frame-lazy-aura", reqMission: ["V01", "V_U1"] },
             "FrameU1": { id: "FrameU1", name: "Active Spirit", subtitle: "จบภารกิจ Unit 1 (M03)", cssClass: "frame-u1-clear", reqMission: "M03" },
             "FrameEx1": { id: "FrameEx1", name: "Unit 1 Conqueror", subtitle: "สอบผ่าน Unit 1 (EXAM_U1)", cssClass: "frame-ex1", reqMission: "EXAM_U1" },
-            "FrameU2": { id: "FrameU2", name: "Star Voyager", subtitle: "จบภารกิจ Unit 2", cssClass: "frame-u2-clear", reqMission: "M08" },
+            "frame_vanity": { id: "frame_vanity", name: "Vanity Glitch Aura", subtitle: "ปราบบอส U2 (V02)", cssClass: "frame-vanity-aura", reqMission: ["V02", "V_U2"] },
+            "FrameU2": { id: "FrameU2", name: "Fashion Forward", subtitle: "จบภารกิจ Unit 2 (M07)", cssClass: "frame-u2-clear", reqMission: "M07" },
             "FrameEx2": { id: "FrameEx2", name: "Unit 2 Elite", subtitle: "สอบผ่าน Unit 2 (EXAM_U2)", cssClass: "frame-ex2", reqMission: "EXAM_U2" },
-            "FrameU3": { id: "FrameU3", name: "Celestial Guide", subtitle: "จบภารกิจ Unit 3", cssClass: "frame-u3-clear", reqMission: "M12" },
+            "FrameU3": { id: "FrameU3", name: "Celestial Guide", subtitle: "จบภารกิจ Unit 3", cssClass: "frame-u3-clear", reqMission: "M11" },
             "FrameEx3": { id: "FrameEx3", name: "Grand Master M.3", subtitle: "สอบผ่าน Unit 3 (EXAM_U3)", cssClass: "frame-ex3", reqMission: "EXAM_U3" },
             "FrameLv5": { id: "FrameLv5", name: "Gold Standard", subtitle: "กรอบสำหรับเลเวล 5 ขึ้นไป", cssClass: "frame-level5", reqLevel: 5 },
             "FrameLv10": { id: "FrameLv10", name: "Diamond Master", subtitle: "กรอบสำหรับเลเวล 10 ขึ้นไป", cssClass: "frame-level10", reqLevel: 10 }
@@ -590,13 +602,20 @@
             "M01": { unit: "Unit 1", subtitle: "ฟังเสียงและทำแบบฝึกหัด People's Lifestyles (หน้า 8-9)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_1.html" },
             "M02": { unit: "Unit 1", subtitle: "ฝึกสำนวนการเชิญชวนและอ่านเรื่อง Different Interests (หน้า 10-13)", category: "Speaking & Reading", difficulty: "Medium", xp: 100, artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_2.html" },
             "M03": { unit: "Unit 1", subtitle: "คำศัพท์และการใช้ Grammar: Comparatives & Present Tenses (หน้า 14-15)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_3.html" },
-            "M04": { unit: "Unit 1", subtitle: "ภารกิจเสริมท้ายบท Unit 1: Interests", category: "Review & Skills", difficulty: "Hard", xp: 150, artType: "castle", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_4.html" },
             "V01": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
             "V_U1": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
 
+            // Unit 2: Fashion Forward (M.3)
+            "M04": { unit: "Unit 2", subtitle: "คำศัพท์การแต่งกายและฝึกฟัง Listen Up & Challenge (หน้า 20-21)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_1.html" },
+            "M05": { unit: "Unit 2", subtitle: "คำศัพท์แฟชั่นและการฟังเรื่องความชอบการแต่งตัว (หน้า 22-23)", category: "Speaking & Vocab", difficulty: "Medium", xp: 100, artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_2.html" },
+            "M06": { unit: "Unit 2", subtitle: "คำศัพท์และการอ่านบทความ Fashion Trend of the Past (หน้า 24-25)", category: "Reading & Vocab", difficulty: "Hard", xp: 150, artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_3.html" },
+            "M07": { unit: "Unit 2", subtitle: "คำศัพท์และไวยากรณ์ used to/would & Passive Voice (หน้า 26-27)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, artType: "castle", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_4.html" },
+            "V02": { unit: "Unit 2", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Vanity Glitch", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u2.html" },
+            "V_U2": { unit: "Unit 2", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Vanity Glitch", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u2.html" },
+
             // Final Challenges (Exams M.3)
             "EXAM_U1": { unit: "Unit 1", subtitle: "สอบเก็บคะแนน Unit 1: All About Me (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false },
-            "EXAM_U2": { unit: "Unit 2", subtitle: "สอบเก็บคะแนน Unit 2 (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false },
+            "EXAM_U2": { unit: "Unit 2", subtitle: "สอบเก็บคะแนน Unit 2: Fashion Forward (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false },
             "EXAM_U3": { unit: "Unit 3", subtitle: "สอบเก็บคะแนน Unit 3 (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false }
         };
 
@@ -617,7 +636,9 @@
         // ==========================================
         const GRAMMAR_TOPICS = {
             "u1_comparatives": { folder: "U1_Comparatives/", prefix: "U1_Comparatives_", ext: ".PNG", total: 10 },
-            "u1_present_tenses": { folder: "U1_Present_Tenses/", prefix: "U1_Present_Tenses_", ext: ".PNG", total: 10 }
+            "u1_present_tenses": { folder: "U1_Present_Tenses/", prefix: "U1_Present_Tenses_", ext: ".PNG", total: 10 },
+            "u2_used_to_would": { folder: "U2_Used_To/", prefix: "U2_Used_To_", ext: ".PNG", total: 10 },
+            "u2_passive_voice": { folder: "U2_Passive_Voice/", prefix: "U2_Passive_Voice_", ext: ".PNG", total: 10 }
         };
         let currentGrammarTopic = "u1_comparatives";
         let currentSlide = 1;
@@ -857,11 +878,11 @@
             renderRightWidgets();
             renderWardrobeItems();
             renderQuestLog();
-            checkUnit1Completion();
+            checkExamButtonReady();
         }
 
         // ==========================================
-        // ระบบ Quest Log (ติดตามงาน ม.3)
+        // ระบบ Quest Log (ติดตามงาน ม.3 — Unit 1 & Unit 2)
         // ==========================================
         function renderQuestLog() {
             const webList = document.getElementById("quest-web-list");
@@ -872,11 +893,15 @@
             const offline = (appState.user && appState.user.offlineTasks) || {}; 
             
             const webQuests = [
-                { ids: ["M01"], name: "ภารกิจ M01: People's Lifestyles" },
-                { ids: ["M02"], name: "ภารกิจ M02: Invitations & Responses" },
-                { ids: ["M03"], name: "ภารกิจ M03: People's Interests" },
-                { ids: ["M04"], name: "ภารกิจ M04: Interests" },
-                { ids: ["V01", "V_U1"], name: "มินิเกมคำศัพท์ Voice Lab (The Lazy Phantom)" }
+                { ids: ["M01"], name: "U1 — M01: People's Lifestyles (P.8-9)" },
+                { ids: ["M02"], name: "U1 — M02: Invitations & Reading (P.10-13)" },
+                { ids: ["M03"], name: "U1 — M03: Writing & Grammar (P.14-15)" },
+                { ids: ["V01", "V_U1"], name: "U1 — Voice Lab Boss: The Lazy Phantom" },
+                { ids: ["M04"], name: "U2 — M04: Fashion Forward (P.20-21)" },
+                { ids: ["M05"], name: "U2 — M05: Preferences & Speaking (P.22-23)" },
+                { ids: ["M06"], name: "U2 — M06: Fashion Trend of the Past (P.24-25)" },
+                { ids: ["M07"], name: "U2 — M07: Writing & Passive Voice (P.26-27)" },
+                { ids: ["V02", "V_U2"], name: "U2 — Voice Lab Boss: The Vanity Glitch" }
             ];
             
             webList.innerHTML = webQuests.map(q => {
@@ -895,7 +920,10 @@
                 { id: "M01_Book", name: "ส่งแบบฝึกหัดหน้า 8-9 (Unit 1.1)" },
                 { id: "M02_Book", name: "ส่งแบบฝึกหัดหน้า 10-13 (Unit 1.2)" },
                 { id: "M03_Book", name: "ส่งแบบฝึกหัดหน้า 14-15 (Unit 1.3)" },
-                { id: "M04_Book", name: "ส่งแบบฝึกหัดท้ายบท Unit 1 (M04)" }
+                { id: "M04_Book", name: "ส่งแบบฝึกหัดหน้า 20-21 (Unit 2.1)" },
+                { id: "M05_Book", name: "ส่งแบบฝึกหัดหน้า 22-23 (Unit 2.2)" },
+                { id: "M06_Book", name: "ส่งแบบฝึกหัดหน้า 24-25 (Unit 2.3)" },
+                { id: "M07_Book", name: "ส่งแบบฝึกหัดหน้า 26-27 (Unit 2.4)" }
             ];
 
             bookList.innerHTML = bookQuests.map(q => {
@@ -932,7 +960,7 @@
         setInterval(() => {
             const el = document.getElementById("quest-countdown");
             if (!el) return;
-            const deadline = new Date("2026-12-15T23:59:59").getTime(); 
+            const deadline = new Date("2027-01-31T23:59:59").getTime(); 
             const now = new Date().getTime();
             const distance = deadline - now;
             
@@ -949,7 +977,7 @@
             el.innerHTML = `${days}d : ${hours.toString().padStart(2, '0')}h : ${minutes.toString().padStart(2, '0')}m : ${seconds.toString().padStart(2, '0')}s`;
         }, 1000);
 
-        function checkUnit1Completion() {
+        function checkExamButtonReady() {
             const btnDesktop = document.getElementById("nav-exam-lobby");
             const btnMobile = document.getElementById("nav-exam-lobby-mobile");
             const badgeDesktop = document.getElementById("exam-btn-badge");
@@ -1033,8 +1061,11 @@
                 }
 
                 let rewardBadge = "";
-                if (m.missionId === "V01" || m.missionId === "V_U1" || (m.rewardSkin && m.rewardSkin.toLowerCase().includes("frame"))) {
+                const isBoss = ["V01", "V_U1", "V02", "V_U2", "V03", "V_U3"].includes(m.missionId);
+                if (isBoss) {
                      rewardBadge = `<span class="px-2 py-0.5 rounded bg-cyan-900/80 border border-cyan-400/50 text-[9px] text-cyan-200">🖼️ กรอบบอส!</span>`;
+                } else if (m.rewardSkin && m.rewardSkin.toLowerCase().includes("frame")) {
+                     rewardBadge = `<span class="px-2 py-0.5 rounded bg-amber-900/80 border border-amber-400/50 text-[9px] text-amber-200">🖼️ กรอบพิเศษ!</span>`;
                 } else if (m.rewardSkin && !m.missionId.includes("EXAM")) {
                      rewardBadge = `<span class="px-2 py-0.5 rounded bg-pink-900/80 border border-pink-400/50 text-[9px] text-pink-200">🎁 สกิน: ${m.rewardSkin}</span>`;
                 }
@@ -1042,7 +1073,7 @@
                 return `
                     <article class="${isLocked ? 'locked-card' : 'cosmic-card cosmic-card-active'} rounded-2xl overflow-hidden flex flex-col p-3.5">
                         <div class="h-28 bg-cosmic-900 rounded-xl mb-3 border border-purple-500/30 flex items-center justify-center relative">
-                            ${isLocked ? '<span class="text-2xl">🔒</span>' : '<span class="text-2xl">🪐</span>'}
+                            ${isLocked ? '<span class="text-2xl">🔒</span>' : isBoss ? '<span class="text-2xl">⚔️</span>' : '<span class="text-2xl">🪐</span>'}
                             <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-cosmic-950 border border-purple-400/40 text-[10px] text-purple-200">${m.missionId}</div>
                             <div class="absolute top-2 right-2">${rewardBadge}</div>
                         </div>
@@ -1075,6 +1106,10 @@
                     } else if (m.missionId === "EXAM_U1") {
                         const hasCore = ["M01", "M02", "M03"].every(req => completedMissions.includes(req));
                         const hasBoss = completedMissions.includes("V01") || completedMissions.includes("V_U1");
+                        isLocked = !(hasCore && hasBoss);
+                    } else if (m.missionId === "EXAM_U2") {
+                        const hasCore = ["M04", "M05", "M06", "M07"].every(req => completedMissions.includes(req));
+                        const hasBoss = completedMissions.includes("V02") || completedMissions.includes("V_U2");
                         isLocked = !(hasCore && hasBoss);
                     } else {
                         isLocked = m.state === "LOCKED";
@@ -1328,7 +1363,8 @@
                     appState.missions = res.missions;
                     saveSession(); renderAllModules(); closeMissionModal();
                     
-                    if (mId === "V01" || mId === "V_U1" || mId.includes("EXAM")) {
+                    const frameUnlockMissions = ["V01", "V_U1", "V02", "V_U2", "M03", "M07"];
+                    if (frameUnlockMissions.includes(mId) || mId.includes("EXAM")) {
                          showToast("🎉 ยินดีด้วย! คุณได้รับกรอบโปรไฟล์ใหม่ ไปดูที่ตู้เสื้อผ้าได้เลย!", "success");
                     } else {
                          showToast(res.message, "success");
