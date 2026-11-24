@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>O-NET M.3 Arena: Tower of Trials</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        scifi: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        cosmic: { 950: '#070510', 900: '#0d091d', 800: '#150f2e', 700: '#211844' },
+                        neon: { cyan: '#38bdf8', purple: '#a855f7', pink: '#ec4899', green: '#34d399', red: '#f43f5e', orange: '#fb923c' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070510;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: #f1f5f9;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(21, 15, 46, 0.88), rgba(13, 9, 29, 0.94));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.1);
+            backdrop-filter: blur(12px);
+        }
+        .btn-action {
+            background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transition: all 0.2s;
+        }
+        .btn-action:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 25px rgba(56, 189, 248, 0.6); }
+        .btn-action:disabled { background: #1e293b; color: #64748b; box-shadow: none; cursor: not-allowed; }
+        .btn-finish-exam {
+            background: linear-gradient(90deg, #9333ea 0%, #ec4899 100%);
+            box-shadow: 0 0 18px rgba(236, 72, 153, 0.45);
+        }
+        
+        .choice-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .choice-btn:hover:not(:disabled) { border-color: rgba(56, 189, 248, 0.6); background: rgba(15, 23, 42, 0.9); }
+        .choice-btn.selected {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+        .choice-btn.correct { background: rgba(52, 211, 153, 0.2); border-color: #34d399; box-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .choice-btn.wrong { background: rgba(244, 63, 94, 0.2); border-color: #f43f5e; }
+        
+        .hp-bar-bg { background: rgba(0,0,0,0.5); border: 1px solid rgba(100,116,139,0.5); border-radius: 999px; overflow: hidden; }
+        .hp-fill { background: linear-gradient(90deg, #38bdf8, #a855f7); transition: width 0.5s ease; }
+        
+        .stage-card {
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            background: rgba(15, 23, 42, 0.6);
+            transition: all 0.3s;
+        }
+        .stage-card.active {
+            border-color: #38bdf8;
+            background: rgba(21, 15, 46, 0.9);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 lg:p-10 flex flex-col items-center">
+
+    <!-- WELCOME / LOBBY SCREEN -->
+    <div id="lobby-screen" class="glass-panel rounded-3xl max-w-4xl w-full p-6 sm:p-8 relative overflow-hidden">
+        <div class="text-center mb-6">
+            <h1 class="font-scifi text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-purple-400 mb-2">O-NET M.3 ARENA</h1>
+            <p class="text-slate-300 text-sm sm:text-base">จำลองข้อสอบ O-NET ภาษาอังกฤษ ม.3 (32 ข้อ • ตามโครงสร้าง สทศ.)</p>
+        </div>
+        
+        <div class="bg-black/50 p-5 rounded-2xl border border-cyan-500/30 text-left text-sm text-slate-300 space-y-2 mb-6 max-w-2xl mx-auto">
+            <p class="font-bold text-cyan-400">📋 เกณฑ์การให้คะแนนเก็บ (เต็ม 10 คะแนน):</p>
+            <ul class="list-disc list-inside space-y-1 ml-2 text-xs">
+                <li><span class="text-rose-400 font-bold">ต่ำกว่า 30% (0–9 ข้อ)</span> = ยังไม่ผ่านเกณฑ์ (ต้องสอบใหม่)</li>
+                <li><span class="text-amber-400 font-bold">30 – 49% (10–15 ข้อ)</span> = ได้ <strong class="text-white">7</strong> / 10 คะแนน (ระดับเอาตัวรอด)</li>
+                <li><span class="text-emerald-400 font-bold">50 – 69% (16–22 ข้อ)</span> = ได้ <strong class="text-white">8.5</strong> / 10 คะแนน (ระดับพร้อมรบ)</li>
+                <li><span class="text-cyan-400 font-bold">70% ขึ้นไป (23 ข้อขึ้นไป)</span> = ได้ <strong class="text-white">10</strong> / 10 คะแนน (ระดับแนวหน้า)</li>
+            </ul>
+            <div class="pt-2 mt-2 border-t border-slate-700/60 text-[11px] text-slate-400 grid grid-cols-2 gap-1">
+                <span>• Part 1: Signs & Notices (6 ข้อ)</span>
+                <span>• Part 2: Conversation (10 ข้อ)</span>
+                <span>• Part 3: Reading & Chart (10 ข้อ)</span>
+                <span>• Part 4: Grammar Cloze (6 ข้อ)</span>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-1">* มีเฉลยและคำอธิบายทันทีหลังส่งคำตอบทุกข้อ และสามารถสอบใหม่ (Retake) ได้จนกว่าจะพอใจกับคะแนน!</p>
+        </div>
+
+        <div class="mb-8">
+            <label class="block text-xs font-medium text-cyan-200 mb-2 text-center">กรุณายืนยันรหัสนักเรียน (Student ID)</label>
+            <input type="text" id="sid-input" placeholder="กรอกรหัสนักเรียน" class="w-full max-w-xs mx-auto block px-4 py-3 rounded-xl bg-cosmic-900 border border-cyan-500/40 text-center text-white font-scifi focus:border-cyan-400 focus:outline-none">
+        </div>
+
+        <div class="flex justify-center mb-8" id="stages-container">
+            <div class="stage-card active rounded-2xl p-6 flex flex-col items-center text-center cursor-pointer w-full max-w-sm hover:scale-105 transition-transform" onclick="startFullExam()">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-600 to-purple-600 flex items-center justify-center text-3xl mb-4 shadow-[0_0_20px_rgba(56,189,248,0.5)]">🎯</div>
+                <h3 class="font-scifi font-bold text-white text-lg mb-1">ENTER THE ARENA</h3>
+                <p class="text-xs text-slate-300 mb-4">ทำข้อสอบต่อเนื่อง 32 ข้อ (เวลา 50 นาที)</p>
+                <span class="text-xs font-bold px-4 py-2 rounded-xl bg-cosmic-950 border border-cyan-500/50 text-cyan-300">คลิกเพื่อเริ่มทำข้อสอบ</span>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="index.html" class="text-xs text-slate-400 hover:text-white underline">⬅️ กลับไปหน้า Dashboard</a>
+        </div>
+    </div>
+
+    <!-- EXAM ARENA SCREEN -->
+    <div id="arena-screen" class="glass-panel rounded-3xl max-w-3xl w-full p-5 sm:p-8 hidden relative">
+        <div class="flex items-center justify-between mb-4 border-b border-cyan-500/30 pb-4 gap-2">
+            <div><span id="arena-stage-name" class="font-scifi font-bold text-cyan-300 text-xs sm:text-sm">PART 1: SIGNS & NOTICES</span></div>
+            <div class="text-right flex-shrink-0"><div class="text-xs text-slate-400">Time: <span id="timer-display" class="font-scifi text-white font-bold">50:00</span></div></div>
+        </div>
+
+        <div class="mb-6">
+            <div class="flex justify-between text-xs font-scifi text-slate-300 mb-1">
+                <span id="progress-text">Question 1 / 32</span>
+                <span class="text-amber-300" id="score-text">Score: 0</span>
+            </div>
+            <div class="h-2 hp-bar-bg">
+                <div id="progress-fill" class="h-full hp-fill" style="width: 3%"></div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div class="bg-cosmic-900/80 rounded-2xl p-5 border border-slate-700/50 mb-6 flex flex-col items-center">
+            <div id="question-content" class="w-full text-center"></div>
+        </div>
+
+        <!-- Choices -->
+        <div id="choices-container" class="space-y-3 mb-4"></div>
+
+        <!-- Explanation Box -->
+        <div id="explanation-box" class="hidden mb-6 p-4 rounded-xl bg-blue-900/40 border border-blue-500/40 text-blue-100 text-sm leading-relaxed">
+            <span class="font-bold text-cyan-300 mr-1">💡 เฉลย/อธิบาย:</span> <span id="explanation-text"></span>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+            <button onclick="confirmReturnToLobby()" class="text-xs text-slate-400 hover:text-white">🚪 ถอนตัว (กลับหน้าหลัก)</button>
+            <button id="btn-next-question" onclick="nextQuestion()" disabled class="btn-action px-6 py-2.5 rounded-xl font-bold text-sm text-white flex items-center gap-2">
+                <span>ยืนยันคำตอบ</span> <span>➡️</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="result-screen" class="glass-panel rounded-3xl max-w-xl w-full p-8 hidden text-center relative">
+        <div class="text-6xl mb-4" id="result-icon">🎯</div>
+        <h2 class="font-scifi text-2xl sm:text-3xl font-bold text-white mb-2" id="result-title">EXAM COMPLETED!</h2>
+        <p class="text-slate-300 text-sm mb-6" id="result-subtitle">จำลองสอบ O-NET ม.3 เสร็จสิ้น</p>
+        
+        <div class="bg-black/60 rounded-2xl p-6 border border-cyan-500/30 mb-6 inline-block w-full max-w-sm mx-auto shadow-lg">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-sm text-slate-400">ทำถูกทั้งหมด</span>
+                <span class="font-bold text-xl text-white" id="result-score">0 / 32 ข้อ</span>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-sm text-slate-400">คิดเป็นร้อยละ</span>
+                <span class="font-bold text-xl text-white" id="result-percent">0%</span>
+            </div>
+            <div class="flex justify-between items-center pt-4 border-t border-slate-700/50 mt-2">
+                <span class="text-sm font-bold text-cyan-300">คะแนนเก็บ (เต็ม 10)</span>
+                <span class="font-scifi font-black text-2xl text-amber-400" id="result-grade">0 / 10</span>
+            </div>
+        </div>
+        
+        <div id="result-feedback" class="text-sm font-bold mb-4 min-h-[24px]"></div>
+        <div id="saving-status" class="text-xs text-cyan-400 mb-6 min-h-[20px]">⏳ กำลังบันทึกคะแนนลงระบบ...</div>
+        
+        <div class="space-y-3 max-w-sm mx-auto" id="result-actions"></div>
+    </div>
+
+    <script>
+        // Google Apps Script API ของ ม.3
+        const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
+
+        let currentSid = "";
+        let currentQIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let timeLeft = 3000; // 50 นาที (ตามมาตรฐาน O-NET ม.3)
+        let hasAnswered = false;
+        let selectedAnsIdx = -1;
+        let ALL_QUESTIONS = [];
+
+        // แผนภูมิแท่งสำหรับ Part 3 (ข้อ 17-19)
+        const SURVEY_CHART_HTML = `
+            <div class="bg-slate-900/95 border border-cyan-500/40 rounded-xl p-4 mb-4 text-left">
+                <p class="text-xs font-bold text-cyan-300 text-center mb-3">📊 Survey: Favorite Free-Time Activities of 100 M.3 Students</p>
+                <div class="space-y-2.5 text-xs">
+                    <div>
+                        <div class="flex justify-between mb-1"><span class="text-slate-200">Playing Online Games</span><span class="font-bold text-cyan-300">35%</span></div>
+                        <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden"><div class="bg-cyan-400 h-full rounded-full" style="width: 35%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span class="text-slate-200">Listening to Music</span><span class="font-bold text-purple-300">25%</span></div>
+                        <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden"><div class="bg-purple-400 h-full rounded-full" style="width: 25%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span class="text-slate-200">Playing Sports</span><span class="font-bold text-emerald-300">20%</span></div>
+                        <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden"><div class="bg-emerald-400 h-full rounded-full" style="width: 20%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span class="text-slate-200">Reading Comics / Books</span><span class="font-bold text-amber-300">12%</span></div>
+                        <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden"><div class="bg-amber-400 h-full rounded-full" style="width: 12%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span class="text-slate-200">Drawing / Art</span><span class="font-bold text-pink-300">8%</span></div>
+                        <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden"><div class="bg-pink-400 h-full rounded-full" style="width: 8%"></div></div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // โปสเตอร์กิจกรรมสำหรับ Part 3 (ข้อ 20-22)
+        const POSTER_HTML = `
+            <div class="bg-emerald-950/60 border-2 border-dashed border-emerald-400/60 rounded-xl p-4 mb-4 text-left space-y-1.5 text-xs sm:text-sm">
+                <p class="font-bold text-emerald-300 text-center text-sm sm:text-base">♻️ GREEN SCHOOL RECYCLING DAY ♻️</p>
+                <p class="text-center text-emerald-100/90 text-xs"><b>Date:</b> Friday, December 18 | <b>Time:</b> 09:00 – 15:00 | <b>Place:</b> School Hall</p>
+                <p class="text-slate-200 pt-1">Bring clean <b>plastic bottles, aluminum cans, or old newspapers</b> to exchange for eco-friendly notebooks and reusable water bottles!</p>
+                <p class="text-rose-300 text-xs"><b>* Note:</b> Broken glass is NOT accepted for safety reasons.</p>
+                <p class="text-slate-400 text-xs">For more information, contact Ms. Suda at the Student Council Room.</p>
+            </div>
+        `;
+
+        // บทความสั้นสำหรับ Part 3 (ข้อ 23-26)
+        const ARTICLE_HTML = `
+            <div class="bg-slate-900/95 border-l-4 border-purple-400 rounded-r-xl p-4 mb-4 text-left text-xs sm:text-sm text-slate-200 leading-relaxed">
+                <p class="font-bold text-purple-300 mb-1.5">📖 Why Sleep Matters for Teenagers</p>
+                <p>Many teenagers stay up late using smartphones or playing games, getting less than six hours of sleep a night. However, doctors say teens need <b>8 to 10 hours of sleep</b> to stay healthy. During sleep, the brain organizes new information learned during the day, which helps improve memory and focus in class. Lack of sleep can make students feel moody, tired, and unable to <u class="text-cyan-300 font-semibold">concentrate</u>. To sleep better, experts recommend turning off screens at least 30 minutes before bedtime and keeping a regular sleep schedule—even on weekends.</p>
+            </div>
+        `;
+
+        // บทความ Cloze Test สำหรับ Part 4 (ข้อ 27-32)
+        const CLOZE_HTML = `
+            <div class="bg-slate-900/95 border border-purple-500/40 rounded-xl p-4 mb-4 text-left text-xs sm:text-sm text-slate-200 leading-relaxed">
+                <p class="font-bold text-amber-300 mb-1.5">📝 Cloze Test: My Weekend Trip to Khao Yai</p>
+                <p>Last weekend, my family and I <b class="text-cyan-300">__(27)__</b> to Khao Yai National Park. The weather was much <b class="text-cyan-300">__(28)__</b> than in the city, so we really enjoyed walking along the nature trail. While we <b class="text-cyan-300">__(29)__</b> near a waterfall, we saw a group of wild deer drinking water. My little sister wanted to get closer, <b class="text-cyan-300">__(30)__</b> my father told her to stay quiet and keep a safe distance. If we <b class="text-cyan-300">__(31)__</b> enough time next month, we will definitely go camping there again. It was <b class="text-cyan-300">__(32)__</b> trip I have ever had!</p>
+            </div>
+        `;
+
+        // --- คลังข้อสอบจำลอง O-NET ภาษาอังกฤษ ม.3 (32 ข้อ อิงแนวข้อสอบจริงปีเก่าๆ) ---
+        const EXAM_DB = {
+            // PART 1: Signs, Notices & Labels (6 ข้อ)
+            1: [
+                {
+                    part: "PART 1: SIGNS & NOTICES",
+                    q: `<div class="bg-amber-400 text-black font-bold rounded-xl p-4 mb-4 max-w-xs mx-auto text-center border-4 border-black shadow-lg"><div class="text-2xl">⚠️</div><div class="font-scifi text-base">CAUTION</div><div class="text-sm">WET FLOOR</div></div>
+                        <p>1. Where would you most likely see this sign?</p>`,
+                    c: ["In a swimming pool", "At a supermarket after mopping", "On a highway", "Inside a library bookshelf"],
+                    a: 1,
+                    exp: "ป้าย 'CAUTION: WET FLOOR' (ระวังพื้นเปียก/ลื่น) มักวางไว้ตามห้างหรือซูเปอร์มาร์เก็ตหลังถูพื้น (after mopping) เพื่อป้องกันคนลื่นล้ม"
+                },
+                {
+                    part: "PART 1: SIGNS & NOTICES",
+                    q: `<div class="bg-rose-950/90 text-white font-bold rounded-xl p-4 mb-4 max-w-xs mx-auto text-center border-2 border-rose-400 shadow-lg"><div class="text-2xl">🚫📸</div><div class="text-sm mt-1">NO FLASH PHOTOGRAPHY ALLOWED</div></div>
+                        <p>2. You see this sign in an art museum. What does it mean?</p>`,
+                    c: ["You cannot buy a camera here.", "You must turn off your phone completely.", "You can take photos, but without using a flash.", "You are not allowed to enter the museum."],
+                    a: 2,
+                    exp: "'No flash photography allowed' แปลว่า ห้ามใช้แฟลชในการถ่ายภาพ ดังนั้นสามารถถ่ายรูปได้แต่ต้องปิดแฟลช (without using a flash)"
+                },
+                {
+                    part: "PART 1: SIGNS & NOTICES",
+                    q: `<div class="bg-slate-900 text-cyan-100 rounded-xl p-4 mb-4 max-w-sm mx-auto text-center border-2 border-cyan-400/60 shadow-lg">
+                            <div class="font-bold text-cyan-300 mb-1">📚 SCHOOL LIBRARY HOURS</div>
+                            <div class="text-xs">Monday – Friday: 08:00 – 16:30</div>
+                            <div class="text-xs">Saturday: 09:00 – 12:00</div>
+                            <div class="text-xs text-rose-400 font-bold mt-1">Closed on Sunday</div>
+                        </div>
+                        <p>3. According to the notice, which statement is TRUE?</p>`,
+                    c: ["The library is open all day on Saturday.", "You can borrow books on Sunday morning.", "The library closes earlier on Saturday than on Wednesday.", "The library opens at 8:00 a.m. every day."],
+                    a: 2,
+                    exp: "วันเสาร์ห้องสมุดปิด 12:00 น. ส่วนวันพุธ (Mon–Fri) ปิด 16:30 น. ดังนั้นวันเสาร์ปิดเร็วกว่าวันพุธ (closes earlier on Saturday than on Wednesday)"
+                },
+                {
+                    part: "PART 1: SIGNS & NOTICES",
+                    q: `<div class="bg-blue-900/90 text-white font-bold rounded-xl p-4 mb-4 max-w-xs mx-auto text-center border-2 border-blue-300 shadow-lg"><div class="text-lg">PLEASE QUEUE HERE ➡️</div></div>
+                        <p>4. What should you do when you see this sign at a ticket counter?</p>`,
+                    c: ["Wait in a line at this spot", "Leave the building immediately", "Sit down and relax", "Ask for a discount"],
+                    a: 0,
+                    exp: "คำว่า 'queue' (v.) แปลว่า เข้าแถว / ต่อคิว ดังนั้น 'Please queue here' คือ กรุณาเข้าแถวรอตรงนี้ (Wait in a line at this spot)"
+                },
+                {
+                    part: "PART 1: SIGNS & NOTICES",
+                    q: `<div class="bg-white text-slate-900 rounded-xl p-4 mb-4 max-w-sm mx-auto text-left border-2 border-rose-500 shadow-lg text-xs">
+                            <div class="font-bold text-rose-600 text-center mb-1">💊 MEDICINE LABEL</div>
+                            <p><b>Directions:</b> Take 2 tablets every 6 hours after meals.</p>
+                            <p class="font-bold text-rose-700 mt-1">WARNING: KEEP OUT OF REACH OF CHILDREN.</p>
+                        </div>
+                        <p>5. According to the warning, who should NOT be able to pick up this bottle easily?</p>`,
+                    c: ["Elderly people", "Young kids", "Doctors", "Nurses"],
+                    a: 1,
+                    exp: "'Keep out of reach of children' แปลว่า เก็บให้พ้นมือเด็ก (young kids) เพื่อป้องกันเด็กหยิบยาไปกินเอง"
+                },
+                {
+                    part: "PART 1: SIGNS & NOTICES",
+                    q: `<div class="bg-emerald-950/90 text-emerald-100 rounded-xl p-4 mb-4 max-w-sm mx-auto text-center border-2 border-emerald-400 shadow-lg">
+                            <div class="font-bold text-emerald-300">🦆 PLEASE DO NOT FEED THE ANIMALS</div>
+                            <div class="text-xs mt-1">Human food can make them sick.</div>
+                        </div>
+                        <p>6. Why shouldn't visitors give food to the animals in this park?</p>`,
+                    c: ["The animals are already full.", "The park wants to sell expensive food.", "It may harm the animals' health.", "The animals will run away."],
+                    a: 2,
+                    exp: "ป้ายระบุว่า 'Human food can make them sick.' (อาหารคนทำให้สัตว์ป่วยได้) ซึ่งตรงกับข้อ C 'อาจเป็นอันตรายต่อสุขภาพสัตว์ (harm the animals' health)'"
+                }
+            ],
+
+            // PART 2: Everyday Conversations (10 ข้อ)
+            2: [
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Ploy accidentally steps on a stranger's foot on the bus.</p>
+                        <p><b>Ploy:</b> Oh, I'm terribly sorry!</p>
+                        <p><b>Stranger:</b> _______</p>`,
+                    c: ["You're welcome.", "That's all right.", "Congratulations!", "See you later."],
+                    a: 1,
+                    exp: "เมื่อมีคนกล่าวขอโทษ (I'm terribly sorry) การตอบรับอย่างสุภาพว่าไม่เป็นไรคือ 'That's all right.' หรือ 'Never mind.'"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Mint is going to compete in an English speech contest tomorrow.</p>
+                        <p><b>Beam:</b> Good luck with the contest tomorrow! _______</p>
+                        <p><b>Mint:</b> Thanks a lot, Beam.</p>`,
+                    c: ["Break a leg!", "Give me a break!", "Take a seat!", "Watch out!"],
+                    a: 0,
+                    exp: "สำนวน 'Break a leg!' ออกข้อสอบ O-NET บ่อยมาก แปลว่า 'ขอให้โชคดี / ทำให้เต็มที่นะ' (นิยมใช้อวยพรก่อนขึ้นเวทีแสดงหรือแข่งขัน)"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: At a restaurant.</p>
+                        <p><b>Waiter:</b> Are you ready to order, sir?</p>
+                        <p><b>Customer:</b> _______ I'll have fried rice with shrimp and iced tea, please.</p>`,
+                    c: ["No, thanks. I'm full.", "Yes, please.", "How much is the bill?", "I'm sorry to hear that."],
+                    a: 1,
+                    exp: "พนักงานถามว่าพร้อมสั่งอาหารหรือยัง ลูกค้าสั่งเมนูต่อทันที ดังนั้นคำตอบรับที่เหมาะสมคือ 'Yes, please.'"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: A tourist is asking Narin for directions.</p>
+                        <p><b>Tourist:</b> Excuse me. _______</p>
+                        <p><b>Narin:</b> Go straight ahead and turn left at the corner. It's next to the bank.</p>`,
+                    c: ["What time does the post office close?", "Could you tell me how to get to the post office?", "Do you work at the post office?", "How far have you walked today?"],
+                    a: 1,
+                    exp: "Narin ตอบด้วยการบอกทาง (เดินตรงไปแล้วเลี้ยวซ้าย) คำถามจึงต้องเป็นการถามทางอย่างสุภาพ: 'Could you tell me how to get to the post office?'"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Tae invites Film to play badminton after school.</p>
+                        <p><b>Tae:</b> Would you like to play badminton with us after school?</p>
+                        <p><b>Film:</b> _______ I have to help my mom at her shop.</p>`,
+                    c: ["Sure, count me in!", "I'd love to, but I can't.", "That sounds awesome!", "Of course, why not?"],
+                    a: 1,
+                    exp: "Film ให้เหตุผลว่าต้องไปช่วยแม่ที่ร้าน แสดงว่าไปไม่ได้ จึงต้องปฏิเสธอย่างสุภาพด้วย 'I'd love to, but I can't.' (อยากไปนะ แต่ไปไม่ได้)"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Nok looks pale and tired in the classroom.</p>
+                        <p><b>June:</b> You don't look well. _______</p>
+                        <p><b>Nok:</b> I have a terrible headache.</p>`,
+                    c: ["What's the matter?", "What do you do?", "What does he look like?", "How old are you?"],
+                    a: 0,
+                    exp: "Nok ตอบว่าปวดหัวมาก (terrible headache) คำถามที่ใช้ถามอาการเมื่อเห็นเพื่อนดูไม่สบายคือ 'What's the matter?' หรือ 'What's wrong?'"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Bank forgot his pen at home.</p>
+                        <p><b>Bank:</b> May I borrow your pen for a moment?</p>
+                        <p><b>Ice:</b> _______ Here you go.</p>`,
+                    c: ["No way.", "Never mind.", "Sure, go ahead.", "It doesn't matter."],
+                    a: 2,
+                    exp: "Ice ยื่นปากกาให้พร้อมพูดว่า 'Here you go.' (เอานี่ไปสิ) ดังนั้นประโยคอนุญาตก่อนหน้าจึงต้องเป็น 'Sure, go ahead.' (ได้เลย ตามสบาย)"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: May is shopping at a clothing store.</p>
+                        <p><b>Shopkeeper:</b> Can I help you?</p>
+                        <p><b>May:</b> Yes, I like this T-shirt. _______</p>
+                        <p><b>Shopkeeper:</b> It's 250 baht.</p>`,
+                    c: ["How many do you have?", "How much does it cost?", "What size is it?", "Where is the fitting room?"],
+                    a: 1,
+                    exp: "คนขายตอบเป็นราคา (250 baht) ดังนั้นคำถามต้องถามราคา: 'How much does it cost?' (ตัวนี้ราคาเท่าไหร่)"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Someone calls Ton's house.</p>
+                        <p><b>Caller:</b> Hello, may I speak to Ton, please?</p>
+                        <p><b>Ton's mother:</b> _______ I'll get him for you.</p>`,
+                    c: ["Hold on a second, please.", "Wrong number.", "He hung up.", "Call me back later."],
+                    a: 0,
+                    exp: "แม่บอกว่าจะไปตามต้นมาให้ (I'll get him for you) ประโยคที่ขอให้ผู้โทรถือสายรอสักครู่คือ 'Hold on a second, please.'"
+                },
+                {
+                    part: "PART 2: CONVERSATION",
+                    q: `<p class="text-cyan-300 text-xs mb-2">Situation: Korn and Pim have just walked out of the cinema.</p>
+                        <p><b>Korn:</b> _______</p>
+                        <p><b>Pim:</b> It was really exciting! The ending surprised me.</p>`,
+                    c: ["How did you go to the cinema?", "What did you think of the movie?", "Who went to the cinema with you?", "When did the movie start?"],
+                    a: 1,
+                    exp: "Pim ตอบเป็นความคิดเห็นว่าหนังตื่นเต้นมาก (really exciting) คำถามจึงต้องถามความคิดเห็น: 'What did you think of the movie?'"
+                }
+            ],
+
+            // PART 3: Reading Comprehension (10 ข้อ)
+            3: [
+                {
+                    part: "PART 3: READING & CHART",
+                    q: SURVEY_CHART_HTML + `<p>17. Which free-time activity is the most popular among M.3 students?</p>`,
+                    c: ["Playing Online Games", "Listening to Music", "Playing Sports", "Reading Comics / Books"],
+                    a: 0,
+                    exp: "จากแผนภูมิ Playing Online Games มีสัดส่วนสูงที่สุดคือ 35%"
+                },
+                {
+                    part: "PART 3: READING & CHART",
+                    q: SURVEY_CHART_HTML + `<p>18. How many MORE students prefer listening to music than drawing/art?</p>`,
+                    c: ["8 students", "12 students", "17 students", "33 students"],
+                    a: 2,
+                    exp: "นักเรียนทั้งหมดมี 100 คน ชอบฟังเพลง 25 คน และชอบวาดรูป 8 คน ดังนั้นมากกว่าอยู่ 25 - 8 = 17 คน"
+                },
+                {
+                    part: "PART 3: READING & CHART",
+                    q: SURVEY_CHART_HTML + `<p>19. Which statement is TRUE according to the chart?</p>`,
+                    c: ["More students like reading than playing sports.", "Playing online games and listening to music make up 60% of all students.", "Drawing/Art is more popular than reading.", "Half of the students like playing sports."],
+                    a: 1,
+                    exp: "นำ Playing Online Games (35%) บวกกับ Listening to Music (25%) จะได้เท่ากับ 60% ของนักเรียนทั้งหมด"
+                },
+                {
+                    part: "PART 3: READING & POSTER",
+                    q: POSTER_HTML + `<p>20. What is the main purpose of this announcement?</p>`,
+                    c: ["To sell cheap school notebooks", "To invite students to join a recycling event", "To warn students about broken glass", "To look for new student council members"],
+                    a: 1,
+                    exp: "จุดประสงค์หลักของประกาศคือเชิญชวนนักเรียนให้นำขยะรีไซเคิลมาร่วมกิจกรรม 'Green School Recycling Day'"
+                },
+                {
+                    part: "PART 3: READING & POSTER",
+                    q: POSTER_HTML + `<p>21. Which item will NOT be accepted at the event?</p>`,
+                    c: ["Clean plastic bottles", "Aluminum cans", "Old newspapers", "Broken glass bottles"],
+                    a: 3,
+                    exp: "ตรงหมายเหตุ (* Note) ระบุชัดเจนว่า 'Broken glass is NOT accepted for safety reasons.' (ไม่รับเศษแก้วแตกเพื่อความปลอดภัย)"
+                },
+                {
+                    part: "PART 3: READING & POSTER",
+                    q: POSTER_HTML + `<p>22. What will students get in return for bringing recyclable items?</p>`,
+                    c: ["Eco-friendly notebooks or reusable water bottles", "Free lunch at the school hall", "Extra money from Ms. Suda", "New plastic bottles"],
+                    a: 0,
+                    exp: "เนื้อหาระบุว่า '...to exchange for eco-friendly notebooks and reusable water bottles' (แลกสมุดรักษ์โลกหรือกระบอกน้ำใช้ซ้ำ)"
+                },
+                {
+                    part: "PART 3: READING PASSAGE",
+                    q: ARTICLE_HTML + `<p>23. What is the main idea of this passage?</p>`,
+                    c: ["Teenagers should never own smartphones.", "Studying at night improves memory.", "Getting enough sleep is essential for teenagers' health and learning.", "Weekends are the only time teens can rest."],
+                    a: 2,
+                    exp: "ใจความสำคัญของบทความคือ การนอนหลับให้เพียงพอ (8–10 ชั่วโมง) มีความสำคัญต่อสุขภาพและความจำในการเรียนของวัยรุ่น"
+                },
+                {
+                    part: "PART 3: READING PASSAGE",
+                    q: ARTICLE_HTML + `<p>24. According to the passage, how many hours of sleep do teenagers need each night?</p>`,
+                    c: ["Less than 6 hours", "8 to 10 hours", "At least 12 hours", "30 minutes"],
+                    a: 1,
+                    exp: "ประโยคที่ 2 ของบทความระบุไว้ชัดเจนว่า 'doctors say teens need 8 to 10 hours of sleep to stay healthy.'"
+                },
+                {
+                    part: "PART 3: READING PASSAGE",
+                    q: ARTICLE_HTML + `<p>25. What does the underlined word <b>"concentrate"</b> mean?</p>`,
+                    c: ["Focus and pay full attention", "Fall asleep quickly", "Get angry easily", "Play games online"],
+                    a: 0,
+                    exp: "'concentrate' แปลว่า มีสมาธิ / จดจ่อ (focus and pay full attention) เมื่อนอนไม่พอก็จะทำให้ไม่มีสมาธิเรียน"
+                },
+                {
+                    part: "PART 3: READING PASSAGE",
+                    q: ARTICLE_HTML + `<p>26. Which advice do experts give for better sleep?</p>`,
+                    c: ["Drink coffee before going to bed", "Sleep only on weekends", "Study with a bright phone screen", "Turn off screens at least 30 minutes before bedtime"],
+                    a: 3,
+                    exp: "ประโยคสุดท้ายระบุว่า ผู้เชี่ยวชาญแนะนำให้ 'turning off screens at least 30 minutes before bedtime' (ปิดหน้าจออย่างน้อย 30 นาทีก่อนนอน)"
+                }
+            ],
+
+            // PART 4: Grammar & Cloze Test (6 ข้อ)
+            4: [
+                {
+                    part: "PART 4: GRAMMAR CLOZE",
+                    q: CLOZE_HTML + `<p>27. Choose the best answer for blank <b>(27)</b>: "Last weekend, my family and I __(27)__ to Khao Yai National Park."</p>`,
+                    c: ["go", "went", "have gone", "are going"],
+                    a: 1,
+                    exp: "มีคำบอกเวลาอดีตชัดเจนคือ 'Last weekend' (สุดสัปดาห์ที่แล้ว) จึงต้องใช้ Past Simple Tense (V.2) คือ 'went'"
+                },
+                {
+                    part: "PART 4: GRAMMAR CLOZE",
+                    q: CLOZE_HTML + `<p>28. Choose the best answer for blank <b>(28)</b>: "The weather was much __(28)__ than in the city..."</p>`,
+                    c: ["cool", "cooler", "coolest", "more cool"],
+                    a: 1,
+                    exp: "มีคำว่า 'much ... than' เป็นการเปรียบเทียบขั้นกว่า (Comparative) คำสั้น 1 พยางค์อย่าง cool ให้เติม -er เป็น 'cooler'"
+                },
+                {
+                    part: "PART 4: GRAMMAR CLOZE",
+                    q: CLOZE_HTML + `<p>29. Choose the best answer for blank <b>(29)</b>: "While we __(29)__ near a waterfall, we saw a group of wild deer..."</p>`,
+                    c: ["walk", "walked", "were walking", "are walking"],
+                    a: 2,
+                    exp: "เหตุการณ์ที่กำลังดำเนินอยู่ในอดีต (While + Past Continuous: was/were + V.ing) แล้วมีอีกเหตุการณ์เข้ามาแทรก (saw) ประธาน we จึงใช้ 'were walking'"
+                },
+                {
+                    part: "PART 4: GRAMMAR CLOZE",
+                    q: CLOZE_HTML + `<p>30. Choose the best answer for blank <b>(30)__</b>: "My little sister wanted to get closer, __(30)__ my father told her to stay quiet..."</p>`,
+                    c: ["and", "so", "but", "because"],
+                    a: 2,
+                    exp: "เนื้อความขัดแย้งกัน (น้องสาวอยากเข้าไปใกล้ 'แต่' พ่อบอกให้เงียบและอยู่ห่างๆ) จึงใช้คำเชื่อมแสดงความขัดแย้ง 'but'"
+                },
+                {
+                    part: "PART 4: GRAMMAR CLOZE",
+                    q: CLOZE_HTML + `<p>31. Choose the best answer for blank <b>(31)</b>: "If we __(31)__ enough time next month, we will definitely go camping there again."</p>`,
+                    c: ["have", "had", "will have", "having"],
+                    a: 0,
+                    exp: "If-Clause Type 1 (เงื่อนไขที่เป็นไปได้ในอนาคต): If + Present Simple (V.1), S + will + V.inf หลัง If ห้ามใช้ will จึงตอบ 'have'"
+                },
+                {
+                    part: "PART 4: GRAMMAR CLOZE",
+                    q: CLOZE_HTML + `<p>32. Choose the best answer for blank <b>(32)</b>: "It was __(32)__ trip I have ever had!"</p>`,
+                    c: ["a good", "better", "the best", "most good"],
+                    a: 2,
+                    exp: "มีวลี 'I have ever had' (เท่าที่ฉันเคยเจอมา) เป็นตัวบอกขั้นสูงสุด (Superlative) ขั้นสูงสุดของ good คือ 'the best'"
+                }
+            ]
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sid = urlParams.get('sid');
+            const sidInput = document.getElementById('sid-input');
+            if (sid && sid !== "GUEST") {
+                sidInput.value = sid;
+                sidInput.setAttribute('readonly', true);
+            }
+        });
+
+        function startFullExam() {
+            const sidInput = document.getElementById("sid-input").value.trim();
+            if (!sidInput) return alert("กรุณากรอกรหัสนักเรียนก่อนเริ่มทำข้อสอบครับ!");
+            
+            ALL_QUESTIONS = [];
+            for (let i = 1; i <= 4; i++) {
+                if (EXAM_DB[i]) {
+                    ALL_QUESTIONS = ALL_QUESTIONS.concat(EXAM_DB[i]);
+                }
+            }
+            
+            currentSid = sidInput;
+            currentQIndex = 0;
+            score = 0;
+            hasAnswered = false;
+            selectedAnsIdx = -1;
+            timeLeft = 3000; // 50 นาที
+            
+            document.getElementById("lobby-screen").classList.add("hidden");
+            document.getElementById("result-screen").classList.add("hidden");
+            document.getElementById("arena-screen").classList.remove("hidden");
+            
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            hasAnswered = false;
+            selectedAnsIdx = -1;
+            const btnNext = document.getElementById("btn-next-question");
+            btnNext.disabled = true;
+            btnNext.classList.remove("btn-finish-exam");
+            btnNext.innerHTML = "<span>ยืนยันคำตอบ</span> <span>➡️</span>";
+
+            const expBox = document.getElementById("explanation-box");
+            expBox.classList.add("hidden");
+
+            const qData = ALL_QUESTIONS[currentQIndex];
+            const totalQ = ALL_QUESTIONS.length;
+
+            document.getElementById("arena-stage-name").textContent = qData.part || "O-NET M.3 ARENA";
+            document.getElementById("progress-text").textContent = `Question ${currentQIndex + 1} / ${totalQ}`;
+            document.getElementById("score-text").textContent = `Score: ${score}`;
+            document.getElementById("progress-fill").style.width = `${((currentQIndex + 1) / totalQ) * 100}%`;
+            
+            document.getElementById("question-content").innerHTML = `<div class="text-sm sm:text-base text-white leading-relaxed text-left w-full">${qData.q}</div>`;
+
+            const choicesContainer = document.getElementById("choices-container");
+            choicesContainer.innerHTML = "";
+            
+            qData.c.forEach((choice, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "choice-btn w-full p-4 rounded-xl text-sm text-slate-200 block";
+                btn.innerHTML = `<span class="inline-block w-6 font-bold text-cyan-400">${String.fromCharCode(65 + idx)}.</span> ${choice}`;
+                btn.onclick = () => selectChoice(idx, btn);
+                choicesContainer.appendChild(btn);
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectChoice(idx, btnEl) {
+            if (hasAnswered) return; 
+            const btns = document.querySelectorAll(".choice-btn");
+            btns.forEach(b => b.classList.remove("selected"));
+            btnEl.classList.add("selected");
+            selectedAnsIdx = idx;
+            document.getElementById("btn-next-question").disabled = false;
+        }
+
+        function nextQuestion() {
+            const qData = ALL_QUESTIONS[currentQIndex];
+            const btnNext = document.getElementById("btn-next-question");
+            const btns = document.querySelectorAll(".choice-btn");
+            const expBox = document.getElementById("explanation-box");
+
+            if (!hasAnswered) {
+                if (selectedAnsIdx === -1) return;
+                hasAnswered = true;
+                btns.forEach(b => b.disabled = true);
+
+                if (selectedAnsIdx === qData.a) {
+                    btns[selectedAnsIdx].classList.add("correct");
+                    score++;
+                } else {
+                    btns[selectedAnsIdx].classList.add("wrong");
+                    btns[qData.a].classList.add("correct");
+                }
+                
+                document.getElementById("score-text").textContent = `Score: ${score}`;
+                
+                if (qData.exp) {
+                    document.getElementById("explanation-text").innerHTML = qData.exp;
+                    expBox.classList.remove("hidden");
+                }
+                
+                if (currentQIndex < ALL_QUESTIONS.length - 1) {
+                    btnNext.innerHTML = "<span>ไปข้อถัดไป</span> <span>⏭️</span>";
+                } else {
+                    btnNext.innerHTML = "<span>ดูผลสอบ O-NET</span> <span>🎯</span>";
+                    btnNext.classList.add("btn-finish-exam");
+                }
+                return;
+            }
+
+            currentQIndex++;
+            if (currentQIndex < ALL_QUESTIONS.length) {
+                loadQuestion();
+            } else {
+                finishExam();
+            }
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerText();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerText();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("⏰ หมดเวลาทำข้อสอบ ระบบจะสรุปคะแนนให้ทันที!");
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerText() {
+            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const s = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById("timer-display").textContent = `${m}:${s}`;
+        }
+
+        async function finishExam() {
+            clearInterval(timerInterval);
+            document.getElementById("arena-screen").classList.add("hidden");
+            document.getElementById("result-screen").classList.remove("hidden");
+            
+            const totalQ = ALL_QUESTIONS.length;
+            const percent = Math.round((score / totalQ) * 100);
+            
+            let grade = 0;
+            let icon = "💪";
+            let title = "TRY AGAIN!";
+            let feedbackText = "ยังไม่ผ่านเกณฑ์ 30% ลองทบทวนคำอธิบายแล้วสอบใหม่อีกครั้งนะครับ!";
+            let feedbackClass = "text-sm font-bold mb-4 text-rose-400";
+
+            if (percent >= 70) {
+                grade = 10;
+                icon = "🏆";
+                title = "OUTSTANDING!";
+                feedbackText = "🌟 ระดับแนวหน้า! คุณพร้อมลุยสนามสอบ O-NET ม.3 เต็มร้อยแล้ว!";
+                feedbackClass = "text-sm font-bold mb-4 text-cyan-400";
+            } else if (percent >= 50) {
+                grade = 8.5;
+                icon = "🔥";
+                title = "GREAT JOB!";
+                feedbackText = "✨ ระดับพร้อมรบ! ทำได้ดีมาก หากอยากเก็บเต็ม 10 ลองสอบแก้มือได้เลย!";
+                feedbackClass = "text-sm font-bold mb-4 text-emerald-400";
+            } else if (percent >= 30) {
+                grade = 7;
+                icon = "👍";
+                title = "PASSED!";
+                feedbackText = "⚡ ระดับเอาตัวรอด! ผ่านเกณฑ์แล้ว แนะนำให้ลองทบทวนและสอบซ้ำเพื่ออัปคะแนน!";
+                feedbackClass = "text-sm font-bold mb-4 text-amber-400";
+            }
+
+            document.getElementById("result-icon").textContent = icon;
+            document.getElementById("result-title").textContent = title;
+            document.getElementById("result-subtitle").textContent = `ผู้เข้าสอบรหัส ${currentSid} • จำลองสอบ O-NET ภาษาอังกฤษ ม.3`;
+            document.getElementById("result-score").textContent = `${score} / ${totalQ} ข้อ`;
+            document.getElementById("result-percent").textContent = `${percent}%`;
+            document.getElementById("result-grade").textContent = `${grade} / 10`;
+
+            const fbEl = document.getElementById("result-feedback");
+            fbEl.textContent = feedbackText;
+            fbEl.className = feedbackClass;
+
+            document.getElementById("result-actions").innerHTML = `
+                <button onclick="startFullExam()" class="btn-action w-full py-3 rounded-xl font-bold text-sm text-white">🔄 สอบใหม่อีกครั้ง (Retake)</button>
+                <a href="index.html" class="block w-full py-3 rounded-xl font-bold text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition">⬅️ กลับหน้าหลัก (Dashboard)</a>
+            `;
+
+            const statusEl = document.getElementById("saving-status");
+            statusEl.textContent = "⏳ กำลังบันทึกผลสอบลงฐานข้อมูล ม.3...";
+            statusEl.className = "text-xs text-cyan-400 mb-6 min-h-[20px]";
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                        action: "recordActivity",
+                        studentId: currentSid,
+                        activityType: "ONET_ARENA",
+                        itemId: "ONET_M3",
+                        xp: grade,
+                        details: `จำลองสอบ O-NET ม.3 ได้ ${score}/${totalQ} ข้อ (${percent}%) | คะแนนเก็บ ${grade}/10`
+                    })
+                });
+                const result = await response.json();
+                if (result.status === "success") {
+                    statusEl.textContent = "✔️ บันทึกผลสอบลงระบบหลังบ้าน (Logs) เรียบร้อยแล้ว!";
+                    statusEl.className = "text-xs text-emerald-400 mb-6 min-h-[20px]";
+                } else {
+                    throw new Error("Save failed");
+                }
+            } catch (error) {
+                statusEl.textContent = "⚠️ ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาแคปหน้าจอผลคะแนนนี้แจ้งคุณครู";
+                statusEl.className = "text-xs text-rose-400 mb-6 min-h-[20px]";
+            }
+        }
+
+        function confirmReturnToLobby() {
+            if (confirm("ต้องการออกจากห้องสอบตอนนี้ใช่ไหมครับ? (คะแนนรอบนี้จะยังไม่ถูกบันทึก)")) {
+                returnToLobby();
+            }
+        }
+
+        function returnToLobby() {
+            clearInterval(timerInterval);
+            document.getElementById("arena-screen").classList.add("hidden");
+            document.getElementById("result-screen").classList.add("hidden");
+            document.getElementById("lobby-screen").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
