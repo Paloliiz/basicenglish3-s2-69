@@ -127,27 +127,39 @@
                 </button>
             </div>
 
-            <!-- EXAM U3 (COMING SOON) -->
+            <!-- EXAM U3 -->
             <div id="card-u3" class="exam-card locked rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-xs font-bold px-3 py-1 rounded bg-slate-900 text-slate-400 border border-slate-700 font-scifi">UNIT 3</span>
-                        <span class="text-lg">🔒</span>
+                        <span class="text-xs font-bold px-3 py-1 rounded bg-rose-950 text-rose-400 border border-rose-500/30 font-scifi">UNIT 3</span>
+                        <span id="lock-icon-u3" class="text-lg">🔒</span>
                     </div>
-                    <h3 class="font-scifi text-xl font-bold text-slate-300 mb-2">Unit 3 Final Exam</h3>
-                    <p class="text-sm text-slate-400 mb-4">ข้อสอบประจำบทที่ 3 (10 คะแนน)</p>
-                    <div class="text-xs text-slate-400 bg-slate-900/70 p-2.5 rounded-lg border border-slate-700 mb-6">
-                        <b>สถานะ:</b> ยังไม่เปิดให้เข้าสอบ (Coming Soon)
+                    <h3 class="font-scifi text-xl font-bold text-white mb-2">That's Entertainment!</h3>
+                    <p class="text-sm text-slate-300 mb-4">ข้อสอบประจำบทที่ 3 (20 ข้อ • 10 คะแนน)</p>
+                    <div id="req-u3" class="text-xs text-rose-400 bg-rose-950/50 p-2.5 rounded-lg border border-rose-900 mb-6">
+                        <b>เงื่อนไขปลดล็อก:</b> ต้องผ่าน M08, M09, M10, M11 และบอส V03 ก่อน
                     </div>
                 </div>
-                <button disabled class="btn-enter w-full py-3 rounded-xl font-bold font-scifi tracking-wider">
-                    COMING SOON
+                <button id="btn-u3" disabled onclick="enterExam('unit3_exam.html')" class="btn-enter w-full py-3 rounded-xl font-bold text-white font-scifi tracking-wider">
+                    ENTER EXAM
                 </button>
             </div>
 
         </div>
+
+        <!-- UPCOMING EXAMS BANNER (UNITS 4-8) -->
+        <div class="mt-8 p-4 rounded-2xl bg-slate-900/60 border border-dashed border-rose-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">📝</span>
+                <div>
+                    <p class="font-scifi text-xs font-bold text-rose-300 tracking-wider">UPCOMING EXAMS: UNIT 4 – UNIT 8</p>
+                    <p class="text-xs text-slate-400">ห้องสอบประจำบทที่ 4 ถึงบทที่ 8 จะเปิดเพิ่มตามบทเรียนที่อัปเดตครับ</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-rose-950 border border-rose-500/30 text-[10px] font-scifi text-rose-300 whitespace-nowrap">COMING SOON</span>
+        </div>
         
-        <div class="text-center mt-10 border-t border-rose-500/20 pt-6">
+        <div class="text-center mt-8 border-t border-rose-500/20 pt-6">
             <a href="index.html" class="text-sm text-slate-400 hover:text-white underline transition">
                 ⬅️ กลับสู่หน้า Dashboard
             </a>
@@ -219,6 +231,11 @@
             const hasU2Core = ["M04", "M05", "M06", "M07"].every(m => completedMissions.includes(m));
             const hasU2Boss = completedMissions.includes("V02") || completedMissions.includes("V_U2");
             updateExamCard("u2", hasU2Core && hasU2Boss, completedMissions.includes("EXAM_U2"));
+
+            // 3. เช็คสิทธิ์ Unit 3
+            const hasU3Core = ["M08", "M09", "M10", "M11"].every(m => completedMissions.includes(m));
+            const hasU3Boss = completedMissions.includes("V03") || completedMissions.includes("V_U3");
+            updateExamCard("u3", hasU3Core && hasU3Boss, completedMissions.includes("EXAM_U3"));
         }
 
         function updateExamCard(unitKey, isReady, isCompleted) {
