@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Voice Lab M.3 Unit 3: Defeat The Pixel Overlord</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        scifi: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        cosmic: { 950: '#070510', 900: '#0d091d', 800: '#150f2e', 700: '#211844' },
+                        neon: { cyan: '#38bdf8', purple: '#a855f7', pink: '#ec4899', green: '#34d399', lime: '#4ade80', red: '#f43f5e', orange: '#fb923c', gold: '#fbbf24' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070510;
+            background-image: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.16) 0%, transparent 70%);
+            background-attachment: fixed;
+            color: #f1f5f9;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(12, 32, 36, 0.90), rgba(10, 14, 28, 0.95));
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.22);
+            backdrop-filter: blur(12px);
+        }
+        .btn-start {
+            background: linear-gradient(90deg, #059669 0%, #10b981 50%, #34d399 100%);
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
+            transition: all 0.2s;
+        }
+        .btn-start:hover:not(:disabled) { transform: scale(1.02); box-shadow: 0 0 28px rgba(52, 211, 153, 0.8); }
+        .btn-start:disabled { background: #334155; box-shadow: none; cursor: not-allowed; color: #94a3b8; }
+
+        .target-box { background: rgba(0,0,0,0.5); border: 2px dashed #10b981; }
+        .hp-bar-bg { background: #333; border: 2px solid #555; border-radius: 10px; overflow: hidden; position: relative; }
+        .hp-bar-fill { background: linear-gradient(90deg, #10b981, #38bdf8); transition: width 0.5s ease-out; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #334155; transition: 0.3s; }
+        .dot.active { background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+        .dot.cleared { background: #34d399; box-shadow: 0 0 10px #34d399; }
+
+        @keyframes shake { 0%, 100% { transform: translate(0, 0) rotate(0); } 20% { transform: translate(-3px, 2px) rotate(-2deg); } 40% { transform: translate(3px, -2px) rotate(2deg); } 60% { transform: translate(-3px, -2px) rotate(-2deg); } 80% { transform: translate(3px, 2px) rotate(2deg); } }
+        .hit-effect { animation: shake 0.4s; filter: drop-shadow(0 0 30px #38bdf8) brightness(1.5) !important; }
+        @keyframes spawn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .letter-btn {
+            background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; 
+            color: white; font-family: 'Orbitron', sans-serif; font-weight: bold;
+            transition: all 0.2s; cursor: pointer;
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; font-size: 1.2rem;
+            animation: spawn 0.3s ease-out backwards;
+        }
+        .letter-btn:hover:not(:disabled) { background: #10b981; color: #020617; box-shadow: 0 0 12px #34d399; transform: translateY(-2px); }
+        .letter-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: scale(0.9); }
+        .letter-slot {
+            width: 38px; height: 40px; border-bottom: 3px solid #34d399;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1.45rem; color: #facc15;
+            cursor: pointer;
+        }
+
+        .word-btn {
+            background: rgba(16, 185, 129, 0.16); border: 1px solid #34d399;
+            color: white; font-family: 'Prompt', sans-serif;
+            padding: 8px 16px; border-radius: 12px; margin: 4px;
+            transition: all 0.2s; cursor: pointer; display: inline-block;
+            animation: spawn 0.3s ease-out backwards;
+        }
+        .word-btn:hover:not(:disabled) { background: #10b981; color: #020617; box-shadow: 0 0 10px #34d399; transform: translateY(-2px); }
+        .word-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        
+        .sentence-slot-area {
+            min-height: 60px; background: rgba(0,0,0,0.3); border: 1px dashed #64748b;
+            border-radius: 12px; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
+        }
+        .slotted-word {
+            background: #10b981; color: #020617; padding: 6px 14px; border-radius: 10px;
+            font-family: 'Prompt', sans-serif; cursor: pointer; box-shadow: 0 0 8px rgba(16, 185, 129, 0.55); font-weight: 600;
+            animation: spawn 0.2s ease-out;
+        }
+        .slotted-word:hover { background: #4ade80; }
+
+        .result-box { transition: all 0.3s; min-height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 10px; }
+        .res-success { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; box-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .res-error { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; animation: shake 0.4s; }
+    </style>
+</head>
+<body class="p-4 sm:p-6 lg:p-10">
+
+    <!-- WELCOME SCREEN -->
+    <div id="welcome-screen" class="glass-panel rounded-3xl max-w-xl w-full mx-auto p-6 sm:p-8 text-center relative z-10">
+        <h1 class="font-scifi text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-green-300 to-cyan-300 mb-2">VOICE LAB: UNIT 3</h1>
+        <p class="text-neon-green mb-6 font-bold">M.3 Final Boss: Defeat The Pixel Overlord</p>
+        
+        <div class="bg-black/40 p-5 rounded-2xl mb-6 text-left text-sm text-slate-300 space-y-2 border border-emerald-500/30">
+            <p><b class="text-white">🎯 ภารกิจบทที่ 3 (That's Entertainment!):</b></p>
+            <p>1. <b>Phase 1 (Media Scan)</b>: ถอดรหัสคำศัพท์หมวดดนตรีและภาพยนตร์</p>
+            <p>2. <b>Phase 2 (Pixel Decode)</b>: ถอดรหัสคำศัพท์หมวดเกมและความรู้สึก</p>
+            <p>3. <b>Phase 3 (Boss Fight!)</b>: เรียงประโยคภาษาอังกฤษเพื่อพิชิต The Pixel Overlord!</p>
+            <p class="text-amber-300 text-xs mt-2 pt-2 border-t border-slate-700">💡 ไม่ต้องใช้ไมโครโฟน กดไอคอน 🔊 เพื่อฟังการออกเสียงได้ทุกข้อ</p>
+        </div>
+        
+        <div class="mb-6">
+            <input type="text" id="sid-input" placeholder="กรอกรหัสนักเรียน (Student ID)" class="w-full px-4 py-3 rounded-xl bg-black border-2 border-emerald-500 text-center text-neon-gold font-scifi focus:outline-none focus:shadow-[0_0_15px_#10b981]">
+        </div>
+        
+        <button id="btn-main-start" class="btn-start w-full py-3.5 rounded-xl font-bold text-slate-950 mb-3" onclick="startGame()">🚀 เริ่มภารกิจปราบบอส</button>
+        <a href="voice_lobby.html" class="inline-block text-xs text-slate-400 hover:text-white underline mt-1">⬅️ กลับโถงบอส (Boss Lobby)</a>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="glass-panel rounded-3xl max-w-lg w-full mx-auto p-5 sm:p-7 hidden relative z-10">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+            <div id="phase-badge" class="bg-neon-green text-slate-950 px-4 py-1.5 rounded-full font-scifi font-bold text-xs tracking-wider">PHASE 1: MEDIA SCAN</div>
+            <div id="progress-bar" class="flex gap-1.5"></div>
+        </div>
+        
+        <!-- BOSS AREA (Show in Phase 3) -->
+        <div id="boss-area" class="hidden mb-6 text-center relative">
+            <h3 class="font-scifi text-neon-lime font-bold tracking-widest mb-2">TARGET: THE PIXEL OVERLORD</h3>
+            <img src="BossPixelU3.png" id="boss-img" alt="The Pixel Overlord" class="w-full max-w-[200px] mx-auto filter drop-shadow-[0_0_25px_#10b981] transition-all duration-200 opacity-95" onerror="this.src='https://via.placeholder.com/180/0f2925/34d399?text=PIXEL+OVERLORD'">
+            <div class="hp-bar-bg h-4 mt-4 w-4/5 mx-auto">
+                <div id="hp-fill" class="hp-bar-fill h-full w-full"></div>
+                <div id="hp-text" class="absolute inset-0 flex justify-center items-center text-[10px] font-scifi text-white font-bold drop-shadow-md">100%</div>
+            </div>
+        </div>
+
+        <!-- TARGET DISPLAY -->
+        <div class="target-box p-5 rounded-2xl mb-5 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-emerald-900/20"></div>
+            <button onclick="playAudio()" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center hover:bg-slate-700 transition z-20" title="ฟังเสียง">🔊</button>
+            <div id="target-meaning" class="text-sm text-slate-300 mb-2 relative z-10">ความหมาย</div>
+            <div id="game-slots-area" class="flex flex-wrap justify-center gap-2 mt-4 min-h-[45px] relative z-10"></div>
+        </div>
+
+        <!-- CONTROLS / INPUT AREA -->
+        <div id="game-controls-area" class="flex flex-wrap justify-center gap-3 mb-5 min-h-[100px]"></div>
+
+        <!-- FEEDBACK -->
+        <div id="feedback-box" class="result-box text-transparent">...</div>
+        
+        <!-- Next Button -->
+        <button id="btn-next" onclick="nextItem()" class="w-full mt-4 py-3 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-500 text-white hidden shadow-[0_0_15px_rgba(16,185,129,0.45)]">ลุยข้อถัดไป ➡️</button>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen" class="glass-panel rounded-3xl max-w-md w-full mx-auto p-8 text-center hidden relative z-10">
+        <h1 class="font-scifi text-3xl font-black text-neon-green mb-2">BOSS DEFEATED!</h1>
+        <p class="text-slate-300 text-sm mb-6">คุณเคลียร์มินิเกมบทที่ 3 และกำจัด The Pixel Overlord สำเร็จ!</p>
+        
+        <div class="bg-green-900/20 border-2 border-dashed border-neon-green p-6 rounded-2xl mb-6">
+            <p class="text-xs text-slate-400 mb-2">รหัสลับรับ XP (นำไปกรอกหน้าหลักตรงการ์ด V03)</p>
+            <h2 id="cipher-code" class="font-scifi text-2xl text-neon-gold tracking-[0.2em] font-bold">...</h2>
+        </div>
+        
+        <div class="space-y-3">
+            <button class="w-full py-3.5 rounded-xl font-bold bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 transition" onclick="window.location.href='index.html'">⬅️ กลับหน้าหลัก (Dashboard)</button>
+            <button class="w-full py-2.5 rounded-xl font-medium text-xs bg-cosmic-900 hover:bg-cosmic-800 text-emerald-300 border border-emerald-500/30 transition" onclick="window.location.href='voice_lobby.html?sid=' + encodeURIComponent(currentSid)">🎙️ กลับโถงบอส (Boss Lobby)</button>
+        </div>
+        <div id="saving-status" class="mt-4 text-xs text-neon-cyan min-h-[20px]">⏳ กำลังเชื่อมต่อฐานข้อมูล...</div>
+    </div>
+
+    <script>
+        // --- Auto-fill Student ID (เช็คทั้ง URL และ Session ม.3) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let sidFromUrl = urlParams.get('sid');
+
+            if (!sidFromUrl || sidFromUrl === "GUEST") {
+                try {
+                    const savedSession = JSON.parse(localStorage.getItem("pd_m3_portal_session") || localStorage.getItem("pd_portal_session"));
+                    if (savedSession && savedSession.user && savedSession.user.studentId) {
+                        sidFromUrl = savedSession.user.studentId;
+                    }
+                } catch (e) {}
+            }
+
+            if (sidFromUrl && sidFromUrl !== "GUEST") {
+                const sidInput = document.getElementById('sid-input');
+                if (sidInput) {
+                    sidInput.value = sidFromUrl;
+                    sidInput.setAttribute('readonly', true);
+                }
+            }
+        });
+
+        // Google Apps Script API ของ ม.3
+        const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
+        const THIS_MISSION_ID = "V03";
+        
+        // --- DATA Unit 3: That's Entertainment! (M.3) ---
+        const DB = {
+            phase1: [ 
+                { word: "classical", meaning: "(adj.) แนวดนตรีคลาสสิก" },
+                { word: "horror", meaning: "(n.) ภาพยนตร์แนวสยองขวัญ" },
+                { word: "comedy", meaning: "(n.) ภาพยนตร์/รายการแนวตลก" },
+                { word: "action", meaning: "(n.) ภาพยนตร์แนวแอ็กชันต่อสู้" }
+            ],
+            phase2: [ 
+                { word: "pixel", meaning: "(n.) จุดสีเล็กๆ ที่ประกอบเป็นภาพบนหน้าจอ" },
+                { word: "console", meaning: "(n.) เครื่องเล่นวิดีโอเกม" },
+                { word: "graphics", meaning: "(n.) ภาพกราฟิกบนหน้าจอคอมพิวเตอร์" },
+                { word: "amazed", meaning: "(adj.) รู้สึกทึ่ง, ประหลาดใจมาก" }
+            ],
+            phase3: [ 
+                { word: "This horror movie is so scary.", meaning: "หนังสยองขวัญเรื่องนี้น่ากลัวมาก!", pieces: ["This", "horror", "movie", "is", "so", "scary."] },
+                { word: "That was such a beautiful song.", meaning: "นั่นช่างเป็นเพลงที่ไพเราะมาก", pieces: ["That", "was", "such", "a", "beautiful", "song."] },
+                { word: "This is the town where I grew up.", meaning: "นี่คือเมืองที่ฉันเติบโตขึ้นมา", pieces: ["This", "is", "the", "town", "where", "I", "grew", "up."] },
+                { word: "We play our favorite games in real time.", meaning: "พวกเราเล่นเกมโปรดด้วยกันแบบเรียลไทม์", pieces: ["We", "play", "our", "favorite", "games", "in", "real", "time."] }
+            ]
+        };
+
+        let currentSid = ""; let currentPhase = 1; let currentIndex = 0; let currentList = []; let bossHP = 100;
+        let targetWord = ""; let userSpelling = []; let letterButtons = []; let sentencePieces = []; let userSentence = [];
+
+        function startGame() {
+            const sidInput = document.getElementById("sid-input");
+            if (!sidInput) return alert("ไม่พบช่องกรอกรหัสนักเรียน");
+            const sid = sidInput.value.trim();
+            if (!sid) return alert("กรุณากรอกรหัสนักเรียนก่อนครับ!");
+            
+            currentSid = sid;
+            bossHP = 100;
+            document.getElementById("welcome-screen").classList.add("hidden");
+            document.getElementById("game-screen").classList.remove("hidden");
+            loadPhase(1);
+        }
+
+        function loadPhase(phaseNum) {
+            currentPhase = phaseNum;
+            currentIndex = 0;
+            const badge = document.getElementById("phase-badge");
+            
+            if (phaseNum === 1) {
+                currentList = DB.phase1;
+                badge.innerText = "PHASE 1: MEDIA SCAN (ถอดรหัสคำ)";
+                badge.className = "bg-neon-green text-slate-950 px-4 py-1.5 rounded-full font-scifi font-bold text-xs tracking-wider shadow-[0_0_10px_#34d399]";
+            } else if (phaseNum === 2) {
+                currentList = DB.phase2;
+                badge.innerText = "PHASE 2: PIXEL DECODE (ถอดรหัสคำ)";
+                badge.className = "bg-neon-cyan text-slate-950 px-4 py-1.5 rounded-full font-scifi font-bold text-xs tracking-wider shadow-[0_0_10px_#38bdf8]";
+            } else if (phaseNum === 3) {
+                currentList = DB.phase3;
+                badge.innerText = "PHASE 3: BOSS FIGHT! (เรียงประโยค)";
+                badge.className = "bg-neon-red text-white px-4 py-1.5 rounded-full font-scifi font-bold text-xs tracking-wider shadow-[0_0_10px_#f43f5e]";
+                document.getElementById("boss-area").classList.remove("hidden");
+            }
+            renderProgress();
+            showCurrentItem();
+        }
+
+        function renderProgress() {
+            const bar = document.getElementById("progress-bar");
+            bar.innerHTML = "";
+            for (let i = 0; i < currentList.length; i++) {
+                let status = "dot";
+                if (i < currentIndex) status += " cleared";
+                else if (i === currentIndex) status += " active";
+                bar.innerHTML += `<div class="${status}"></div>`;
+            }
+        }
+
+        function shuffle(array) {
+            let idx = array.length, randomIndex;
+            while (idx !== 0) {
+                randomIndex = Math.floor(Math.random() * idx);
+                idx--;
+                [array[idx], array[randomIndex]] = [array[randomIndex], array[idx]];
+            }
+            return array;
+        }
+
+        function showCurrentItem() {
+            if (currentIndex >= currentList.length) {
+                if (currentPhase === 1) return loadPhase(2);
+                if (currentPhase === 2) return loadPhase(3);
+                if (currentPhase === 3) return showSuccess();
+                return;
+            }
+            
+            const item = currentList[currentIndex];
+            targetWord = item.word;
+            document.getElementById("target-meaning").innerText = item.meaning;
+            
+            const slotsArea = document.getElementById("game-slots-area");
+            const controlsArea = document.getElementById("game-controls-area");
+            const btnNext = document.getElementById("btn-next");
+            const feedback = document.getElementById("feedback-box");
+            
+            slotsArea.innerHTML = "";
+            controlsArea.innerHTML = "";
+            btnNext.classList.add("hidden");
+            feedback.className = "result-box text-transparent";
+            feedback.innerText = "...";
+            
+            if (currentPhase === 1 || currentPhase === 2) {
+                userSpelling = [];
+                letterButtons = [];
+                
+                for (let i = 0; i < targetWord.length; i++) {
+                    slotsArea.innerHTML += `<div class="letter-slot" id="slot-${i}">_</div>`;
+                }
+                
+                let letters = targetWord.split('');
+                const alphabet = "abcdefghijklmnopqrstuvwxyz";
+                letters.push(alphabet[Math.floor(Math.random() * alphabet.length)]);
+                letters = shuffle(letters);
+                
+                letters.forEach((char, idx) => {
+                    const delay = idx * 0.05;
+                    controlsArea.innerHTML += `<button id="lbtn-${idx}" class="letter-btn" style="animation-delay: ${delay}s" onclick="selectLetter('${char}', ${idx})">${char.toUpperCase()}</button>`;
+                    letterButtons.push({ id: `lbtn-${idx}`, char: char, used: false });
+                });
+
+            } else if (currentPhase === 3) {
+                userSentence = [];
+                sentencePieces = [];
+                slotsArea.innerHTML = `<div id="sentence-drop" class="sentence-slot-area w-full"><span class="text-slate-500 text-sm">เรียงประโยคที่นี่...</span></div>`;
+                
+                let pieces = shuffle([...item.pieces]);
+                pieces.forEach((piece, idx) => {
+                    const delay = idx * 0.05;
+                    const escaped = piece.replace(/'/g, "\\'");
+                    controlsArea.innerHTML += `<button id="wbtn-${idx}" class="word-btn" style="animation-delay: ${delay}s" onclick="selectWord('${escaped}', ${idx})">${piece}</button>`;
+                    sentencePieces.push({ id: `wbtn-${idx}`, word: piece, used: false });
+                });
+            }
+            renderProgress();
+        }
+
+        window.selectLetter = function(char, btnIdx) {
+            const btn = document.getElementById(`lbtn-${btnIdx}`);
+            if (btn.disabled) return;
+            const slotIdx = userSpelling.length;
+            if (slotIdx >= targetWord.length) return;
+            
+            userSpelling.push({ char: char, btnIdx: btnIdx });
+            document.getElementById(`slot-${slotIdx}`).innerText = char.toUpperCase();
+            btn.disabled = true;
+            document.getElementById(`slot-${slotIdx}`).onclick = () => undoLetter(slotIdx);
+            
+            if (userSpelling.length === targetWord.length) checkDecoderAnswer();
+        };
+        
+        window.undoLetter = function(slotIdx) {
+            if (slotIdx !== userSpelling.length - 1) return;
+            const last = userSpelling.pop();
+            document.getElementById(`slot-${slotIdx}`).innerText = "_";
+            document.getElementById(`slot-${slotIdx}`).onclick = null;
+            document.getElementById(`lbtn-${last.btnIdx}`).disabled = false;
+            document.getElementById("feedback-box").className = "result-box text-transparent";
+        };
+        
+        function checkDecoderAnswer() {
+            const currentStr = userSpelling.map(u => u.char).join('');
+            const feedback = document.getElementById("feedback-box");
+            
+            if (currentStr.toLowerCase() === targetWord.toLowerCase()) {
+                feedback.innerHTML = "✔️ ACCESS GRANTED";
+                feedback.className = "result-box res-success mt-4 p-2";
+                document.getElementById("game-controls-area").innerHTML = "";
+                document.getElementById("btn-next").classList.remove("hidden");
+                playAudio();
+            } else {
+                feedback.innerHTML = "❌ ACCESS DENIED";
+                feedback.className = "result-box res-error mt-4 p-2";
+                setTimeout(() => {
+                    while (userSpelling.length > 0) undoLetter(userSpelling.length - 1);
+                    feedback.className = "result-box text-transparent";
+                }, 800);
+            }
+        }
+
+        window.selectWord = function(word, btnIdx) {
+            const btn = document.getElementById(`wbtn-${btnIdx}`);
+            if (btn.disabled) return;
+            userSentence.push({ word: word, btnIdx: btnIdx });
+            btn.disabled = true;
+            renderSentenceDropArea();
+            if (userSentence.length === currentList[currentIndex].pieces.length) checkSentenceAnswer();
+        };
+        
+        window.undoWord = function(pieceIdx) {
+            const removed = userSentence.splice(pieceIdx, 1)[0];
+            document.getElementById(`wbtn-${removed.btnIdx}`).disabled = false;
+            renderSentenceDropArea();
+            document.getElementById("feedback-box").className = "result-box text-transparent";
+        };
+        
+        function renderSentenceDropArea() {
+            const dropArea = document.getElementById("sentence-drop");
+            dropArea.innerHTML = "";
+            userSentence.forEach((u, idx) => {
+                dropArea.innerHTML += `<div class="slotted-word" onclick="undoWord(${idx})">${u.word}</div>`;
+            });
+            if (userSentence.length === 0) {
+                dropArea.innerHTML = `<span class="text-slate-500 text-sm">เรียงประโยคที่นี่...</span>`;
+            }
+        }
+        
+        function checkSentenceAnswer() {
+            const currentStr = userSentence.map(u => u.word).join(' ');
+            const targetStr = currentList[currentIndex].pieces.join(' ');
+            const feedback = document.getElementById("feedback-box");
+            
+            if (currentStr === targetStr) {
+                feedback.innerHTML = "✔️ BOSS HIT!";
+                feedback.className = "result-box res-success mt-4 p-2";
+                document.getElementById("game-controls-area").innerHTML = "";
+                document.getElementById("btn-next").classList.remove("hidden");
+                hitBoss();
+                playAudio();
+            } else {
+                feedback.innerHTML = "❌ MISS! คลิกคำด้านบนเพื่อเรียงใหม่";
+                feedback.className = "result-box res-error mt-4 p-2";
+            }
+        }
+
+        window.playAudio = function() {
+            const text = currentList[currentIndex].word;
+            const synth = window.speechSynthesis;
+            synth.cancel();
+            const utterThis = new SpeechSynthesisUtterance(text);
+            utterThis.lang = 'en-US';
+            utterThis.rate = 0.9;
+            synth.speak(utterThis);
+        };
+
+        window.nextItem = function() {
+            currentIndex++;
+            showCurrentItem();
+        };
+
+        function hitBoss() {
+            const dmg = Math.ceil(100 / DB.phase3.length);
+            bossHP = Math.max(0, bossHP - dmg);
+            document.getElementById("hp-fill").style.width = bossHP + "%";
+            document.getElementById("hp-text").innerText = bossHP + "%";
+            const bossImg = document.getElementById("boss-img");
+            if (bossImg) {
+                bossImg.classList.add("hit-effect");
+                setTimeout(() => bossImg.classList.remove("hit-effect"), 400);
+            }
+        }
+
+        async function showSuccess() {
+            document.getElementById("game-screen").classList.add("hidden");
+            document.getElementById("success-screen").classList.remove("hidden");
+            
+            const savingStatus = document.getElementById("saving-status");
+            savingStatus.innerText = "⏳ กำลังดึงรหัสลับและบันทึกประวัติ...";
+            savingStatus.className = "mt-4 text-xs text-neon-cyan min-h-[20px]";
+
+            try {
+                // 1. ดึงรหัสลับเฉพาะบุคคลจากหลังบ้าน (Apps Script ม.3)
+                const passRes = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ 
+                        action: "getPasscode", 
+                        missionId: THIS_MISSION_ID,
+                        studentId: currentSid 
+                    })
+                });
+                const passResult = await passRes.json();
+                
+                if (passResult.status === "success" && passResult.passcode && passResult.passcode !== "NO-CODE-FOUND") {
+                    document.getElementById("cipher-code").innerText = passResult.passcode;
+
+                    // 2. บันทึกประวัติการปราบบอสลงชีท Logs
+                    await fetch(API_URL, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            action: "recordActivity",
+                            studentId: currentSid,
+                            activityType: "VOICE_LAB_U3",
+                            itemId: THIS_MISSION_ID,
+                            xp: 0,
+                            details: "ผ่าน Minigame Unit 3 (ปราบ The Pixel Overlord)"
+                        })
+                    });
+
+                    if (passResult.passcode.includes("{CIPHER}")) {
+                        savingStatus.innerText = "⚠️ แจ้งคุณครู: กรุณาตรวจสอบสูตร V03-{CIPHER} ใน Apps Script และ Deploy เวอร์ชันใหม่";
+                        savingStatus.className = "mt-4 text-xs text-amber-400 min-h-[20px]";
+                    } else {
+                        savingStatus.innerText = "✔️ ดึงรหัสลับและบันทึกประวัติลงระบบแล้ว!";
+                        savingStatus.className = "mt-4 text-xs text-neon-green min-h-[20px]";
+                    }
+                } else {
+                    throw new Error("ไม่พบแถว V03 ในชีท Missions");
+                }
+            } catch (error) {
+                savingStatus.innerHTML = `⚠️ ไม่สามารถดึงรหัสได้ (ตรวจสอบแถว V03 ในชีท Missions)<br><button onclick="showSuccess()" class="mt-2 text-white bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded">ลองดึงรหัสใหม่ 🔄</button>`;
+                savingStatus.className = "mt-4 text-xs text-neon-red min-h-[36px]";
+            }
+        }
+    </script>
+</body>
+</html>
