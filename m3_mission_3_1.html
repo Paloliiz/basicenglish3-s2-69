@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mission 3.1: That's Entertainment! (Pages 34-35) | PARALLEL DIMENSION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Orbitron:wght@500;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS VARIABLES & GLOBALS ================= */
+        :root {
+            --bg-space: #020617;
+            --bg-panel: #0f172a;
+            --bg-card: #1e293b;
+            --unit-theme: #16a34a;       /* ธีมสีเขียว Unit 3: That's Entertainment! */
+            --unit-theme-light: #4ade80;
+            --neon-cyan: #06b6d4;
+            --neon-blue: #3b82f6;
+            --neon-orange: #f59e0b;
+            --neon-red: #ef4444;
+            --gold: #facc15;
+            --neon-green: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-space);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 15px;
+            background-image: radial-gradient(circle at 50% 10%, rgba(22, 163, 74, 0.14) 0%, transparent 60%);
+            line-height: 1.6;
+        }
+
+        .container {
+            background: var(--bg-panel);
+            border-top: 4px solid var(--unit-theme);
+            border-radius: var(--radius);
+            padding: 20px;
+            max-width: 820px;
+            width: 100%;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.4s ease;
+            position: relative;
+        }
+
+        h1, h2, h3 { font-family: 'Poppins', 'Kanit', sans-serif; }
+        .section-title {
+            background: var(--unit-theme);
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* ================= TOP ACTION & PROFILE BADGE ================= */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 12px;
+        }
+        .btn-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--neon-cyan);
+            background: rgba(6, 182, 212, 0.08);
+            color: var(--neon-cyan);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-home-link:hover {
+            background: var(--neon-cyan);
+            color: #020617;
+            transform: translateY(-1px);
+        }
+
+        .profile-badge {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px solid var(--unit-theme-light);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ================= FORM & INPUTS ================= */
+        select, input[type="text"], input[type="number"] {
+            font-size: 16px !important;
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: #fff;
+            font-family: 'Kanit', sans-serif;
+        }
+        select:focus, input:focus { border-color: var(--unit-theme-light); outline: none; }
+
+        select.blank-input {
+            border: none;
+            border-bottom: 2px solid var(--unit-theme);
+            background: rgba(2, 6, 23, 0.55) !important;
+            color: var(--gold) !important;
+            text-align: left;
+            padding: 3px 8px;
+            border-radius: 4px 4px 0 0;
+            display: inline-block;
+            font-weight: bold;
+            width: auto;
+            min-width: 135px;
+            font-size: 0.95rem !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+        }
+        select.blank-input:focus {
+            border-bottom-color: var(--unit-theme-light);
+            outline: none;
+            background: #020617 !important;
+        }
+
+        select.full-select {
+            margin-top: 8px;
+            border: 1px solid #475569;
+            background: #020617;
+            color: var(--gold);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        input[type="text"].sentence-input {
+            width: 100%;
+            padding: 11px 12px;
+            margin-top: 8px;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            background: #020617;
+            color: var(--gold);
+            font-size: 0.95rem !important;
+            transition: border-color 0.25s ease;
+        }
+
+        .is-correct { color: var(--neon-green) !important; font-weight: bold; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-check { background: var(--unit-theme); color: white; }
+        .btn-check:hover:not(:disabled) { background: var(--unit-theme-light); color: #020617; }
+        .btn-next { background: var(--neon-cyan); color: #000; animation: pulse 1.5s infinite; }
+        .btn-back { background: transparent; border: 1px solid #475569; color: #cbd5e1; margin-top: 12px; }
+        .btn-finish-link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: var(--neon-cyan);
+            color: #020617;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.2s;
+        }
+        .btn-finish-link:hover { background: #22d3ee; transform: translateY(-2px); }
+
+        /* ================= MISSION UI ================= */
+        .header-mission {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px dashed #334155;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .header-mission h2 {
+            font-family: 'Poppins', 'Kanit', sans-serif;
+            color: var(--unit-theme-light);
+            margin: 0;
+            font-size: 1.35rem;
+        }
+
+        .question {
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #334155;
+        }
+        .question:last-of-type { border-bottom: none; padding-bottom: 0; }
+        .q-text { font-size: 0.98rem; margin-bottom: 6px; color: #f8fafc; line-height: 1.9; }
+        .q-hint { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* Vocab Number Grid */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 14px;
+            margin-bottom: 24px;
+        }
+        @media (min-width: 600px) { .vocab-grid { grid-template-columns: repeat(4, 1fr); } }
+        .vocab-item {
+            background: rgba(2, 6, 23, 0.55);
+            padding: 14px 10px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #475569;
+            font-weight: bold;
+            font-size: 0.98rem;
+            font-family: 'Poppins', sans-serif;
+            color: var(--unit-theme-light);
+            text-align: center;
+        }
+        .vocab-item input {
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Word Bank Chips */
+        .word-bank {
+            background: rgba(2, 6, 23, 0.55);
+            border: 1px dashed var(--unit-theme-light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .word-chip {
+            background: rgba(22, 163, 74, 0.2);
+            color: var(--unit-theme-light);
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+
+        /* Ex. 5 Checkbox Grid */
+        .check-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+        @media (min-width: 600px) { .check-grid { grid-template-columns: repeat(4, 1fr); } }
+        .check-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(2, 6, 23, 0.6);
+            border: 2px solid #475569;
+            border-radius: 8px;
+            padding: 11px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #f8fafc;
+            user-select: none;
+        }
+        .check-card:hover { border-color: var(--unit-theme-light); }
+        .check-card input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--unit-theme);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .check-card.checked-active {
+            background: rgba(22, 163, 74, 0.16);
+            border-color: var(--unit-theme-light);
+        }
+
+        /* Ex. 6 Person Cards for Table */
+        .person-table-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+        .person-card {
+            background: rgba(2, 6, 23, 0.55);
+            border: 1px solid #334155;
+            border-left: 4px solid var(--unit-theme-light);
+            border-radius: 10px;
+            padding: 14px;
+        }
+        .person-name {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+        .person-row {
+            margin-bottom: 10px;
+        }
+        .person-row:last-child { margin-bottom: 0; }
+        .person-label {
+            display: block;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        /* Note Box */
+        .grammar-slide {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid var(--unit-theme-light);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 18px;
+            margin-bottom: 15px;
+        }
+        .grammar-detail-box {
+            background: rgba(2, 6, 23, 0.5);
+            padding: 12px 14px;
+            border-radius: 8px;
+            border-left: 4px solid var(--unit-theme-light);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .audio-container {
+            background: #020617;
+            border: 1px solid #475569;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        audio { width: 100%; height: 40px; outline: none; }
+
+        .sub-heading {
+            color: var(--unit-theme-light);
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 12px;
+            padding-top: 14px;
+            border-top: 1px dashed #334155;
+        }
+        .sub-heading:first-child { border-top: none; padding-top: 0; }
+
+        /* ================= TABS ================= */
+        .tab-container {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #1e293b;
+            color: var(--text-muted);
+            border: 1px solid #475569;
+            font-size: 0.82rem;
+            margin: 0;
+            padding: 9px 10px;
+            flex: 1;
+            min-width: 110px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--unit-theme);
+            color: #fff;
+            border-color: var(--unit-theme);
+            font-weight: bold;
+        }
+        .tab-btn.locked-tab { opacity: 0.6; cursor: not-allowed; }
+        .tab-btn:hover:not(.active):not(.locked-tab) { transform: none; background: #334155; }
+
+        .master-feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.65;
+        }
+        .correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+        .wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--neon-red); color: var(--neon-red); }
+
+        .passcode-box {
+            background: #020617;
+            color: var(--gold);
+            padding: 14px;
+            border-radius: 8px;
+            margin: 14px 0;
+            border: 1px dashed var(--gold);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.45); } 70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); } 100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); } }
+    </style>
+</head>
+<body>
+
+    <!-- STUDENT VERIFICATION PANEL -->
+    <div id="student-verification-panel" class="container" style="max-width: 500px; text-align: center; background: rgba(15, 23, 42, 0.95);">
+        <div style="font-size: 42px; margin-bottom: 10px;">👤</div>
+        <h3 style="color: var(--neon-cyan); margin-bottom: 8px; font-size: 1.25rem;">ยืนยันตัวตนก่อนทำภารกิจ</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px;">Unit 3: That's Entertainment! — Mission 3.1 (Pages 34-35)</p>
+        <input type="text" id="verify-sid" placeholder="กรอกรหัสนักเรียน (Student ID)" style="text-align: center; margin-bottom: 12px; font-size: 1.15rem !important; padding: 14px; font-family: 'Orbitron', 'Kanit', sans-serif; letter-spacing: 2px;">
+        <button onclick="verifyStudent()" style="background: var(--neon-cyan); color: #000; padding: 14px;">ยืนยันรหัส & เริ่มภารกิจ 🚀</button>
+        <a href="index.html" class="btn-back" style="display: block; text-align: center; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 0.9rem;">⬅️ กลับหน้าหลัก (Dashboard)</a>
+        <div id="verify-result" style="margin-top: 12px; font-size: 0.9rem; font-weight: bold;"></div>
+    </div>
+
+    <!-- MAIN MISSION VIEW -->
+    <div id="view-mission" class="container hidden">
+        
+        <div class="top-bar">
+            <a href="index.html" class="btn-home-link">🏠 กลับหน้าหลัก (Dashboard)</a>
+        </div>
+
+        <!-- STUDENT PROFILE BADGE -->
+        <div class="profile-badge">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-size: 1.8rem; background: rgba(0,0,0,0.5); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid #334155;">🎓</div>
+                <div>
+                    <div style="font-size: 0.72rem; color: var(--text-muted); font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">CURRENT EXPLORER</div>
+                    <div id="display-student-name" style="font-weight: bold; color: var(--neon-cyan); font-size: 1.05rem; line-height: 1.2;">นักเรียน ม.3</div>
+                </div>
+            </div>
+            <div id="display-student-id" style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--gold); background: rgba(250, 204, 21, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(250, 204, 21, 0.3);">ID: -----</div>
+        </div>
+
+        <!-- MISSION NAV (ล็อกข้ามด่าน) -->
+        <div id="missionNav" class="tab-container">
+            <button id="tab1" class="tab-btn active" onclick="goToPhase(1)">1. Vocab (P.34)</button>
+            <button id="tab2" class="tab-btn locked-tab" onclick="goToPhase(2)">🔒 2. Focus (P.35)</button>
+            <button id="tab3" class="tab-btn locked-tab" onclick="goToPhase(3)">🔒 3. Listen Up (P.35)</button>
+            <button id="tab4" class="tab-btn locked-tab" onclick="goToPhase(4)">🔒 4. Challenge (P.35)</button>
+        </div>
+
+        <div class="header-mission">
+            <h2>Mission 3.1: Taste in Music</h2>
+            <span id="pageBadge" style="background: #334155; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;">Page 34</span>
+        </div>
+
+        <!-- ================= PHASE 1: VOCABULARY & GENRE (Page 34) ================= -->
+        <div id="phase1">
+            <div class="section-title">A. Listening — Vocabulary</div>
+            
+            <div class="card">
+                <p class="sub-heading">1. Listen and number (1-8). (ฟังเสียงและใส่หมายเลข 1-8 ให้ตรงกับแนวดนตรี)</p>
+                
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 3-01 (Music Genres)</span>
+                    <audio controls><source src="audio_u3/NF2e_SB3_Track 03-01.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <div class="vocab-grid">
+                    <div class="vocab-item">pop <input type="number" id="v34_1" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">jazz <input type="number" id="v34_2" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">dance/EDM <input type="number" id="v34_3" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">hip-hop <input type="number" id="v34_4" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">rock <input type="number" id="v34_5" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">classical <input type="number" id="v34_6" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">metal <input type="number" id="v34_7" min="1" max="8" placeholder="No."></div>
+                    <div class="vocab-item">folk <input type="number" id="v34_8" min="1" max="8" placeholder="No."></div>
+                </div>
+
+                <p class="sub-heading">2. Listen and choose the genre of music being played. (ฟังเสียงดนตรีแล้วเลือกแนวเพลงให้ถูกต้อง)</p>
+
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 3-02 (Identify the Music Genre)</span>
+                    <audio controls><source src="audio_u3/NF2e_SB3_Track 03-02.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <div class="question">
+                    <div class="q-text">1. <select class="genre-dropdown blank-input" id="g34_1"><option value="">-- เลือกแนวเพลง --</option></select> music</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">2. <select class="genre-dropdown blank-input" id="g34_2"><option value="">-- เลือกแนวเพลง --</option></select> music</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">3. <select class="genre-dropdown blank-input" id="g34_3"><option value="">-- เลือกแนวเพลง --</option></select> music</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">4. <select class="genre-dropdown blank-input" id="g34_4"><option value="">-- เลือกแนวเพลง --</option></select> music</div>
+                </div>
+                <div class="question">
+                    <div class="q-text">5. <select class="genre-dropdown blank-input" id="g34_5"><option value="">-- เลือกแนวเพลง --</option></select> music</div>
+                </div>
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">6. <select class="genre-dropdown blank-input" id="g34_6"><option value="">-- เลือกแนวเพลง --</option></select> music</div>
+                </div>
+
+                <div class="grammar-slide">
+                    <div class="grammar-detail-box">
+                        <b style="color: var(--gold);">💡 NOTE!</b> A <b>genre</b> is a type of art, writing, music, etc., in a particular style. <i>(แนว / ประเภทของดนตรี ศิลปะ หรืองานเขียน)</i>
+                    </div>
+                </div>
+
+                <div id="fb-p1" class="master-feedback"></div>
+                <button class="btn-check" id="btn-check-1" onclick="checkPhase1()">ตรวจคำตอบ Phase 1</button>
+                <button class="btn-next hidden" id="btn-next-1" onclick="goToPhase(2)">➔ ไปด่าน Focus (Page 35)</button>
+            </div>
+        </div>
+
+        <!-- ================= PHASE 2: FOCUS SENTENCES (Page 35) ================= -->
+        <div id="phase2" class="hidden">
+            <div class="section-title">Focus — Time Clauses (Page 35)</div>
+
+            <div class="card">
+                <p class="sub-heading">4. Listen and use words from the box to write sentences. (ฟังเสียงแล้วนำคำในกล่องมาเชื่อมประโยคให้สมบูรณ์)</p>
+
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 3-03 (Focus Sentences)</span>
+                    <audio controls><source src="audio_u3/NF2e_SB3_Track 03-03.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <div class="word-bank">
+                    <span class="word-chip">while</span>
+                    <span class="word-chip">before</span>
+                    <span class="word-chip">until</span>
+                    <span class="word-chip">after</span>
+                </div>
+
+                <div class="question">
+                    <div class="q-text">1. [go for a walk] [need to find my headphones]</div>
+                    <input type="text" id="s35_1" class="sentence-input" placeholder="Before I go for a walk, ...">
+                    <div class="q-hint">💡 Hint: ฟังเสียง Track 3-03 ข้อ 1 แล้วใช้คำเชื่อม <b>before</b></div>
+                </div>
+
+                <div class="question">
+                    <div class="q-text">2. [move to countryside] [listen to more folk music]</div>
+                    <input type="text" id="s35_2" class="sentence-input" placeholder="I listened to more folk music ...">
+                    <div class="q-hint">💡 Hint: เล่าเหตุการณ์ในอดีต (listened / moved) แล้วใช้คำเชื่อม <b>after</b></div>
+                </div>
+
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">3. [like to drink tea] [listen to jazz]</div>
+                    <input type="text" id="s35_3" class="sentence-input" placeholder="I like to drink tea ...">
+                    <div class="q-hint">💡 Hint: ฟังเสียง Track 3-03 ข้อ 3 แล้วใช้คำเชื่อม <b>while</b></div>
+                </div>
+
+                <div id="fb-p2" class="master-feedback"></div>
+                <button class="btn-check" id="btn-check-2" onclick="checkPhase2()">ตรวจคำตอบ Phase 2</button>
+                <button class="btn-next hidden" id="btn-next-2" onclick="goToPhase(3)">➔ ไปด่าน Listen Up (Page 35)</button>
+                <button class="btn-back" onclick="goToPhase(1)">⬅️ ย้อนกลับ</button>
+            </div>
+        </div>
+
+        <!-- ================= PHASE 3: LISTEN UP (Page 35) ================= -->
+        <div id="phase3" class="hidden">
+            <div class="section-title">Listen Up (Page 35)</div>
+
+            <div class="card">
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 3-04 (ใช้ฟังสำหรับข้อ 5, 6 และ 7)</span>
+                    <audio controls><source src="audio_u3/NF2e_SB3_Track 03-04.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <!-- Exercise 5 -->
+                <p class="sub-heading">5. Listen and put a check mark (✓) next to the words you hear. (เลือกเฉพาะคำที่ได้ยินในคลิปเสียง)</p>
+
+                <div class="check-grid" id="ex5-grid">
+                    <label class="check-card" id="lbl_concert"><input type="checkbox" id="chk_concert" onchange="toggleCheckCard(this)"> concert</label>
+                    <label class="check-card" id="lbl_classical"><input type="checkbox" id="chk_classical" onchange="toggleCheckCard(this)"> classical</label>
+                    <label class="check-card" id="lbl_metal"><input type="checkbox" id="chk_metal" onchange="toggleCheckCard(this)"> metal</label>
+                    <label class="check-card" id="lbl_radio"><input type="checkbox" id="chk_radio" onchange="toggleCheckCard(this)"> radio</label>
+                    <label class="check-card" id="lbl_band"><input type="checkbox" id="chk_band" onchange="toggleCheckCard(this)"> band</label>
+                    <label class="check-card" id="lbl_hiphop"><input type="checkbox" id="chk_hiphop" onchange="toggleCheckCard(this)"> hip-hop</label>
+                    <label class="check-card" id="lbl_rock"><input type="checkbox" id="chk_rock" onchange="toggleCheckCard(this)"> rock</label>
+                    <label class="check-card" id="lbl_folk"><input type="checkbox" id="chk_folk" onchange="toggleCheckCard(this)"> folk</label>
+                </div>
+
+                <!-- Exercise 6 -->
+                <p class="sub-heading">6. Listen again. Fill out the table. (ฟังอีกครั้งแล้วเลือกข้อมูลของ Jenna, Joe และ Marcy ให้ถูกต้อง)</p>
+
+                <div class="person-table-grid">
+                    <!-- 1. Jenna -->
+                    <div class="person-card">
+                        <div class="person-name">1. Jenna</div>
+                        <div class="person-row">
+                            <span class="person-label">Likes:</span>
+                            <select class="music-pair-dropdown full-select" id="t35_jenna_like"><option value="">-- เลือกแนวเพลงที่ชอบ --</option></select>
+                        </div>
+                        <div class="person-row">
+                            <span class="person-label">Doesn't like:</span>
+                            <select class="music-pair-dropdown full-select" id="t35_jenna_dislike"><option value="">-- เลือกแนวเพลงที่ไม่ชอบ --</option></select>
+                        </div>
+                        <div class="person-row">
+                            <span class="person-label">Extra information:</span>
+                            <select class="extra-info-dropdown full-select" id="t35_jenna_extra"><option value="">-- เลือกข้อมูลเพิ่มเติม --</option></select>
+                        </div>
+                    </div>
+
+                    <!-- 2. Joe -->
+                    <div class="person-card">
+                        <div class="person-name">2. Joe</div>
+                        <div class="person-row">
+                            <span class="person-label">Likes:</span>
+                            <select class="music-pair-dropdown full-select" id="t35_joe_like"><option value="">-- เลือกแนวเพลงที่ชอบ --</option></select>
+                        </div>
+                        <div class="person-row">
+                            <span class="person-label">Doesn't like:</span>
+                            <select class="music-pair-dropdown full-select" id="t35_joe_dislike"><option value="">-- เลือกแนวเพลงที่ไม่ชอบ --</option></select>
+                        </div>
+                        <div class="person-row">
+                            <span class="person-label">Extra information:</span>
+                            <select class="extra-info-dropdown full-select" id="t35_joe_extra"><option value="">-- เลือกข้อมูลเพิ่มเติม --</option></select>
+                        </div>
+                    </div>
+
+                    <!-- 3. Marcy -->
+                    <div class="person-card">
+                        <div class="person-name">3. Marcy</div>
+                        <div class="person-row">
+                            <span class="person-label">Likes:</span>
+                            <select class="music-pair-dropdown full-select" id="t35_marcy_like"><option value="">-- เลือกแนวเพลงที่ชอบ --</option></select>
+                        </div>
+                        <div class="person-row">
+                            <span class="person-label">Doesn't like:</span>
+                            <select class="music-pair-dropdown full-select" id="t35_marcy_dislike"><option value="">-- เลือกแนวเพลงที่ไม่ชอบ --</option></select>
+                        </div>
+                        <div class="person-row">
+                            <span class="person-label">Extra information:</span>
+                            <select class="extra-info-dropdown full-select" id="t35_marcy_extra"><option value="">-- เลือกข้อมูลเพิ่มเติม --</option></select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercise 7 -->
+                <p class="sub-heading">7. Listen again and circle True or False.</p>
+
+                <div class="question">
+                    <div class="q-text">1. Folk music is boring to Jenna.
+                        <select id="tf35_1" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="q-text">2. Joe plays classical music on the violin.
+                        <select id="tf35_2" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="q-text">3. Marcy listens to jazz every day.
+                        <select id="tf35_3" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">4. Pop music gives Marcy a headache.
+                        <select id="tf35_4" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+
+                <div id="fb-p3" class="master-feedback"></div>
+                <button class="btn-check" id="btn-check-3" onclick="checkPhase3()">ตรวจคำตอบ Phase 3</button>
+                <button class="btn-next hidden" id="btn-next-3" onclick="goToPhase(4)">➔ ไปด่าน Challenge (Page 35)</button>
+                <button class="btn-back" onclick="goToPhase(2)">⬅️ ย้อนกลับ</button>
+            </div>
+        </div>
+
+        <!-- ================= PHASE 4: CHALLENGE (Page 35) ================= -->
+        <div id="phase4" class="hidden">
+            <div class="section-title">Challenge (Page 35)</div>
+
+            <div class="card">
+                <p class="sub-heading">8. Listen and circle. (ฟังเสียงแล้วเลือกคำตอบที่ถูกต้อง)</p>
+
+                <div class="audio-container">
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block; margin-bottom: 6px;">🎧 Track 3-05 (Challenge)</span>
+                    <audio controls><source src="audio_u3/NF2e_SB3_Track 03-05.mp3" type="audio/mpeg"></audio>
+                </div>
+
+                <div class="question">
+                    <div class="q-text">1. What genre does the speaker NOT mention?</div>
+                    <select id="c35_1" class="full-select">
+                        <option value="">-- เลือกคำตอบ --</option>
+                        <option value="a">a. EDM</option>
+                        <option value="b">b. folk</option>
+                        <option value="c">c. classical</option>
+                        <option value="d">d. pop</option>
+                    </select>
+                </div>
+
+                <div class="question">
+                    <div class="q-text">2. What genre is the speaker's all-time favorite song?</div>
+                    <select id="c35_2" class="full-select">
+                        <option value="">-- เลือกคำตอบ --</option>
+                        <option value="a">a. pop</option>
+                        <option value="b">b. rock</option>
+                        <option value="c">c. metal</option>
+                        <option value="d">d. dance</option>
+                    </select>
+                </div>
+
+                <p class="sub-heading">3. Circle True or False.</p>
+
+                <div class="question">
+                    <div class="q-text">a. "Let's Get Out of Here" is a beautiful pop song.
+                        <select id="c35_3a" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="q-text">b. The composer Bach wrote classic rock.
+                        <select id="c35_3b" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+                <div class="question" style="border-bottom: none;">
+                    <div class="q-text">c. "Move Your Body" is EDM music.
+                        <select id="c35_3c" class="blank-input"><option value="">-- เลือก --</option><option value="true">true</option><option value="false">false</option></select>
+                    </div>
+                </div>
+
+                <div id="fb-p4" class="master-feedback"></div>
+                <button class="btn-check" id="btn-check-4" style="margin-top: 20px;" onclick="checkPhase4()">ตรวจคำตอบ & จบภารกิจ 🏆</button>
+                <button class="btn-back" onclick="goToPhase(3)">⬅️ ย้อนกลับ</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ================= API & MISSION CONFIG (M.3) =================
+        const API_URL = "https://script.google.com/macros/s/AKfycbweNroAFDw4bgPOEp5KCDdtFIBZe5bzX0Xzw8H6tzXCQcZcXFu8qDGTjIdZVhR4xSUw5Q/exec";
+        const THIS_MISSION_ID = "M08"; // Unit 3.1 (Pages 34-35)
+
+        let verifiedStudentId = "";
+        let verifiedStudentName = "";
+        let isPhase1Passed = false;
+        let isPhase2Passed = false;
+        let isPhase3Passed = false;
+
+        // ข้อมูลตัวเลือกแบบสุ่มลำดับ (Auto-Shuffle)
+        const genreOptions = ["classical", "rock", "EDM", "folk", "pop", "hip-hop", "jazz", "metal"];
+        const musicPairOptions = [
+            "rock and folk",
+            "classical and jazz",
+            "dance and classical",
+            "rock and metal",
+            "jazz",
+            "pop and rock",
+            "hip-hop and EDM"
+        ];
+        const extraInfoOptions = [
+            "Jenna went to a rock festival last month.",
+            "Joe plays the cello.",
+            "Marcy listens to jazz every day.",
+            "Joe listens to hip-hop on the radio."
+        ];
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function populateDropdowns(selector, items) {
+            document.querySelectorAll(selector).forEach(dropdown => {
+                shuffleArray(items).forEach(text => {
+                    const opt = document.createElement('option');
+                    opt.value = text;
+                    opt.textContent = text;
+                    dropdown.appendChild(opt);
+                });
+            });
+        }
+
+        function toggleCheckCard(checkbox) {
+            const label = checkbox.closest('.check-card');
+            if (checkbox.checked) {
+                label.classList.add('checked-active');
+            } else {
+                label.classList.remove('checked-active');
+            }
+            label.style.removeProperty('border-color');
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            populateDropdowns('.genre-dropdown', genreOptions);
+            populateDropdowns('.music-pair-dropdown', musicPairOptions);
+            populateDropdowns('.extra-info-dropdown', extraInfoOptions);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            let sid = urlParams.get('sid');
+            let savedName = "";
+
+            const savedSession = localStorage.getItem("pd_m3_portal_session") || localStorage.getItem("pd_portal_session");
+            if (savedSession) {
+                try {
+                    const appState = JSON.parse(savedSession);
+                    if (appState.user && appState.user.studentId) {
+                        if (!sid || sid === "GUEST") sid = appState.user.studentId;
+                        if (String(appState.user.studentId).trim() === String(sid).trim()) {
+                            savedName = appState.user.name || "";
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            const sidInput = document.getElementById('verify-sid');
+            if (sid && sid !== "GUEST" && sid !== "GUEST (ไม่ได้ล็อกอิน)") {
+                sidInput.value = sid;
+                sidInput.setAttribute('readonly', true);
+                verifiedStudentId = sid;
+                verifiedStudentName = savedName || `Student #${sid}`;
+
+                if (savedName) {
+                    enterMissionScreen();
+                }
+            }
+
+            // รีเซ็ตสถานะอัตโนมัติเมื่อแก้ไขคำตอบหลังผ่านด่านแล้ว (กันแอบแก้)
+            document.querySelectorAll('#phase1 input, #phase1 select').forEach(el => {
+                el.addEventListener('change', () => {
+                    if (isPhase1Passed) resetFromPhase(1);
+                });
+            });
+            document.querySelectorAll('#phase2 input').forEach(el => {
+                el.addEventListener('change', () => {
+                    if (isPhase2Passed) resetFromPhase(2);
+                });
+            });
+            document.querySelectorAll('#phase3 input, #phase3 select').forEach(el => {
+                el.addEventListener('change', () => {
+                    if (isPhase3Passed) resetFromPhase(3);
+                });
+            });
+        });
+
+        function resetFromPhase(fromPhase) {
+            if (fromPhase <= 1) {
+                isPhase1Passed = false;
+                document.getElementById('tab1').innerHTML = "1. Vocab (P.34)";
+                document.getElementById('btn-next-1').classList.add('hidden');
+                document.getElementById('btn-check-1').classList.remove('hidden');
+            }
+            if (fromPhase <= 2) {
+                isPhase2Passed = false;
+                const tab2 = document.getElementById('tab2');
+                if (fromPhase === 1) {
+                    tab2.innerHTML = "🔒 2. Focus (P.35)";
+                    tab2.classList.add('locked-tab');
+                } else {
+                    tab2.innerHTML = "2. Focus (P.35)";
+                }
+                document.getElementById('btn-next-2').classList.add('hidden');
+                document.getElementById('btn-check-2').classList.remove('hidden');
+            }
+            if (fromPhase <= 3) {
+                isPhase3Passed = false;
+                const tab3 = document.getElementById('tab3');
+                if (fromPhase <= 2) {
+                    tab3.innerHTML = "🔒 3. Listen Up (P.35)";
+                    tab3.classList.add('locked-tab');
+                } else {
+                    tab3.innerHTML = "3. Listen Up (P.35)";
+                }
+                const tab4 = document.getElementById('tab4');
+                tab4.innerHTML = "🔒 4. Challenge (P.35)";
+                tab4.classList.add('locked-tab');
+                document.getElementById('btn-next-3').classList.add('hidden');
+                document.getElementById('btn-check-3').classList.remove('hidden');
+            }
+        }
+
+        function verifyStudent() {
+            const sid = document.getElementById('verify-sid').value.trim();
+            const resDiv = document.getElementById('verify-result');
+            if (!sid) {
+                resDiv.innerHTML = '<span style="color: var(--neon-red);">❌ กรุณากรอกรหัสนักเรียนก่อนเริ่มภารกิจ</span>';
+                return;
+            }
+            verifiedStudentId = sid;
+            if (!verifiedStudentName) verifiedStudentName = `Explorer #${sid}`;
+            enterMissionScreen();
+        }
+
+        function enterMissionScreen() {
+            document.getElementById('display-student-name').innerText = verifiedStudentName;
+            document.getElementById('display-student-id').innerText = "ID: " + verifiedStudentId;
+            document.getElementById('student-verification-panel').style.display = 'none';
+            document.getElementById('view-mission').classList.remove('hidden');
+        }
+
+        function cleanNum(s) {
+            return String(s || "").replace(/[^0-9]/g, '').trim();
+        }
+
+        function cleanSentence(s) {
+            return String(s || "")
+                .toLowerCase()
+                .replace(/[.!?,]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        // ระบบสลับหน้า (ล็อกข้ามด่าน)
+        function goToPhase(phaseNum) {
+            if (phaseNum >= 2 && !isPhase1Passed) {
+                showLockMsg('fb-p1', '⚠️ กรุณาทำด่าน 1. Vocab (Page 34) ให้ผ่านครบทุกข้อก่อนนะครับ!');
+                return;
+            }
+            if (phaseNum >= 3 && !isPhase2Passed) {
+                showLockMsg('fb-p2', '⚠️ กรุณาทำด่าน 2. Focus (Page 35) ให้ผ่านครบทุกข้อก่อนนะครับ!');
+                return;
+            }
+            if (phaseNum >= 4 && !isPhase3Passed) {
+                showLockMsg('fb-p3', '⚠️ กรุณาทำด่าน 3. Listen Up (Page 35) ให้ผ่านครบทุกข้อก่อนไปด่าน Challenge นะครับ!');
+                return;
+            }
+
+            document.querySelectorAll('#phase1, #phase2, #phase3, #phase4').forEach(el => el.classList.add('hidden'));
+            document.getElementById('phase' + phaseNum).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab' + phaseNum).classList.add('active');
+
+            document.getElementById('pageBadge').innerText = (phaseNum === 1) ? "Page 34" : "Page 35";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showLockMsg(fbId, msg) {
+            const fb = document.getElementById(fbId);
+            fb.style.display = 'block';
+            fb.className = 'master-feedback wrong';
+            fb.innerHTML = msg;
+            fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function validateSelectGroup(answerMap) {
+            let allCorrect = true;
+            for (const key in answerMap) {
+                const el = document.getElementById(key);
+                const isInline = el.classList.contains('blank-input');
+                if (el.value !== answerMap[key]) {
+                    allCorrect = false;
+                    if (isInline) el.style.setProperty('border-bottom-color', 'var(--neon-red)', 'important');
+                    else el.style.setProperty('border-color', 'var(--neon-red)', 'important');
+                    el.classList.remove('is-correct');
+                } else {
+                    if (isInline) el.style.setProperty('border-bottom-color', 'var(--neon-green)', 'important');
+                    else el.style.setProperty('border-color', 'var(--neon-green)', 'important');
+                    el.classList.add('is-correct');
+                }
+            }
+            return allCorrect;
+        }
+
+        // ================= PHASE 1 CHECK (Page 34) =================
+        function checkPhase1() {
+            const ansNum = {
+                v34_1: '3', // pop
+                v34_2: '6', // jazz
+                v34_3: '7', // dance/EDM
+                v34_4: '1', // hip-hop
+                v34_5: '8', // rock
+                v34_6: '2', // classical
+                v34_7: '5', // metal
+                v34_8: '4'  // folk
+            };
+
+            const ansGenre = {
+                g34_1: 'classical',
+                g34_2: 'rock',
+                g34_3: 'EDM',
+                g34_4: 'folk',
+                g34_5: 'pop',
+                g34_6: 'hip-hop'
+            };
+
+            let allCorrect = true;
+
+            for (const key in ansNum) {
+                const el = document.getElementById(key);
+                if (cleanNum(el.value) !== ansNum[key]) {
+                    allCorrect = false;
+                    el.style.setProperty('border-color', 'var(--neon-red)', 'important');
+                    el.classList.remove('is-correct');
+                } else {
+                    el.style.setProperty('border-color', 'var(--neon-green)', 'important');
+                    el.classList.add('is-correct');
+                }
+            }
+
+            if (!validateSelectGroup(ansGenre)) allCorrect = false;
+
+            const fb = document.getElementById('fb-p1');
+            fb.style.display = 'block';
+
+            if (allCorrect) {
+                isPhase1Passed = true;
+                document.getElementById('tab1').innerHTML = "1. Vocab (P.34) ✔️";
+                const tab2 = document.getElementById('tab2');
+                tab2.innerHTML = "2. Focus (P.35)";
+                tab2.classList.remove('locked-tab');
+
+                fb.className = 'master-feedback correct';
+                fb.innerHTML = '✔️ ยอดเยี่ยม! แยกแนวดนตรีได้แม่นเป๊ะ ไปลุยด่าน Focus (Page 35) กันต่อเลย';
+                document.getElementById('btn-next-1').classList.remove('hidden');
+                document.getElementById('btn-check-1').classList.add('hidden');
+            } else {
+                isPhase1Passed = false;
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ ยังมีข้อที่ผิดหรือยังไม่กรอก ลองฟัง Track 3-01 / 3-02 ซ้ำตรงกรอบสีแดงนะครับ';
+            }
+        }
+
+        // ================= PHASE 2 CHECK (Page 35 - Ex. 4) =================
+        function checkPhase2() {
+            const fb = document.getElementById('fb-p2');
+            if (!isPhase1Passed) {
+                showLockMsg('fb-p2', '❌ กรุณาย้อนกลับไปทำด่าน 1. Vocab (Page 34) ให้ผ่านก่อนนะครับ');
+                return;
+            }
+
+            const acceptedAnswers = {
+                s35_1: [
+                    "before i go for a walk i need to find my headphones",
+                    "i need to find my headphones before i go for a walk"
+                ],
+                s35_2: [
+                    "i listened to more folk music after i moved to the countryside",
+                    "after i moved to the countryside i listened to more folk music",
+                    "i listened to more folk music after i moved to countryside",
+                    "after i moved to countryside i listened to more folk music"
+                ],
+                s35_3: [
+                    "i like to drink tea while listening to jazz",
+                    "while listening to jazz i like to drink tea",
+                    "i like to drink tea while i listen to jazz",
+                    "while i listen to jazz i like to drink tea"
+                ]
+            };
+
+            let allCorrect = true;
+            for (const key in acceptedAnswers) {
+                const el = document.getElementById(key);
+                const userClean = cleanSentence(el.value);
+                if (!acceptedAnswers[key].includes(userClean)) {
+                    allCorrect = false;
+                    el.style.setProperty('border-color', 'var(--neon-red)', 'important');
+                    el.classList.remove('is-correct');
+                } else {
+                    el.style.setProperty('border-color', 'var(--neon-green)', 'important');
+                    el.classList.add('is-correct');
+                }
+            }
+
+            fb.style.display = 'block';
+
+            if (allCorrect) {
+                isPhase2Passed = true;
+                document.getElementById('tab2').innerHTML = "2. Focus (P.35) ✔️";
+                const tab3 = document.getElementById('tab3');
+                tab3.innerHTML = "3. Listen Up (P.35)";
+                tab3.classList.remove('locked-tab');
+
+                fb.className = 'master-feedback correct';
+                fb.innerHTML = '✔️ แต่งประโยคเชื่อมเวลาได้ถูกต้องครบถ้วน! ไปลุยด่าน Listen Up กันเลย';
+                document.getElementById('btn-next-2').classList.remove('hidden');
+                document.getElementById('btn-check-2').classList.add('hidden');
+            } else {
+                isPhase2Passed = false;
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ ยังมีประโยคที่สะกดหรือใช้คำเชื่อมไม่ตรงกับเสียง Track 3-03 เช็คกรอบสีแดงแล้วลองแก้ไขนะครับ';
+            }
+        }
+
+        // ================= PHASE 3 CHECK (Page 35 - Ex. 5, 6, 7) =================
+        function checkPhase3() {
+            const fb = document.getElementById('fb-p3');
+            if (!isPhase1Passed || !isPhase2Passed) {
+                showLockMsg('fb-p3', '❌ กรุณาทำด่าน 1 และด่าน 2 ให้ผ่านก่อนนะครับ');
+                return;
+            }
+
+            let allCorrect = true;
+
+            // Ex. 5 Checkboxes
+            const ansChecks = {
+                chk_concert: true,
+                chk_classical: true,
+                chk_metal: true,
+                chk_radio: false,
+                chk_band: false,
+                chk_hiphop: false,
+                chk_rock: true,
+                chk_folk: true
+            };
+
+            for (const key in ansChecks) {
+                const cb = document.getElementById(key);
+                const lbl = cb.closest('.check-card');
+                if (cb.checked !== ansChecks[key]) {
+                    allCorrect = false;
+                    lbl.style.setProperty('border-color', 'var(--neon-red)', 'important');
+                } else {
+                    lbl.style.setProperty('border-color', 'var(--neon-green)', 'important');
+                }
+            }
+
+            // Ex. 6 Table & Ex. 7 True/False
+            const ansSelects = {
+                t35_jenna_like: "rock and folk",
+                t35_jenna_dislike: "classical and jazz",
+                t35_jenna_extra: "Jenna went to a rock festival last month.",
+                t35_joe_like: "dance and classical",
+                t35_joe_dislike: "rock and metal",
+                t35_joe_extra: "Joe plays the cello.",
+                t35_marcy_like: "jazz",
+                t35_marcy_dislike: "pop and rock",
+                t35_marcy_extra: "Marcy listens to jazz every day.",
+                tf35_1: "false",
+                tf35_2: "false",
+                tf35_3: "true",
+                tf35_4: "false"
+            };
+
+            if (!validateSelectGroup(ansSelects)) allCorrect = false;
+
+            fb.style.display = 'block';
+
+            if (allCorrect) {
+                isPhase3Passed = true;
+                document.getElementById('tab3').innerHTML = "3. Listen Up (P.35) ✔️";
+                const tab4 = document.getElementById('tab4');
+                tab4.innerHTML = "4. Challenge (P.35)";
+                tab4.classList.remove('locked-tab');
+
+                fb.className = 'master-feedback correct';
+                fb.innerHTML = '✔️ สุดยอด! เก็บรายละเอียด Listen Up ครบทุกจุด ไปลุยด่านสุดท้าย Challenge กันเลย';
+                document.getElementById('btn-next-3').classList.remove('hidden');
+                document.getElementById('btn-check-3').classList.add('hidden');
+            } else {
+                isPhase3Passed = false;
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ ยังมีข้อที่ผิด สังเกตกรอบ/เส้นสีแดงแล้วลองฟัง Track 3-04 ซ้ำอีกครั้งนะครับ';
+            }
+        }
+
+        // ================= PHASE 4 CHECK (Page 35 - Ex. 8) & ดึงรหัสลับ =================
+        async function checkPhase4() {
+            const fb = document.getElementById('fb-p4');
+            if (!isPhase1Passed || !isPhase2Passed || !isPhase3Passed) {
+                showLockMsg('fb-p4', '❌ กรุณาทำด่าน 1–3 ให้ผ่านครบทุกข้อก่อนรับรหัสลับนะครับ');
+                return;
+            }
+
+            const ans = {
+                c35_1: 'b',      // folk
+                c35_2: 'c',      // metal
+                c35_3a: 'false',
+                c35_3b: 'false',
+                c35_3c: 'true'
+            };
+
+            const correct = validateSelectGroup(ans);
+            fb.style.display = 'block';
+
+            if (!correct) {
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = '❌ ยังมีข้อที่ผิด ลองฟัง Track 3-05 ซ้ำตรงข้อสีแดงแล้วกดตรวจใหม่นะครับ';
+                return;
+            }
+
+            document.getElementById('tab4').innerHTML = "4. Challenge (P.35) ✔️";
+            document.getElementById('btn-check-4').classList.add('hidden');
+            fb.className = 'master-feedback correct';
+            fb.innerHTML = '⏳ ตรวจสอบถูกต้องครบทุกข้อ! กำลังประมวลผลและดึงรหัสลับจากฐานข้อมูล...';
+
+            await fetchSecretPasscode();
+        }
+
+        async function fetchSecretPasscode() {
+            const fb = document.getElementById('fb-p4');
+            fb.className = 'master-feedback correct';
+            fb.innerHTML = '⏳ กำลังเชื่อมต่อฐานข้อมูลเพื่อดึงรหัสเฉพาะบุคคล...';
+
+            try {
+                // 1. ดึงรหัสลับเฉพาะบุคคลจาก Apps Script ม.3 (ไม่มีรหัสสำรอง)
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "getPasscode",
+                        missionId: THIS_MISSION_ID,
+                        studentId: verifiedStudentId
+                    })
+                });
+                const result = await response.json();
+
+                if (result.status === "success" && result.passcode && result.passcode !== "NO-CODE-FOUND") {
+                    // 2. บันทึกประวัติลง Logs
+                    fetch(API_URL, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            action: "recordActivity",
+                            studentId: verifiedStudentId,
+                            activityType: "WORKSHEET_" + THIS_MISSION_ID,
+                            itemId: THIS_MISSION_ID,
+                            xp: 0,
+                            details: "Completed Unit 3.1: Taste in Music (Pages 34-35)"
+                        })
+                    }).catch(() => {});
+
+                    const warningNote = result.passcode.includes("{CIPHER}")
+                        ? `<p style="font-size: 0.82rem; color: var(--neon-orange); margin-top: 8px;">⚠️ แจ้งคุณครู: กรุณาเพิ่มสูตร U31-{CIPHER} ใน Apps Script และ Deploy เวอร์ชันใหม่</p>`
+                        : "";
+
+                    fb.innerHTML = `
+                        <div style="font-size: 1.2rem; margin-bottom: 6px;">🏆 MISSION 3.1 COMPLETED!</div>
+                        <p style="color: #f8fafc; font-weight: normal;">เยี่ยมมาก! ผู้ทำภารกิจ <strong style="color: var(--neon-cyan);">${verifiedStudentId}</strong> ผ่านภารกิจหน้า 34-35 เรียบร้อยแล้ว</p>
+                        <div class="passcode-box">🔑 ${result.passcode}</div>
+                        ${warningNote}
+                        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">คัดลอกรหัสนี้กลับไปกรอกที่ <b>"หน้าหลัก (Dashboard)"</b> ตรงการ์ด <b>${THIS_MISSION_ID}</b> เพื่อรับ XP เข้าสู่ระบบ!</p>
+                        <a href="index.html" class="btn-finish-link">กลับหน้าหลักเพื่อรับ XP ➔</a>
+                    `;
+                } else {
+                    throw new Error("ไม่พบรหัสด่าน " + THIS_MISSION_ID + " ในชีท Missions");
+                }
+            } catch (error) {
+                fb.className = 'master-feedback wrong';
+                fb.innerHTML = `
+                    ❌ ระบบไม่สามารถดึงรหัสลับจากฐานข้อมูลได้<br>
+                    <span style="font-size: 0.85rem; font-weight: normal;">กรุณาตรวจสอบอินเทอร์เน็ต หรือแจ้งคุณครูว่าเพิ่มแถว <b>${THIS_MISSION_ID}</b> ในชีท Missions แล้วหรือยัง</span>
+                    <button class="btn-check" onclick="fetchSecretPasscode()" style="margin-top: 14px;">ลองดึงรหัสใหม่อีกครั้ง 🔄</button>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
