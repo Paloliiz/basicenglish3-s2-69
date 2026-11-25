@@ -90,6 +90,15 @@
             box-shadow: 0 0 20px #ec4899, 0 0 36px rgba(250, 204, 21, 0.65), inset 0 0 16px #fb7185;
             animation: spinSlow 10s linear reverse infinite;
         }
+
+        /* กรอบบอส Unit 3: The Pixel Overlord */
+        .frame-pixel-aura {
+            border: 4px dashed #34d399;
+            outline: 2px solid rgba(56, 189, 248, 0.8);
+            outline-offset: 2px;
+            box-shadow: 0 0 20px #10b981, 0 0 38px rgba(56, 189, 248, 0.7), inset 0 0 16px #34d399;
+            animation: spinSlow 9s linear infinite;
+        }
         
         .frame-level5 {
             border: 3px solid #fbbf24;
@@ -161,7 +170,7 @@
                 <h1 class="font-scifi text-2xl sm:text-3xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300">
                     PARALLEL DIMENSION
                 </h1>
-                <p class="text-xs font-scifi tracking-widest text-purple-300/80 mt-1">M.3 TERM 2 • STUDY TODAY, LEVEL UP TOMORROW</p>
+                <p class="text-xs font-scifi tracking-widest text-purple-300/80 mt-1">M.3 • STUDY TODAY, LEVEL UP TOMORROW</p>
                 <p class="text-xs text-slate-400 mt-1">โรงเรียนเขาฉกรรจ์วิทยาคม (English Department)</p>
             </div>
 
@@ -217,7 +226,7 @@
                                 PARALLEL DIMENSION
                             </h1>
                             <p class="text-[10px] font-scifi tracking-widest text-purple-300/70 hidden sm:block">
-                                M.3 TERM 2 • STUDY TODAY, LEVEL UP TOMORROW
+                                M.3 • STUDY TODAY, LEVEL UP TOMORROW
                             </p>
                         </div>
                     </div>
@@ -229,12 +238,12 @@
                 <nav class="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0">
                     <button onclick="switchModule('missions')" id="nav-missions" class="module-nav-btn nav-btn-active flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap">
                         <span class="flex items-center gap-2.5"><span class="text-base">🏠</span><span>แบบฝึกหัด (Missions)</span></span>
-                        <span id="badge-nav-missions" class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-purple-950/90 border border-purple-400/40 text-[10px] font-scifi text-purple-200">9</span>
+                        <span id="badge-nav-missions" class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-purple-950/90 border border-purple-400/40 text-[10px] font-scifi text-purple-200">14</span>
                     </button>
 
                     <button onclick="switchModule('grammar')" id="nav-grammar" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap">
                         <span class="flex items-center gap-2.5"><span class="text-base">📘</span><span>คลังความรู้ (Grammar)</span></span>
-                        <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-scifi text-blue-200">2 บท</span>
+                        <span class="hidden lg:inline-block px-2 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-scifi text-blue-200">3 บท</span>
                     </button>
 
                     <button onclick="openVoiceLab()" class="module-nav-btn flex items-center justify-between gap-2.5 px-3.5 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition whitespace-nowrap shadow-[0_0_15px_rgba(168,85,247,0.2)]">
@@ -329,9 +338,9 @@
                     <div>
                         <div class="flex items-center gap-2.5">
                             <span class="text-2xl">🏠</span>
-                            <h3 class="font-scifi text-xl sm:text-2xl font-bold text-white tracking-wide">Term 2 Missions (M.3)</h3>
+                            <h3 class="font-scifi text-xl sm:text-2xl font-bold text-white tracking-wide">M.3 Missions (8 Units)</h3>
                         </div>
-                        <p class="text-xs sm:text-sm text-purple-200/75 mt-1">เริ่มต้นผจญภัย ม.3 เทอม 2 นำรหัสลับจากการทำใบงาน/เว็บแอพมาปลดล็อกด่านถัดไป</p>
+                        <p class="text-xs sm:text-sm text-purple-200/75 mt-1">ผจญภัยภาษาอังกฤษ ม.3 นำรหัสลับจากการทำใบงาน/เว็บแอพมาปลดล็อกด่านถัดไป</p>
                     </div>
 
                     <div class="flex flex-col md:flex-row items-end md:items-center gap-2">
@@ -343,12 +352,17 @@
                     </div>
                 </div>
                 
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 border-b border-purple-500/20 mb-2">
-                    <span class="text-xs text-purple-300 font-medium whitespace-nowrap">เลือกบทเรียน (ม.3 เทอม 2):</span>
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-purple-500/20 mb-2">
+                    <span class="text-xs text-purple-300 font-medium whitespace-nowrap">เลือกบทเรียน:</span>
                     <button onclick="setMissionUnitFilter('ALL')" id="unit-filter-ALL" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-fuchsia-600/80 text-white border border-fuchsia-400/50 whitespace-nowrap">ทุกบท</button>
                     <button onclick="setMissionUnitFilter('Unit 1')" id="unit-filter-Unit 1" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 1</button>
                     <button onclick="setMissionUnitFilter('Unit 2')" id="unit-filter-Unit 2" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 2</button>
                     <button onclick="setMissionUnitFilter('Unit 3')" id="unit-filter-Unit 3" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 3</button>
+                    <button onclick="setMissionUnitFilter('Unit 4')" id="unit-filter-Unit 4" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 4</button>
+                    <button onclick="setMissionUnitFilter('Unit 5')" id="unit-filter-Unit 5" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 5</button>
+                    <button onclick="setMissionUnitFilter('Unit 6')" id="unit-filter-Unit 6" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 6</button>
+                    <button onclick="setMissionUnitFilter('Unit 7')" id="unit-filter-Unit 7" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 7</button>
+                    <button onclick="setMissionUnitFilter('Unit 8')" id="unit-filter-Unit 8" class="unit-pill px-3 py-1 rounded-lg text-xs font-medium bg-cosmic-950 text-purple-200 border border-purple-500/30 whitespace-nowrap">Unit 8</button>
                 </div>
 
                 <div id="missions-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
@@ -376,6 +390,9 @@
                                 <option value="u1_present_tenses">Unit 1: Present Simple vs Present Continuous</option>
                                 <option value="u2_used_to_would">Unit 2: Past Habits (used to / would)</option>
                                 <option value="u2_passive_voice">Unit 2: Present & Past Simple Passive</option>
+                                <option value="u3_so_such">Unit 3: Emphasis with so & such</option>
+                                <option value="u3_time_clauses">Unit 3: Time Clauses</option>
+                                <option value="u3_relative_pronouns">Unit 3: Relative Pronouns</option>
                             </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-cyan-400">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
@@ -418,7 +435,7 @@
                         <p class="text-xs sm:text-sm text-purple-200/75 mt-1">สมุดพกภารกิจ ม.3: ตรวจสอบสถานะการส่งงานออนไลน์และแบบฝึกหัดในหนังสือ</p>
                     </div>
                     <div class="bg-rose-950/80 border border-rose-500/50 px-4 py-2 rounded-xl text-center shadow-[0_0_15px_rgba(244,63,94,0.2)]">
-                        <p class="text-[10px] text-rose-300 font-scifi mb-1">TERM 2 DEADLINE</p>
+                        <p class="text-[10px] text-rose-300 font-scifi mb-1">NEXT CHECKPOINT</p>
                         <p class="text-lg font-bold text-rose-400 font-scifi" id="quest-countdown">-- : -- : --</p>
                     </div>
                 </div>
@@ -445,11 +462,11 @@
         <aside class="w-full lg:w-80 xl:w-84 p-4 sm:p-6 lg:py-7 lg:pr-7 lg:pl-0 space-y-6 flex-shrink-0">
             <div class="cosmic-card rounded-3xl p-5 space-y-3">
                 <h4 class="font-scifi font-bold text-sm tracking-wider text-white flex items-center gap-2"><span>📢</span> SYSTEM ANNOUNCEMENT</h4>
-                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/90 to-indigo-950/80 border border-purple-400/30 flex items-start gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg flex-shrink-0">🔥</div>
+                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/90 to-indigo-950/80 border border-emerald-400/30 flex items-start gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-lg flex-shrink-0">🎮</div>
                     <div class="text-xs space-y-1">
-                        <p class="font-semibold text-purple-100">เปิดมิติ Unit 2: Fashion Forward แล้ว!</p>
-                        <p class="text-slate-300 leading-relaxed">ลุยภารกิจ <b>M04–M07</b> และปราบบอส <b>The Vanity Glitch (V02)</b> เพื่อปลดล็อกกรอบใหม่และห้องสอบ <b>EXAM_U2</b> ได้เลย!</p>
+                        <p class="font-semibold text-emerald-200">เปิดมิติ Unit 3: That's Entertainment!</p>
+                        <p class="text-slate-300 leading-relaxed">ลุยด่าน <b>M08–M11</b> และบอสใหม่โหมด Boss Rush <b>The Pixel Overlord (V03)</b> เพื่อปลดล็อกกรอบใหม่และห้องสอบ <b>EXAM_U3</b> ได้เลย! (บท 4–8 กำลังทยอยเปิด)</p>
                     </div>
                 </div>
             </div>
@@ -562,7 +579,7 @@
             <h3 class="font-scifi text-lg font-bold text-white mb-4">📋 คู่มือใช้งานสำหรับครู (ม.3)</h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4">
                 <p>คุณครูสามารถนำรหัสนักเรียนและรหัส PIN จาก Google Sheets ของ ม.3 (แผ่นงาน Users) มาล็อกอินเข้าใช้งานระบบได้เลยครับ</p>
-                <p>และสามารถนำรหัสผ่านมิติของแต่ละด่าน (จากแผ่นงาน Missions) มากรอกเพื่อทดสอบการปลดล็อกสกินและกรอบรูปได้ทันที</p>
+                <p>และสามารถเช็คงานหนังสือในแผ่นงาน Offline_Tasks รวมถึงดูผลสอบ/ประวัติการทำด่านทั้งหมดได้ในแผ่นงาน Logs</p>
             </div>
         </div>
     </div>
@@ -580,6 +597,9 @@
             "Skin05": { id: "Skin05", name: "Skin 05: Galactic Scholar", subtitle: "นักปราชญ์จักรวาลคู่ขนาน", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M04", svg: `<img src="skin05.png" alt="Galactic Scholar" class="w-full h-full object-cover">` },
             "Skin06": { id: "Skin06", name: "Skin 06: Time Warden", subtitle: "ผู้พิทักษ์กาลเวลา", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M05", svg: `<img src="skin06.png" alt="Time Warden" class="w-full h-full object-cover">` },
             "Skin07": { id: "Skin07", name: "Skin 07: Void Walker", subtitle: "ผู้ท่องความว่างเปล่า", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M06", svg: `<img src="skin07.png" alt="Void Walker" class="w-full h-full object-cover">` },
+            "Skin08": { id: "Skin08", name: "Skin 08: Beat Striker", subtitle: "นักรบแห่งจังหวะดนตรี", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M08", svg: `<img src="skin08.png" alt="Beat Striker" class="w-full h-full object-cover" onerror="this.src='skin01.png'">` },
+            "Skin09": { id: "Skin09", name: "Skin 09: Star Director", subtitle: "ผู้กำกับแห่งมิติภาพยนตร์", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M09", svg: `<img src="skin09.png" alt="Star Director" class="w-full h-full object-cover" onerror="this.src='skin01.png'">` },
+            "Skin10": { id: "Skin10", name: "Skin 10: Arcade Hero", subtitle: "ฮีโร่แห่งโลกพิกเซล", unlockHint: "ปลดล็อกเมื่อผ่านด่าน M10", svg: `<img src="skin10.png" alt="Arcade Hero" class="w-full h-full object-cover" onerror="this.src='skin01.png'">` },
             "Skin99": { id: "Skin99", name: "Custom Avatar", subtitle: "ตัวละครที่คุณสร้างเอง", unlockHint: "ปลดล็อกเมื่อใส่ลิงก์รูปภาพ", svg: `<svg viewBox="0 0 200 200" class="w-full h-full"><rect width="200" height="200" fill="#070510"/><rect x="40" y="40" width="120" height="120" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="8 8"/><circle cx="100" cy="100" r="20" fill="#38bdf8" opacity="0.5" class="animate-ping"/></svg>` }
         };
 
@@ -591,32 +611,41 @@
             "frame_vanity": { id: "frame_vanity", name: "Vanity Glitch Aura", subtitle: "ปราบบอส U2 (V02)", cssClass: "frame-vanity-aura", reqMission: ["V02", "V_U2"] },
             "FrameU2": { id: "FrameU2", name: "Fashion Forward", subtitle: "จบภารกิจ Unit 2 (M07)", cssClass: "frame-u2-clear", reqMission: "M07" },
             "FrameEx2": { id: "FrameEx2", name: "Unit 2 Elite", subtitle: "สอบผ่าน Unit 2 (EXAM_U2)", cssClass: "frame-ex2", reqMission: "EXAM_U2" },
-            "FrameU3": { id: "FrameU3", name: "Celestial Guide", subtitle: "จบภารกิจ Unit 3", cssClass: "frame-u3-clear", reqMission: "M11" },
-            "FrameEx3": { id: "FrameEx3", name: "Grand Master M.3", subtitle: "สอบผ่าน Unit 3 (EXAM_U3)", cssClass: "frame-ex3", reqMission: "EXAM_U3" },
+            "frame_pixel": { id: "frame_pixel", name: "Pixel Overlord Aura", subtitle: "ปราบบอส U3 (V03)", cssClass: "frame-pixel-aura", reqMission: ["V03", "V_U3"] },
+            "FrameU3": { id: "FrameU3", name: "Entertainment Star", subtitle: "จบภารกิจ Unit 3 (M11)", cssClass: "frame-u3-clear", reqMission: "M11" },
+            "FrameEx3": { id: "FrameEx3", name: "Unit 3 Sovereign", subtitle: "สอบผ่าน Unit 3 (EXAM_U3)", cssClass: "frame-ex3", reqMission: "EXAM_U3" },
             "FrameLv5": { id: "FrameLv5", name: "Gold Standard", subtitle: "กรอบสำหรับเลเวล 5 ขึ้นไป", cssClass: "frame-level5", reqLevel: 5 },
             "FrameLv10": { id: "FrameLv10", name: "Diamond Master", subtitle: "กรอบสำหรับเลเวล 10 ขึ้นไป", cssClass: "frame-level10", reqLevel: 10 }
         };
 
         const MISSION_META_PRESETS = {
-            // Unit 1: All About Me (M.3)
-            "M01": { unit: "Unit 1", subtitle: "ฟังเสียงและทำแบบฝึกหัด People's Lifestyles (หน้า 8-9)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_1.html" },
-            "M02": { unit: "Unit 1", subtitle: "ฝึกสำนวนการเชิญชวนและอ่านเรื่อง Different Interests (หน้า 10-13)", category: "Speaking & Reading", difficulty: "Medium", xp: 100, artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_2.html" },
-            "M03": { unit: "Unit 1", subtitle: "คำศัพท์และการใช้ Grammar: Comparatives & Present Tenses (หน้า 14-15)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_3.html" },
-            "V01": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
-            "V_U1": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
+            // Unit 1: All About Me
+            "M01": { unit: "Unit 1", subtitle: "ฟังเสียงและทำแบบฝึกหัด People's Lifestyles (หน้า 8-9)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_1.html" },
+            "M02": { unit: "Unit 1", subtitle: "ฝึกสำนวนการเชิญชวนและอ่านเรื่อง Different Interests (หน้า 10-13)", category: "Speaking & Reading", difficulty: "Medium", xp: 100, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_2.html" },
+            "M03": { unit: "Unit 1", subtitle: "คำศัพท์และการใช้ Grammar: Comparatives & Present Tenses (หน้า 14-15)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_1_3.html" },
+            "V01": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
+            "V_U1": { unit: "Unit 1", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Lazy Phantom", category: "Vocab", difficulty: "Boss", xp: 200, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u1.html" },
 
-            // Unit 2: Fashion Forward (M.3)
-            "M04": { unit: "Unit 2", subtitle: "คำศัพท์การแต่งกายและฝึกฟัง Listen Up & Challenge (หน้า 20-21)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_1.html" },
-            "M05": { unit: "Unit 2", subtitle: "คำศัพท์แฟชั่นและการฟังเรื่องความชอบการแต่งตัว (หน้า 22-23)", category: "Speaking & Vocab", difficulty: "Medium", xp: 100, artType: "book", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_2.html" },
-            "M06": { unit: "Unit 2", subtitle: "คำศัพท์และการอ่านบทความ Fashion Trend of the Past (หน้า 24-25)", category: "Reading & Vocab", difficulty: "Hard", xp: 150, artType: "mirror", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_3.html" },
-            "M07": { unit: "Unit 2", subtitle: "คำศัพท์และไวยากรณ์ used to/would & Passive Voice (หน้า 26-27)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, artType: "castle", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_4.html" },
-            "V02": { unit: "Unit 2", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Vanity Glitch", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u2.html" },
-            "V_U2": { unit: "Unit 2", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Vanity Glitch", category: "Vocab", difficulty: "Boss", xp: 200, artType: "corridor", isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u2.html" },
+            // Unit 2: Fashion Forward
+            "M04": { unit: "Unit 2", subtitle: "คำศัพท์การแต่งกายและฝึกฟัง Listen Up & Challenge (หน้า 20-21)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_1.html" },
+            "M05": { unit: "Unit 2", subtitle: "คำศัพท์แฟชั่นและการฟังเรื่องความชอบการแต่งตัว (หน้า 22-23)", category: "Speaking & Vocab", difficulty: "Medium", xp: 100, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_2.html" },
+            "M06": { unit: "Unit 2", subtitle: "คำศัพท์และการอ่านบทความ Fashion Trend of the Past (หน้า 24-25)", category: "Reading & Vocab", difficulty: "Hard", xp: 150, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_3.html" },
+            "M07": { unit: "Unit 2", subtitle: "คำศัพท์และไวยากรณ์ used to/would & Passive Voice (หน้า 26-27)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_2_4.html" },
+            "V02": { unit: "Unit 2", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Vanity Glitch", category: "Vocab", difficulty: "Boss", xp: 200, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u2.html" },
+            "V_U2": { unit: "Unit 2", subtitle: "มินิเกมคำศัพท์และเรียงประโยค: ปราบ The Vanity Glitch", category: "Vocab", difficulty: "Boss", xp: 200, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u2.html" },
+
+            // Unit 3: That's Entertainment!
+            "M08": { unit: "Unit 3", subtitle: "แนวเพลง, Focus Time Clauses, Listen Up & Challenge (หน้า 34-35)", category: "Listening & Vocab", difficulty: "Medium", xp: 100, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_3_1.html" },
+            "M09": { unit: "Unit 3", subtitle: "ประเภทภาพยนตร์/ทีวี, Relative Pronouns & so/such (หน้า 36-37)", category: "Speaking & Grammar", difficulty: "Medium", xp: 100, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_3_2.html" },
+            "M10": { unit: "Unit 3", subtitle: "คำศัพท์เกมและการอ่านบทความ Bernie's Blog (หน้า 38-39)", category: "Reading & Vocab", difficulty: "Hard", xp: 150, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_3_3.html" },
+            "M11": { unit: "Unit 3", subtitle: "คำศัพท์ความรู้สึก, Time Clauses & Relative Pronouns (หน้า 40-41)", category: "Writing & Grammar", difficulty: "Hard", xp: 150, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/m3_mission_3_4.html" },
+            "V03": { unit: "Unit 3", subtitle: "Boss Rush 3 โหมด: ปราบ The Pixel Overlord (15 ด่าน)", category: "Vocab", difficulty: "Boss", xp: 200, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u3.html" },
+            "V_U3": { unit: "Unit 3", subtitle: "Boss Rush 3 โหมด: ปราบ The Pixel Overlord (15 ด่าน)", category: "Vocab", difficulty: "Boss", xp: 200, isWebLink: true, linkUrl: "https://paloliiz.github.io/basicenglish3-s2-69/voice_lab_m3_u3.html" },
 
             // Final Challenges (Exams M.3)
-            "EXAM_U1": { unit: "Unit 1", subtitle: "สอบเก็บคะแนน Unit 1: All About Me (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false },
-            "EXAM_U2": { unit: "Unit 2", subtitle: "สอบเก็บคะแนน Unit 2: Fashion Forward (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false },
-            "EXAM_U3": { unit: "Unit 3", subtitle: "สอบเก็บคะแนน Unit 3 (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, artType: "castle", isWebLink: false }
+            "EXAM_U1": { unit: "Unit 1", subtitle: "สอบเก็บคะแนน Unit 1: All About Me (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, isWebLink: false },
+            "EXAM_U2": { unit: "Unit 2", subtitle: "สอบเก็บคะแนน Unit 2: Fashion Forward (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, isWebLink: false },
+            "EXAM_U3": { unit: "Unit 3", subtitle: "สอบเก็บคะแนน Unit 3: That's Entertainment! (10 คะแนน)", category: "Exam", difficulty: "Boss", xp: 100, isWebLink: false }
         };
 
         let appState = {
@@ -638,7 +667,10 @@
             "u1_comparatives": { folder: "U1_Comparatives/", prefix: "U1_Comparatives_", ext: ".PNG", total: 10 },
             "u1_present_tenses": { folder: "U1_Present_Tenses/", prefix: "U1_Present_Tenses_", ext: ".PNG", total: 10 },
             "u2_used_to_would": { folder: "U2_Used_To/", prefix: "U2_Used_To_", ext: ".PNG", total: 10 },
-            "u2_passive_voice": { folder: "U2_Passive_Voice/", prefix: "U2_Passive_Voice_", ext: ".PNG", total: 10 }
+            "u2_passive_voice": { folder: "U2_Passive_Voice/", prefix: "U2_Passive_Voice_", ext: ".PNG", total: 10 },
+            "u3_so_such": { folder: "U3_So_Such/", prefix: "U3_So_Such_", ext: ".PNG", total: 10 },
+            "u3_time_clauses": { folder: "U3_Time_Clauses/", prefix: "U3_Time_Clauses_", ext: ".PNG", total: 10 },
+            "u3_relative_pronouns": { folder: "U3_Relative_Pronouns/", prefix: "U3_Relative_Pronouns_", ext: ".PNG", total: 10 }
         };
         let currentGrammarTopic = "u1_comparatives";
         let currentSlide = 1;
@@ -882,7 +914,7 @@
         }
 
         // ==========================================
-        // ระบบ Quest Log (ติดตามงาน ม.3 — Unit 1 & Unit 2)
+        // ระบบ Quest Log (ติดตามงาน ม.3 — Unit 1, 2, 3)
         // ==========================================
         function renderQuestLog() {
             const webList = document.getElementById("quest-web-list");
@@ -901,7 +933,12 @@
                 { ids: ["M05"], name: "U2 — M05: Preferences & Speaking (P.22-23)" },
                 { ids: ["M06"], name: "U2 — M06: Fashion Trend of the Past (P.24-25)" },
                 { ids: ["M07"], name: "U2 — M07: Writing & Passive Voice (P.26-27)" },
-                { ids: ["V02", "V_U2"], name: "U2 — Voice Lab Boss: The Vanity Glitch" }
+                { ids: ["V02", "V_U2"], name: "U2 — Voice Lab Boss: The Vanity Glitch" },
+                { ids: ["M08"], name: "U3 — M08: Taste in Music (P.34-35)" },
+                { ids: ["M09"], name: "U3 — M09: Movies & TV Shows (P.36-37)" },
+                { ids: ["M10"], name: "U3 — M10: Bernie's Blog (P.38-39)" },
+                { ids: ["M11"], name: "U3 — M11: Writing & Grammar (P.40-41)" },
+                { ids: ["V03", "V_U3"], name: "U3 — Boss Rush: The Pixel Overlord" }
             ];
             
             webList.innerHTML = webQuests.map(q => {
@@ -923,7 +960,11 @@
                 { id: "M04_Book", name: "ส่งแบบฝึกหัดหน้า 20-21 (Unit 2.1)" },
                 { id: "M05_Book", name: "ส่งแบบฝึกหัดหน้า 22-23 (Unit 2.2)" },
                 { id: "M06_Book", name: "ส่งแบบฝึกหัดหน้า 24-25 (Unit 2.3)" },
-                { id: "M07_Book", name: "ส่งแบบฝึกหัดหน้า 26-27 (Unit 2.4)" }
+                { id: "M07_Book", name: "ส่งแบบฝึกหัดหน้า 26-27 (Unit 2.4)" },
+                { id: "M08_Book", name: "ส่งแบบฝึกหัดหน้า 34-35 (Unit 3.1)" },
+                { id: "M09_Book", name: "ส่งแบบฝึกหัดหน้า 36-37 (Unit 3.2)" },
+                { id: "M10_Book", name: "ส่งแบบฝึกหัดหน้า 38-39 (Unit 3.3)" },
+                { id: "M11_Book", name: "ส่งแบบฝึกหัดหน้า 40-41 (Unit 3.4)" }
             ];
 
             bookList.innerHTML = bookQuests.map(q => {
@@ -960,7 +1001,7 @@
         setInterval(() => {
             const el = document.getElementById("quest-countdown");
             if (!el) return;
-            const deadline = new Date("2027-01-31T23:59:59").getTime(); 
+            const deadline = new Date("2027-02-28T23:59:59").getTime(); 
             const now = new Date().getTime();
             const distance = deadline - now;
             
@@ -1028,6 +1069,22 @@
                 return matchStatus && matchUnit && isNotExam;
             });
 
+            const examMissions = missions.filter(m => {
+                const preset = MISSION_META_PRESETS[m.missionId];
+                return preset && preset.category === "Exam" && (appState.currentUnitFilter === "ALL" || preset.unit === appState.currentUnitFilter);
+            });
+
+            if (filtered.length === 0 && examMissions.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-1 sm:col-span-2 xl:col-span-3 text-center py-12 px-4 rounded-2xl bg-cosmic-950/60 border border-dashed border-purple-500/30">
+                        <div class="text-4xl mb-3">🚀</div>
+                        <p class="font-bold text-purple-200 text-sm mb-1">ยังไม่มีภารกิจที่เปิดในหมวดนี้</p>
+                        <p class="text-xs text-slate-400">บทเรียน Unit 4–8 กำลังทยอยเปิดประตูมิติเร็วๆ นี้ครับ!</p>
+                    </div>
+                `;
+                return;
+            }
+
             grid.innerHTML = filtered.map((m) => {
                 const preset = MISSION_META_PRESETS[m.missionId] || { unit: "Unit 1", subtitle: "ภารกิจ ม.3", category: "Mission", difficulty: "Normal", xp: 100 };
                 const isLocked = m.state === "LOCKED";
@@ -1061,7 +1118,7 @@
                 }
 
                 let rewardBadge = "";
-                const isBoss = ["V01", "V_U1", "V02", "V_U2", "V03", "V_U3"].includes(m.missionId);
+                const isBoss = m.missionId.startsWith("V");
                 if (isBoss) {
                      rewardBadge = `<span class="px-2 py-0.5 rounded bg-cyan-900/80 border border-cyan-400/50 text-[9px] text-cyan-200">🖼️ กรอบบอส!</span>`;
                 } else if (m.rewardSkin && m.rewardSkin.toLowerCase().includes("frame")) {
@@ -1090,11 +1147,6 @@
             }).join("");
 
             // ส่วนแสดง FINAL CHALLENGES (EXAM ม.3)
-            const examMissions = missions.filter(m => {
-                const preset = MISSION_META_PRESETS[m.missionId];
-                return preset && preset.category === "Exam" && (appState.currentUnitFilter === "ALL" || preset.unit === appState.currentUnitFilter);
-            });
-            
             if(examMissions.length > 0) {
                 const examHtml = examMissions.map(m => {
                     const preset = MISSION_META_PRESETS[m.missionId];
@@ -1110,6 +1162,10 @@
                     } else if (m.missionId === "EXAM_U2") {
                         const hasCore = ["M04", "M05", "M06", "M07"].every(req => completedMissions.includes(req));
                         const hasBoss = completedMissions.includes("V02") || completedMissions.includes("V_U2");
+                        isLocked = !(hasCore && hasBoss);
+                    } else if (m.missionId === "EXAM_U3") {
+                        const hasCore = ["M08", "M09", "M10", "M11"].every(req => completedMissions.includes(req));
+                        const hasBoss = completedMissions.includes("V03") || completedMissions.includes("V_U3");
                         isLocked = !(hasCore && hasBoss);
                     } else {
                         isLocked = m.state === "LOCKED";
@@ -1363,7 +1419,7 @@
                     appState.missions = res.missions;
                     saveSession(); renderAllModules(); closeMissionModal();
                     
-                    const frameUnlockMissions = ["V01", "V_U1", "V02", "V_U2", "M03", "M07"];
+                    const frameUnlockMissions = ["V01", "V_U1", "V02", "V_U2", "V03", "V_U3", "M03", "M07", "M11"];
                     if (frameUnlockMissions.includes(mId) || mId.includes("EXAM")) {
                          showToast("🎉 ยินดีด้วย! คุณได้รับกรอบโปรไฟล์ใหม่ ไปดูที่ตู้เสื้อผ้าได้เลย!", "success");
                     } else {
