@@ -665,7 +665,7 @@
         // ==========================================
         const GRAMMAR_TOPICS = {
             "u1_comparatives": { folder: "U1_Comparatives/", prefix: "Comparatives_and_Intensifiers_Page_", ext: ".jpg", total: 9 },
-            "u1_present_tenses": { folder: "U1_Present_Tenses/", prefix: "U1_Present_Tenses_", ext: ".PNG", total: 10 },
+            "u1_present_tenses": { folder: "U1_Present_Tenses/", prefix: "PresentSimple_vs_PresentContinuous_Page_", ext: ".jpg", total: 10, pad: 2 },
             "u2_used_to_would": { folder: "U2_Used_To/", prefix: "U2_Used_To_", ext: ".PNG", total: 10 },
             "u2_passive_voice": { folder: "U2_Passive_Voice/", prefix: "U2_Passive_Voice_", ext: ".PNG", total: 10 },
             "u3_so_such": { folder: "U3_So_Such/", prefix: "U3_So_Such_", ext: ".PNG", total: 10 },
@@ -682,7 +682,8 @@
             imgEl.style.opacity = 0.5;
             
             setTimeout(() => {
-                imgEl.src = `${topic.folder}${topic.prefix}${currentSlide}${topic.ext}`;
+                const slideNum = topic.pad ? String(currentSlide).padStart(topic.pad, '0') : currentSlide;
+                imgEl.src = `${topic.folder}${topic.prefix}${slideNum}${topic.ext}`;
                 document.getElementById('slide-counter').innerText = `${currentSlide} / ${topic.total}`;
                 imgEl.style.opacity = 1;
             }, 150);
